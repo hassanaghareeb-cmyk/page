@@ -701,6 +701,10 @@ section {
     line-height: 1.7;
 }
 
+.legal-page section a {
+    color: var(--gold);
+}
+
 .legal-notice {
     margin-top: 1.5rem;
     padding: 1rem 1.2rem;
