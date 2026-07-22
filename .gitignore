@@ -1,0 +1,20 @@
+# Installierte Pakete und erzeugte Website
+node_modules/
+dist/
+
+# Astro- und Werkzeug-Caches
+.astro/
+.cache/
+.npm/
+
+# Lokale Einstellungen und geheime Umgebungsvariablen
+.env
+.env.*
+!.env.example
+
+# Betriebssystem und Editoren
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/

@@ -1,0 +1,324 @@
+---
+import "../styles/global.css";
+
+// Präzise Trennung der Halal-Speisen (100% zertifiziert, alkoholfrei)
+const menuData = {
+  pizzen: [
+    { id: "p1", name: "Pizza Margherita", desc: "Fruchtige San-Marzano-Tomatensauce, Fior di Latte, frischer Basilikum, extra natives Olivenöl", preis: 11.50, veggie: true, sharp: false, allergens: ["A", "G"] },
+    { id: "p2", name: "Pizza Diavola Halal", desc: "San-Marzano-Tomaten, Fior di Latte, scharfe kalabrische Rindersalami (Halal), hausgemachtes Chili-Öl", preis: 15.50, veggie: false, sharp: true, allergens: ["A", "G"] },
+    { id: "p3", name: "Pizza Tartufo e Bresaola", desc: "Trüffelcreme, Fior di Latte, luftgetrockneter Rinderschinken (Bresaola), Rucola, Grana Padano", preis: 19.50, veggie: false, sharp: false, allergens: ["A", "G"] }
+  ],
+  pasten: [
+    { id: "pa1", name: "Spaghetti alla Carbonara di Manzo", desc: "Traditionelle Zubereitung mit krossem Kalbs-Bacon, Eigelb, Pecorino Romano und frisch gemahlenem schwarzen Pfeffer (ohne Weißwein)", preis: 16.90, veggie: false, sharp: false, allergens: ["A", "C", "G"] },
+    { id: "pa2", name: "Tagliolini al Tartufo", desc: "Hausgemachte Eiernudeln geschwenkt in cremiger Trüffelbutter, frischer schwarzer Trüffel", preis: 21.00, veggie: true, sharp: false, allergens: ["A", "C", "G"] }
+  ]
+};
+
+const dishImages = {
+  p1: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80",
+  p2: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=80",
+  p3: "https://images.unsplash.com/photo-1594007654729-407eedc4be65?auto=format&fit=crop&w=900&q=80",
+  pa1: "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=900&q=80",
+  pa2: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=900&q=80"
+};
+---
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nove - Modern Halal Fine Dining</title>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <header class="site-header">
+        <div class="nav-wrapper">
+            <a href="#home" class="brand-logo">Nove<span>.</span></a>
+            <nav class="main-nav">
+                <a href="#home">Startseite</a>
+                <a href="#vorteile">Ihre Vorteile</a>
+                <a href="#menu">Speisekarte</a>
+                <a href="#reservierung">Reservieren</a>
+                <a href="#kontakt">Kontakt & Zeiten</a>
+            </nav>
+            <div class="halal-seal-nav">100% Halal Certified</div>
+        </div>
+    </header>
+
+    <!-- HERO-BEREICH (id="home") -->
+    <section class="hero-stage" id="home">
+        <div class="hero-content">
+            <span class="hero-subtitle">Kulinarische Perfektion</span>
+            <h1>Tradition modern interpretiert</h1>
+            <p>Erleben Sie eine Symbiose aus handverlesenen, rein halal-zertifizierten Zutaten und zeitloser italienischer Kochkunst.</p>
+            <div class="hero-actions">
+                <a href="#menu" class="btn-primary">Menü entdecken</a>
+                <div id="live-status" class="status-indicator">Prüfe Öffnungszeiten...</div>
+            </div>
+            <div class="hero-highlights" aria-label="Unsere Qualitätsversprechen">
+                <span>100% Halal</span>
+                <span>Ohne Alkohol</span>
+                <span>Frisch zubereitet</span>
+            </div>
+        </div>
+        <div class="hero-corner" aria-hidden="true">
+            <span>Fine</span>
+            <strong>Dining</strong>
+            <i></i>
+        </div>
+    </section>
+
+    <!-- VORTEILE & NUTZEN (id="vorteile") -->
+    <section class="benefits-section" id="vorteile">
+        <div class="section-header">
+            <h2>Ihr Vorteil bei Nove</h2>
+            <p class="section-lead">Genuss ohne Kompromisse. Wir verbinden Werte mit gehobener Gastronomie.</p>
+        </div>
+        
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">✨</div>
+                <h4>100% Halal Garantie</h4>
+                <p>Sämtliche Fleischsorten und Zutaten stammen aus lückenlos zertifizierten Halal-Quellen für Ihr absolutes Vertrauen.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">🌿</div>
+                <h4>Reiner Geschmack</h4>
+                <p>Unsere Küche ist komplett alkoholfrei. Saucen und Desserts werden handwerklich präzise ohne Wein oder Gelatine vollendet.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">👑</div>
+                <h4>Fine Dining Ambiente</h4>
+                <p>Ein modern gestaltetes Premium-Ambiente, das den perfekten Rahmen für besondere Abende mit Familie und Freunden bietet.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SPEISEKARTE SECTION (id="menu") -->
+    <section class="menu-section" id="menu">
+        <div class="section-header">
+            <h2>Unsere Speisen</h2>
+            <p class="section-lead">Präzise abgestimmte Aromen, frisch für Sie zubereitet.</p>
+            
+            <div class="filter-controls">
+                <button class="filter-trigger active" data-target="all">Gesamtes Menü</button>
+                <button class="filter-trigger" data-target="veggie">🌱 Vegetarisch</button>
+                <button class="filter-trigger" data-target="sharp">🌶️ Scharf</button>
+            </div>
+        </div>
+
+        <div class="menu-container">
+            <div class="menu-block">
+                <h3 class="category-title">Pizza dal Forno</h3>
+                <div class="items-list">
+                    {menuData.pizzen.map((item) => (
+                        <div class="dish-card" data-veggie={item.veggie.toString()} data-sharp={item.sharp.toString()}>
+                            <div class="dish-meta">
+                                <h4 class="dish-name">
+                                    {item.name}
+                                    {item.veggie && <span class="diet-tag">VEGGIE</span>}
+                                    {item.sharp && <span class="diet-tag sharp">SHARP</span>}
+                                </h4>
+                                <span class="dish-price">{item.preis.toFixed(2)} €</span>
+                            </div>
+                            <p class="dish-description">{item.desc}</p>
+                            <span class="allergen-info">Allergene: {item.allergens.join(', ')}</span>
+                            <img class="dish-image" src={dishImages[item.id]} alt={`Foto von ${item.name}`} loading="lazy" />
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <div class="menu-block">
+                <h3 class="category-title">Pasta Fresca</h3>
+                <div class="items-list">
+                    {menuData.pasten.map((item) => (
+                        <div class="dish-card" data-veggie={item.veggie.toString()} data-sharp={item.sharp.toString()}>
+                            <div class="dish-meta">
+                                <h4 class="dish-name">
+                                    {item.name}
+                                    {item.veggie && <span class="diet-tag">VEGGIE</span>}
+                                    {item.sharp && <span class="diet-tag sharp">SHARP</span>}
+                                </h4>
+                                <span class="dish-price">{item.preis.toFixed(2)} €</span>
+                            </div>
+                            <p class="dish-description">{item.desc}</p>
+                            <span class="allergen-info">Allergene: {item.allergens.join(', ')}</span>
+                            <img class="dish-image" src={dishImages[item.id]} alt={`Foto von ${item.name}`} loading="lazy" />
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RESERVIERUNG -->
+    <section class="reservation-section" id="reservierung">
+        <div class="reservation-intro">
+            <p class="reservation-kicker">TISCHRESERVIERUNG</p>
+            <h2>Ihr Tisch bei Nove</h2>
+            <p>Wählen Sie Ihren Wunschtisch und senden Sie uns Ihre Anfrage. Wir bestätigen Ihre Reservierung so schnell wie möglich.</p>
+        </div>
+
+        <div class="reservation-layout">
+            <div class="table-picker">
+                <div class="table-picker-heading">
+                    <h3>Wunschtisch wählen</h3>
+                    <span id="selected-table-text">Noch keinen Tisch gewählt</span>
+                </div>
+                <div class="table-grid" aria-label="Auswahl der Tische">
+                    <button class="table-choice" type="button" data-table="Tisch 1" data-seats="2 Plätze"><strong>1</strong><span>2 Plätze</span></button>
+                    <button class="table-choice" type="button" data-table="Tisch 2" data-seats="2 Plätze"><strong>2</strong><span>2 Plätze</span></button>
+                    <button class="table-choice" type="button" data-table="Tisch 3" data-seats="4 Plätze"><strong>3</strong><span>4 Plätze</span></button>
+                    <button class="table-choice" type="button" data-table="Tisch 4" data-seats="4 Plätze"><strong>4</strong><span>4 Plätze</span></button>
+                    <button class="table-choice table-choice-large" type="button" data-table="Tisch 5" data-seats="6 Plätze"><strong>5</strong><span>6 Plätze</span></button>
+                    <button class="table-choice" type="button" data-table="Tisch 6" data-seats="2 Plätze"><strong>6</strong><span>2 Plätze</span></button>
+                    <button class="table-choice" type="button" data-table="Tisch 7" data-seats="4 Plätze"><strong>7</strong><span>4 Plätze</span></button>
+                </div>
+                <p class="table-picker-note">Die Auswahl ist ein Tischwunsch. Die endgültige Verfügbarkeit wird vom Restaurant bestätigt.</p>
+            </div>
+
+            <form class="reservation-form" id="reservation-form">
+                <input type="hidden" id="selected-table" name="table" />
+                <label>Ihr Name<input type="text" name="name" autocomplete="name" required /></label>
+                <label>E-Mail-Adresse<input type="email" name="email" autocomplete="email" required /></label>
+                <div class="form-row">
+                    <label>Datum<input type="date" name="date" id="reservation-date" required /></label>
+                    <label>Uhrzeit<select name="time" required><option value="">Wählen</option><option>17:30</option><option>18:00</option><option>18:30</option><option>19:00</option><option>19:30</option><option>20:00</option><option>20:30</option></select></label>
+                </div>
+                <label>Personen<select name="guests" required><option value="">Wählen</option><option>1 Person</option><option>2 Personen</option><option>3 Personen</option><option>4 Personen</option><option>5 Personen</option><option>6 Personen</option></select></label>
+                <label>Besondere Wünsche <span>(optional)</span><textarea name="note" rows="3" placeholder="Zum Beispiel: Kinderstuhl oder Allergiehinweis"></textarea></label>
+                <button class="btn-primary" type="submit">Reservierungsanfrage senden</button>
+                <p class="reservation-feedback" id="reservation-feedback" aria-live="polite"></p>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER / KONTAKT -->
+    <footer class="site-footer" id="kontakt">
+        <div class="footer-grid">
+            <div class="footer-box">
+                <h5>Standort</h5>
+                <address>Musterstraße 42<br>12345 Musterstadt</address>
+            </div>
+            <div class="footer-box">
+                <h5>Unser Versprechen</h5>
+                <p>100% Halal-Garantie</p>
+                <p>Kein Alkohol im gesamten Betrieb</p>
+            </div>
+            <div class="footer-box">
+                <h5>Öffnungszeiten</h5>
+                <p>Di — Sa: 17:30 — 21:00 Uhr</p>
+                <p>So & Mo: Ruhetag</p>
+            </div>
+            <div class="footer-box">
+                <h5>Kontakt & Reservierung</h5>
+                <p>Ruf uns an oder komm einfach vorbei – wir freuen uns auf dich.</p>
+                <p>Telefon: 0123 456789<br>E-Mail: hallo@nove-restaurant.de</p>
+            </div>
+        </div>
+        <div class="footer-credits">
+            <p>&copy; 2026 Nove. All rights reserved. | Impressum & Datenschutz</p>
+        </div>
+    </footer>
+
+    <!-- INTERAKTIVES JAVASCRIPT -->
+    <script>
+        const checkStatus = () => {
+            const now = new Date();
+            const day = now.getDay();
+            const hour = now.getHours();
+            const minute = now.getMinutes();
+            const currentTime = hour * 60 + minute;
+
+            const openTime = 17 * 60 + 30; 
+            const closeTime = 23* 60;     
+
+            const statusEl = document.getElementById("live-status");
+            if (!statusEl) return;
+            
+            if (day === 0 || day === 1) {
+                statusEl.textContent = "🔴 Geschlossen (Ruhetag)";
+            } else if (currentTime >= openTime && currentTime < closeTime) {
+                statusEl.textContent = "🟢 Jetzt geöffnet";
+            } else {
+                statusEl.textContent = "🔴 Geschlossen (Öffnet um 17:30)";
+            }
+        };
+
+        const filterButtons = document.querySelectorAll(".filter-trigger");
+        const dishCards = document.querySelectorAll(".dish-card");
+
+        filterButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                filterButtons.forEach(btn => btn.classList.remove("active"));
+                button.classList.add("active");
+
+                const target = button.getAttribute("data-target");
+
+                dishCards.forEach(card => {
+                    const isVeggie = card.getAttribute("data-veggie") === "true";
+                    const isSharp = card.getAttribute("data-sharp") === "true";
+
+                    if (target === "all") {
+                        card.style.display = "block";
+                    } else if (target === "veggie" && isVeggie) {
+                        card.style.display = "block";
+                    } else if (target === "sharp" && isSharp) {
+                        card.style.display = "block";
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+            });
+        });
+
+        const reservationForm = document.getElementById("reservation-form");
+        const tableChoices = document.querySelectorAll(".table-choice");
+        const selectedTableInput = document.getElementById("selected-table");
+        const selectedTableText = document.getElementById("selected-table-text");
+        const reservationFeedback = document.getElementById("reservation-feedback");
+        const reservationDate = document.getElementById("reservation-date");
+
+        if (reservationDate) {
+            reservationDate.min = new Date().toISOString().split("T")[0];
+        }
+
+        tableChoices.forEach((table) => {
+            table.addEventListener("click", () => {
+                tableChoices.forEach((choice) => choice.classList.remove("selected"));
+                table.classList.add("selected");
+                selectedTableInput.value = table.dataset.table;
+                selectedTableText.textContent = `${table.dataset.table} · ${table.dataset.seats}`;
+                reservationFeedback.textContent = "";
+            });
+        });
+
+        reservationForm?.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            if (!selectedTableInput.value) {
+                reservationFeedback.textContent = "Bitte wählen Sie zuerst einen Wunschtisch.";
+                return;
+            }
+
+            const formData = new FormData(reservationForm);
+            const subject = encodeURIComponent("Reservierungsanfrage bei Nove");
+            const body = encodeURIComponent(`Name: ${formData.get("name")}\nE-Mail: ${formData.get("email")}\nDatum: ${formData.get("date")}\nUhrzeit: ${formData.get("time")}\nPersonen: ${formData.get("guests")}\nWunschtisch: ${formData.get("table")}\nBesondere Wünsche: ${formData.get("note") || "Keine"}`);
+            reservationFeedback.textContent = "Ihre E-Mail-App wird geöffnet. Bitte senden Sie die vorbereitete Anfrage ab.";
+            window.location.href = `mailto:hallo@nove-restaurant.de?subject=${subject}&body=${body}`;
+        });
+
+        document.addEventListener("astro:page-load", () => {
+            checkStatus();
+        });
+
+        checkStatus();
+        setInterval(checkStatus, 60000);
+    </script>
+</body>
+</html>
