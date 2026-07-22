@@ -750,3 +750,188 @@ section {
     .btn-primary { width: 100%; text-align: center; }
     .dish-meta { flex-direction: column; }
 }
+
+/* --- ABSCHLIESSENDE PREMIUM-VERFEINERUNG --- */
+html {
+    background: #0b0d11;
+}
+
+body {
+    background: radial-gradient(circle at 15% 20%, rgba(212, 175, 55, 0.04), transparent 25%), #0b0d11;
+    text-rendering: optimizeLegibility;
+}
+
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+    width: 100%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.scroll-progress span {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #8f6a10, #f5dc81, #d4af37);
+    box-shadow: 0 0 14px rgba(212, 175, 55, 0.7);
+    transition: width 0.08s linear;
+}
+
+.main-nav a.is-active {
+    color: var(--gold);
+}
+
+.main-nav a.is-active::after {
+    transform: scaleX(1);
+}
+
+.hero-stage {
+    min-height: min(860px, 100svh);
+}
+
+.hero-stage::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+    height: 180px;
+    pointer-events: none;
+    background: linear-gradient(transparent, #0b0d11);
+}
+
+.hero-content,
+.hero-corner {
+    z-index: 1;
+}
+
+.benefit-icon {
+    display: grid;
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 1.3rem;
+    place-items: center;
+    border: 1px solid rgba(212, 175, 55, 0.34);
+    border-radius: 50%;
+    background: rgba(212, 175, 55, 0.06);
+}
+
+.signature-section {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: clamp(2.5rem, 8vw, 8rem);
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.section-kicker {
+    margin-bottom: 1rem;
+    color: var(--gold);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+}
+
+.signature-copy h2 {
+    max-width: 640px;
+    font-size: clamp(2.5rem, 5vw, 4.6rem);
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: -0.05em;
+}
+
+.signature-copy > p:not(.section-kicker) {
+    max-width: 600px;
+    margin-top: 1.4rem;
+    color: var(--text-muted);
+    font-size: 1.06rem;
+}
+
+.text-link {
+    display: inline-flex;
+    gap: 0.6rem;
+    align-items: center;
+    margin-top: 2rem;
+    color: var(--gold);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.text-link span {
+    transition: transform 0.25s ease;
+}
+
+.text-link:hover span {
+    transform: translateX(5px);
+}
+
+.signature-mark {
+    position: relative;
+    display: grid;
+    width: min(280px, 70vw);
+    aspect-ratio: 1;
+    margin-left: auto;
+    place-items: center;
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.16), rgba(212, 175, 55, 0.02) 62%, transparent 63%);
+    animation: mark-breathe 7s ease-in-out infinite;
+}
+
+.signature-mark::before,
+.signature-mark::after {
+    content: "";
+    position: absolute;
+    border: 1px solid rgba(212, 175, 55, 0.18);
+    border-radius: 50%;
+}
+
+.signature-mark::before { inset: 15px; }
+.signature-mark::after { inset: 34px; }
+
+.signature-mark strong {
+    z-index: 1;
+    color: var(--gold);
+    font-family: Georgia, serif;
+    font-size: 6rem;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.signature-mark span {
+    position: absolute;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.signature-mark span:first-child { top: 42px; }
+.signature-mark span:last-child { bottom: 42px; }
+
+@keyframes mark-breathe {
+    0%, 100% { transform: rotate(-3deg) scale(1); box-shadow: 0 0 0 rgba(212, 175, 55, 0); }
+    50% { transform: rotate(3deg) scale(1.025); box-shadow: 0 0 45px rgba(212, 175, 55, 0.12); }
+}
+
+@media (max-width: 768px) {
+    .signature-section {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        text-align: center;
+    }
+
+    .signature-copy > p:not(.section-kicker) {
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .signature-mark {
+        margin: 0 auto;
+    }
+}
