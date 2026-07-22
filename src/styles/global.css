@@ -218,6 +218,158 @@ body {
     background: var(--gold);
 }
 
+/* --- FEINE ANIMATIONEN & PREMIUM-DETAILS --- */
+.site-header {
+    background: linear-gradient(180deg, rgba(8, 10, 14, 0.94), rgba(8, 10, 14, 0.78));
+    backdrop-filter: blur(16px);
+}
+
+.main-nav a {
+    position: relative;
+    padding-bottom: 0.35rem;
+}
+
+.main-nav a::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+}
+
+.main-nav a:hover::after {
+    transform: scaleX(1);
+}
+
+.hero-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 50% 35%, rgba(212, 175, 55, 0.16), transparent 34%);
+}
+
+.hero-content > * {
+    animation: hero-reveal 0.8s both cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-content > :nth-child(1) { animation-delay: 0.08s; }
+.hero-content > :nth-child(2) { animation-delay: 0.17s; }
+.hero-content > :nth-child(3) { animation-delay: 0.26s; }
+.hero-content > :nth-child(4) { animation-delay: 0.36s; }
+
+.hero-highlights span {
+    transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.hero-highlights span:hover {
+    transform: translateY(-3px);
+    border-color: var(--gold);
+    background: rgba(212, 175, 55, 0.16);
+}
+
+.benefit-card {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.benefit-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 2px;
+    background: var(--gold);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.35s ease;
+}
+
+.benefit-card:hover {
+    transform: translateY(-9px);
+    border-color: rgba(212, 175, 55, 0.55);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
+}
+
+.benefit-card:hover::before {
+    transform: scaleY(1);
+}
+
+.filter-trigger {
+    transition: color 0.25s ease, border-color 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
+}
+
+.filter-trigger:hover {
+    transform: translateY(-2px);
+}
+
+.dish-card {
+    border-radius: 4px;
+}
+
+.dish-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.dish-card:hover::before {
+    opacity: 1;
+}
+
+.footer-box {
+    transition: transform 0.3s ease;
+}
+
+.footer-box:hover {
+    transform: translateY(-4px);
+}
+
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.65s ease var(--reveal-delay, 0ms), transform 0.65s ease var(--reveal-delay, 0ms);
+}
+
+.scroll-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes hero-reveal {
+    from {
+        opacity: 0;
+        transform: translateY(22px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
 /* --- ALLGEMEINE SECTIONS --- */
 section {
     padding: 6rem 2rem;
