@@ -40,7 +40,6 @@ const dishImages = {
                 <a href="#home">Startseite</a>
                 <a href="#vorteile">Ihre Vorteile</a>
                 <a href="#menu">Speisekarte</a>
-                <a href="#reservierung">Reservieren</a>
                 <a href="#kontakt">Kontakt & Zeiten</a>
             </nav>
             <div class="halal-seal-nav">100% Halal Certified</div>
@@ -156,48 +155,6 @@ const dishImages = {
         </div>
     </section>
 
-    <!-- RESERVIERUNG -->
-    <section class="reservation-section" id="reservierung">
-        <div class="reservation-intro">
-            <p class="reservation-kicker">TISCHRESERVIERUNG</p>
-            <h2>Ihr Tisch bei Nove</h2>
-            <p>Wählen Sie Ihren Wunschtisch und senden Sie uns Ihre Anfrage. Wir bestätigen Ihre Reservierung so schnell wie möglich.</p>
-        </div>
-
-        <div class="reservation-layout">
-            <div class="table-picker">
-                <div class="table-picker-heading">
-                    <h3>Wunschtisch wählen</h3>
-                    <span id="selected-table-text">Noch keinen Tisch gewählt</span>
-                </div>
-                <div class="table-grid" aria-label="Auswahl der Tische">
-                    <button class="table-choice" type="button" data-table="Tisch 1" data-seats="2 Plätze"><strong>1</strong><span>2 Plätze</span></button>
-                    <button class="table-choice" type="button" data-table="Tisch 2" data-seats="2 Plätze"><strong>2</strong><span>2 Plätze</span></button>
-                    <button class="table-choice" type="button" data-table="Tisch 3" data-seats="4 Plätze"><strong>3</strong><span>4 Plätze</span></button>
-                    <button class="table-choice" type="button" data-table="Tisch 4" data-seats="4 Plätze"><strong>4</strong><span>4 Plätze</span></button>
-                    <button class="table-choice table-choice-large" type="button" data-table="Tisch 5" data-seats="6 Plätze"><strong>5</strong><span>6 Plätze</span></button>
-                    <button class="table-choice" type="button" data-table="Tisch 6" data-seats="2 Plätze"><strong>6</strong><span>2 Plätze</span></button>
-                    <button class="table-choice" type="button" data-table="Tisch 7" data-seats="4 Plätze"><strong>7</strong><span>4 Plätze</span></button>
-                </div>
-                <p class="table-picker-note">Die Auswahl ist ein Tischwunsch. Die endgültige Verfügbarkeit wird vom Restaurant bestätigt.</p>
-            </div>
-
-            <form class="reservation-form" id="reservation-form">
-                <input type="hidden" id="selected-table" name="table" />
-                <label>Ihr Name<input type="text" name="name" autocomplete="name" required /></label>
-                <label>E-Mail-Adresse<input type="email" name="email" autocomplete="email" required /></label>
-                <div class="form-row">
-                    <label>Datum<input type="date" name="date" id="reservation-date" required /></label>
-                    <label>Uhrzeit<select name="time" required><option value="">Wählen</option><option>17:30</option><option>18:00</option><option>18:30</option><option>19:00</option><option>19:30</option><option>20:00</option><option>20:30</option></select></label>
-                </div>
-                <label>Personen<select name="guests" required><option value="">Wählen</option><option>1 Person</option><option>2 Personen</option><option>3 Personen</option><option>4 Personen</option><option>5 Personen</option><option>6 Personen</option></select></label>
-                <label>Besondere Wünsche <span>(optional)</span><textarea name="note" rows="3" placeholder="Zum Beispiel: Kinderstuhl oder Allergiehinweis"></textarea></label>
-                <button class="btn-primary" type="submit">Reservierungsanfrage senden</button>
-                <p class="reservation-feedback" id="reservation-feedback" aria-live="polite"></p>
-            </form>
-        </div>
-    </section>
-
     <!-- FOOTER / KONTAKT -->
     <footer class="site-footer" id="kontakt">
         <div class="footer-grid">
@@ -275,42 +232,6 @@ const dishImages = {
                     }
                 });
             });
-        });
-
-        const reservationForm = document.getElementById("reservation-form");
-        const tableChoices = document.querySelectorAll(".table-choice");
-        const selectedTableInput = document.getElementById("selected-table");
-        const selectedTableText = document.getElementById("selected-table-text");
-        const reservationFeedback = document.getElementById("reservation-feedback");
-        const reservationDate = document.getElementById("reservation-date");
-
-        if (reservationDate) {
-            reservationDate.min = new Date().toISOString().split("T")[0];
-        }
-
-        tableChoices.forEach((table) => {
-            table.addEventListener("click", () => {
-                tableChoices.forEach((choice) => choice.classList.remove("selected"));
-                table.classList.add("selected");
-                selectedTableInput.value = table.dataset.table;
-                selectedTableText.textContent = `${table.dataset.table} · ${table.dataset.seats}`;
-                reservationFeedback.textContent = "";
-            });
-        });
-
-        reservationForm?.addEventListener("submit", (event) => {
-            event.preventDefault();
-
-            if (!selectedTableInput.value) {
-                reservationFeedback.textContent = "Bitte wählen Sie zuerst einen Wunschtisch.";
-                return;
-            }
-
-            const formData = new FormData(reservationForm);
-            const subject = encodeURIComponent("Reservierungsanfrage bei Nove");
-            const body = encodeURIComponent(`Name: ${formData.get("name")}\nE-Mail: ${formData.get("email")}\nDatum: ${formData.get("date")}\nUhrzeit: ${formData.get("time")}\nPersonen: ${formData.get("guests")}\nWunschtisch: ${formData.get("table")}\nBesondere Wünsche: ${formData.get("note") || "Keine"}`);
-            reservationFeedback.textContent = "Ihre E-Mail-App wird geöffnet. Bitte senden Sie die vorbereitete Anfrage ab.";
-            window.location.href = `mailto:hallo@nove-restaurant.de?subject=${subject}&body=${body}`;
         });
 
         document.addEventListener("astro:page-load", () => {
