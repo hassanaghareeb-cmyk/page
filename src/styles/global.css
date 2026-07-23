@@ -1141,29 +1141,135 @@ body.is-reserving {
 
 body.is-reserving .signature-reservation-link {
     z-index: 5000;
-    animation: reservation-vortex 0.52s both cubic-bezier(0.7, 0, 0.84, 0);
+    animation: reservation-vortex 1.45s both cubic-bezier(0.7, 0, 0.84, 0);
 }
 
 body.is-reserving main,
 body.is-reserving .site-header,
 body.is-reserving .site-footer {
-    transition: opacity 0.42s ease, transform 0.52s ease;
+    transition: opacity 0.72s ease, transform 1.2s ease;
     opacity: 0;
-    transform: scale(1.04);
+    transform: scale(0.76);
 }
 
 @keyframes reservation-vortex {
     0% { transform: scale(1) rotate(0deg); filter: blur(0); }
-    55% { transform: scale(1.12) rotate(16deg); filter: blur(0); }
-    100% { transform: scale(12) rotate(80deg); filter: blur(5px); }
+    45% { transform: scale(1.18) rotate(16deg); filter: blur(0); }
+    100% { transform: scale(16) rotate(140deg); filter: blur(9px); }
+}
+
+.space-transition {
+    position: fixed;
+    inset: 0;
+    z-index: 4500;
+    display: grid;
+    overflow: hidden;
+    pointer-events: none;
+    place-items: center;
+    background: radial-gradient(circle at center, rgba(53, 20, 103, 0.82) 0%, rgba(5, 6, 20, 0.4) 36%, #03040c 100%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+
+.space-transition-stars {
+    position: absolute;
+    inset: -25%;
+    background-image:
+        radial-gradient(circle, #fff 0 1px, transparent 1.8px),
+        radial-gradient(circle, rgba(245, 220, 129, 0.95) 0 1.4px, transparent 2px),
+        radial-gradient(circle, rgba(146, 181, 255, 0.9) 0 0.8px, transparent 1.5px);
+    background-position: 0 0, 25px 54px, 100px 18px;
+    background-size: 96px 96px, 151px 151px, 59px 59px;
+    opacity: 0;
+    transform: scale(0.25);
+}
+
+.space-transition-portal {
+    width: min(24vw, 280px);
+    aspect-ratio: 1;
+    border: 2px solid rgba(245, 220, 129, 0.85);
+    border-radius: 50%;
+    box-shadow: 0 0 0 18px rgba(97, 54, 177, 0.18), 0 0 70px 15px rgba(119, 76, 236, 0.4), inset 0 0 50px rgba(71, 33, 156, 0.9);
+    opacity: 0;
+    transform: scale(0.1);
+}
+
+.space-transition p {
+    position: relative;
+    z-index: 1;
+    margin-top: min(34vw, 380px);
+    color: #f5dc81;
+    font-size: clamp(0.7rem, 1.4vw, 0.95rem);
+    font-weight: 700;
+    letter-spacing: 0.32em;
+    opacity: 0;
+    text-transform: uppercase;
+}
+
+body.is-reserving .space-transition {
+    opacity: 1;
+}
+
+body.is-reserving .space-transition-stars {
+    animation: star-flight 1.45s both cubic-bezier(0.17, 0.67, 0.24, 1);
+}
+
+body.is-reserving .space-transition-portal {
+    animation: portal-open 1.25s both cubic-bezier(0.16, 0.75, 0.25, 1);
+}
+
+body.is-reserving .space-transition p {
+    animation: flight-message 1.2s 0.35s both ease;
+}
+
+@keyframes portal-open {
+    0% { opacity: 0; transform: scale(0.08) rotate(0deg); }
+    35% { opacity: 1; transform: scale(1) rotate(80deg); }
+    100% { opacity: 1; transform: scale(16) rotate(280deg); }
+}
+
+@keyframes star-flight {
+    0% { opacity: 0; transform: scale(0.2); filter: blur(0); }
+    20% { opacity: 0.9; }
+    100% { opacity: 1; transform: scale(5); filter: blur(1px); }
+}
+
+@keyframes flight-message {
+    0%, 20% { opacity: 0; transform: translateY(8px); }
+    45%, 75% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-10px); }
 }
 
 /* --- RESERVIERUNGSSEITE --- */
 .reservation-page {
+    position: relative;
     width: min(820px, calc(100% - 3rem));
     min-height: 100svh;
     margin: 0 auto;
     padding: 7rem 0 5rem;
+}
+
+.reservation-body {
+    min-height: 100svh;
+    overflow-x: hidden;
+    background:
+        radial-gradient(circle at 18% 25%, rgba(69, 46, 160, 0.34), transparent 20%),
+        radial-gradient(circle at 82% 70%, rgba(185, 124, 40, 0.18), transparent 24%),
+        #03040c;
+}
+
+.reservation-body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(circle, rgba(255, 255, 255, 0.85) 0 1px, transparent 1.5px),
+        radial-gradient(circle, rgba(245, 220, 129, 0.8) 0 1px, transparent 1.6px);
+    background-position: 0 0, 62px 88px;
+    background-size: 108px 108px, 173px 173px;
+    opacity: 0.48;
 }
 
 .reservation-page h1 {
@@ -1187,7 +1293,8 @@ body.is-reserving .site-footer {
     margin-top: 3rem;
     padding: clamp(1.3rem, 4vw, 2.5rem);
     border: 1px solid var(--border-color);
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+    background: linear-gradient(145deg, rgba(58, 42, 113, 0.4), rgba(5, 7, 18, 0.78));
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 
 .reservation-fields {
