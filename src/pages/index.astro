@@ -56,13 +56,18 @@ const dishImages = {
     <header class="site-header">
         <div class="nav-wrapper">
             <a href="#home" class="brand-logo">Nove<span>.</span></a>
-            <nav class="main-nav" aria-label="Hauptnavigation">
+            <nav class="main-nav" id="primary-navigation" aria-label="Hauptnavigation">
                 <a href="#home" data-i18n="nav-home">Startseite</a>
                 <a href="#vorteile" data-i18n="nav-benefits">Ihre Vorteile</a>
                 <a href="#menu" data-i18n="nav-menu">Speisekarte</a>
                 <a href="#kontakt" data-i18n="nav-contact">Kontakt & Zeiten</a>
             </nav>
-            <button class="language-switcher" id="language-switcher" type="button" aria-label="Sprache ändern">DE / EN</button>
+            <div class="nav-actions">
+                <button class="language-switcher" id="language-switcher" type="button" aria-label="Sprache ändern">DE / EN</button>
+                <button class="menu-toggle" id="menu-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false" aria-label="Menü öffnen">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -280,6 +285,8 @@ const dishImages = {
         const languageModal = document.getElementById("language-modal");
         const languageButtons = document.querySelectorAll(".language-option");
         const languageSwitcher = document.getElementById("language-switcher");
+        const menuToggle = document.getElementById("menu-toggle");
+        const mainNavigation = document.getElementById("primary-navigation");
         const pageDescription = document.querySelector('meta[name="description"]');
         const germanTexts = {};
 
@@ -325,6 +332,23 @@ const dishImages = {
         });
 
         languageSwitcher?.addEventListener("click", showLanguagePicker);
+
+        const closeMenu = () => {
+            mainNavigation?.classList.remove("is-open");
+            menuToggle?.classList.remove("is-open");
+            menuToggle?.setAttribute("aria-expanded", "false");
+            menuToggle?.setAttribute("aria-label", "Menü öffnen");
+        };
+
+        menuToggle?.addEventListener("click", () => {
+            const isOpen = mainNavigation?.classList.toggle("is-open");
+            menuToggle.classList.toggle("is-open", isOpen);
+            menuToggle.setAttribute("aria-expanded", String(isOpen));
+            menuToggle.setAttribute("aria-label", isOpen ? "Menü schließen" : "Menü öffnen");
+        });
+
+        mainNavigation?.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMenu));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeMenu(); });
 
         const checkStatus = () => {
             const now = new Date();

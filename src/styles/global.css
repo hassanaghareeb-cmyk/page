@@ -89,6 +89,31 @@ body {
     color: var(--dark-bg);
 }
 
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.menu-toggle {
+    display: none;
+    width: 42px;
+    height: 38px;
+    padding: 0;
+    border: 1px solid rgba(212, 175, 55, 0.42);
+    background: transparent;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 18px;
+    height: 1px;
+    margin: 4px auto;
+    background: var(--gold);
+    transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
 .halal-seal-nav {
     border: 1px solid var(--gold);
     color: var(--gold);
@@ -757,9 +782,46 @@ section {
 /* --- RESPONSIVE ADJUSTMENTS --- */
 @media (max-width: 768px) {
     section { padding: 4.5rem 1.25rem; }
-    .nav-wrapper { padding: 1rem 1.25rem; flex-direction: column; gap: 0.8rem; }
-    .main-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.3rem 1rem; }
-    .main-nav a { margin-right: 0; font-size: 0.86rem; }
+    .nav-wrapper { position: relative; padding: 0.9rem 1.25rem; flex-direction: row; gap: 0.6rem; }
+    .main-nav {
+        position: absolute;
+        top: calc(100% + 1px);
+        right: 0;
+        left: 0;
+        display: grid;
+        gap: 0;
+        max-height: 0;
+        padding: 0 1.25rem;
+        overflow: hidden;
+        border-bottom: 1px solid transparent;
+        background: rgba(9, 11, 15, 0.98);
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-8px);
+        transition: max-height 0.35s ease, padding 0.35s ease, opacity 0.25s ease, transform 0.35s ease, border-color 0.35s ease;
+    }
+    .main-nav.is-open {
+        max-height: 330px;
+        padding-top: 0.6rem;
+        padding-bottom: 0.85rem;
+        border-color: var(--border-color);
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+    .main-nav a {
+        width: 100%;
+        margin-right: 0;
+        padding: 0.85rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        font-size: 0.95rem;
+    }
+    .main-nav a:last-child { border-bottom: 0; }
+    .nav-actions { margin-left: auto; }
+    .menu-toggle { display: block; }
+    .menu-toggle.is-open span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+    .menu-toggle.is-open span:nth-child(2) { opacity: 0; }
+    .menu-toggle.is-open span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
     .halal-seal-nav { padding: 0.3rem 0.6rem; font-size: 0.7rem; }
     .hero-stage { min-height: 700px; padding: 11.5rem 1.25rem 4.5rem; background-position: 62% center; }
     .hero-stage h1 { font-size: clamp(2.7rem, 13vw, 4rem); }
