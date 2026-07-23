@@ -28,17 +28,19 @@ const dishImages = {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b0d11" />
     <meta name="description" content="Nove verbindet moderne italienische Küche mit halal-zertifizierten Zutaten und einem besonderen Fine-Dining-Erlebnis." />
     <title>Nove - Modern Halal Fine Dining</title>
 </head>
 <body>
     <div class="scroll-progress" aria-hidden="true"><span></span></div>
+    <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
 
     <!-- NAVIGATION -->
     <header class="site-header">
         <div class="nav-wrapper">
             <a href="#home" class="brand-logo">Nove<span>.</span></a>
-            <nav class="main-nav">
+            <nav class="main-nav" aria-label="Hauptnavigation">
                 <a href="#home">Startseite</a>
                 <a href="#vorteile">Ihre Vorteile</a>
                 <a href="#menu">Speisekarte</a>
@@ -47,6 +49,7 @@ const dishImages = {
         </div>
     </header>
 
+    <main id="main-content">
     <!-- HERO-BEREICH (id="home") -->
     <section class="hero-stage" id="home">
         <div class="hero-content">
@@ -55,7 +58,7 @@ const dishImages = {
             <p>Erleben Sie eine Symbiose aus handverlesenen, rein halal-zertifizierten Zutaten und zeitloser italienischer Kochkunst.</p>
             <div class="hero-actions">
                 <a href="#menu" class="btn-primary">Menü entdecken</a>
-                <div id="live-status" class="status-indicator">Prüfe Öffnungszeiten...</div>
+                <div id="live-status" class="status-indicator" aria-live="polite">Prüfe Öffnungszeiten...</div>
             </div>
             <div class="hero-highlights" aria-label="Unsere Qualitätsversprechen">
                 <span>100% Halal</span>
@@ -119,9 +122,9 @@ const dishImages = {
             <p class="section-lead">Präzise abgestimmte Aromen, frisch für Sie zubereitet.</p>
             
             <div class="filter-controls">
-                <button class="filter-trigger active" data-target="all">Gesamtes Menü</button>
-                <button class="filter-trigger" data-target="veggie">🌱 Vegetarisch</button>
-                <button class="filter-trigger" data-target="sharp">🌶️ Scharf</button>
+                <button class="filter-trigger active" type="button" data-target="all" aria-pressed="true">Gesamtes Menü</button>
+                <button class="filter-trigger" type="button" data-target="veggie" aria-pressed="false">🌱 Vegetarisch</button>
+                <button class="filter-trigger" type="button" data-target="sharp" aria-pressed="false">🌶️ Scharf</button>
             </div>
         </div>
 
@@ -170,6 +173,8 @@ const dishImages = {
         </div>
     </section>
 
+    </main>
+
     <!-- FOOTER / KONTAKT -->
     <footer class="site-footer" id="kontakt">
         <div class="footer-grid">
@@ -208,7 +213,7 @@ const dishImages = {
             const currentTime = hour * 60 + minute;
 
             const openTime = 17 * 60 + 30; 
-            const closeTime = 23* 60;     
+            const closeTime = 21 * 60;
 
             const statusEl = document.getElementById("live-status");
             if (!statusEl) return;
@@ -230,7 +235,9 @@ const dishImages = {
         filterButtons.forEach(button => {
             button.addEventListener("click", () => {
                 filterButtons.forEach(btn => btn.classList.remove("active"));
+                filterButtons.forEach(btn => btn.setAttribute("aria-pressed", "false"));
                 button.classList.add("active");
+                button.setAttribute("aria-pressed", "true");
 
                 const target = button.getAttribute("data-target");
 
@@ -261,7 +268,10 @@ const dishImages = {
             entries.forEach((entry) => {
                 if (!entry.isIntersecting) return;
                 navLinks.forEach((link) => {
-                    link.classList.toggle("is-active", link.getAttribute("href") === `#${entry.target.id}`);
+                    const isActive = link.getAttribute("href") === `#${entry.target.id}`;
+                    link.classList.toggle("is-active", isActive);
+                    if (isActive) link.setAttribute("aria-current", "page");
+                    else link.removeAttribute("aria-current");
                 });
             });
         }, { rootMargin: "-35% 0px -55% 0px", threshold: 0 });
