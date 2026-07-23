@@ -61,7 +61,6 @@ const dishImages = {
                 <a href="#vorteile" data-i18n="nav-benefits">Ihre Vorteile</a>
                 <a href="#menu" data-i18n="nav-menu">Speisekarte</a>
                 <a href="#kontakt" data-i18n="nav-contact">Kontakt & Zeiten</a>
-                <a href={`${import.meta.env.BASE_URL}reservierung/`} data-i18n="nav-reservation">Tisch anfragen</a>
             </nav>
             <div class="nav-actions">
                 <button class="language-switcher" id="language-switcher" type="button" aria-label="Sprache ändern">DE / EN</button>
@@ -81,7 +80,6 @@ const dishImages = {
             <p data-i18n="hero-copy">Erleben Sie eine Symbiose aus handverlesenen, rein halal-zertifizierten Zutaten und zeitloser italienischer Kochkunst.</p>
             <div class="hero-actions">
                 <a href="#menu" class="btn-primary" data-i18n="hero-button">Menü entdecken</a>
-                <a href={`${import.meta.env.BASE_URL}reservierung/`} class="btn-secondary" data-i18n="hero-reservation">Tisch anfragen</a>
                 <div id="live-status" class="status-indicator" aria-live="polite">Prüfe Öffnungszeiten...</div>
             </div>
             <div class="hero-highlights" aria-label="Unsere Qualitätsversprechen">
@@ -211,10 +209,6 @@ const dishImages = {
                 </div>
             </div>
         </div>
-        <div class="menu-cta">
-            <p data-i18n="menu-cta-copy">Sie möchten Ihren Abend bei Nove planen?</p>
-            <a class="btn-secondary" href={`${import.meta.env.BASE_URL}reservierung/`} data-i18n="menu-cta-button">Tisch anfragen</a>
-        </div>
     </section>
 
     </main>
@@ -249,7 +243,6 @@ const dishImages = {
 
     <div class="quick-actions" aria-label="Schnellzugriff">
         <a href="tel:+4955163451185" aria-label="Nove anrufen">☎</a>
-        <a href={`${import.meta.env.BASE_URL}reservierung/`} aria-label="Tisch anfragen">✦</a>
     </div>
 
     <!-- INTERAKTIVES JAVASCRIPT -->
@@ -260,12 +253,10 @@ const dishImages = {
                 "nav-benefits": "Why Nove",
                 "nav-menu": "Menu",
                 "nav-contact": "Contact & hours",
-                "nav-reservation": "Book a table",
                 "hero-kicker": "Culinary perfection",
                 "hero-title": "Tradition, interpreted for today",
                 "hero-copy": "Experience a harmony of carefully selected, fully halal-certified ingredients and timeless Italian craftsmanship.",
                 "hero-button": "Explore the menu",
-                "hero-reservation": "Book a table",
                 "hero-alcohol-free": "Alcohol-free",
                 "hero-fresh": "Freshly prepared",
                 "benefits-title": "The Nove difference",
@@ -288,8 +279,6 @@ const dishImages = {
                 "occasion-three": "A personal table request in just a few steps",
                 "menu-title": "Our dishes",
                 "menu-lead": "Thoughtfully balanced flavours, freshly prepared for you.",
-                "menu-cta-copy": "Would you like to plan your evening at Nove?",
-                "menu-cta-button": "Book a table",
                 "filter-all": "Full menu",
                 "filter-veggie": "🌱 Vegetarian",
                 "filter-sharp": "🌶️ Spicy",
@@ -480,7 +469,7 @@ const dishImages = {
         });
 
         const revealElements = document.querySelectorAll(
-            ".section-header, .benefit-card, .signature-copy, .signature-mark, .occasion-section, .menu-block, .menu-cta, .footer-box"
+            ".section-header, .benefit-card, .signature-copy, .signature-mark, .occasion-section, .menu-block, .footer-box"
         );
 
         if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {

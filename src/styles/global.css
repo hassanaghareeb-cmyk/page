@@ -209,22 +209,6 @@ body {
     box-shadow: 0 16px 35px rgba(0, 0, 0, 0.4);
 }
 
-.btn-secondary {
-    padding: 0.7rem 1.4rem;
-    border: 1px solid rgba(245, 245, 245, 0.42);
-    color: var(--text-light);
-    font-size: 0.9rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
-}
-
-.btn-secondary:hover {
-    border-color: var(--gold);
-    background: rgba(212, 175, 55, 0.1);
-    transform: translateY(-2px);
-}
-
 .status-indicator {
     font-size: 0.9rem;
     font-weight: 500;
@@ -1667,23 +1651,6 @@ body.is-reserving .space-transition-portal b {
     font-size: 0.75rem;
 }
 
-.menu-cta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.2rem;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 4rem;
-    padding: 1.5rem;
-    border: 1px solid rgba(212, 175, 55, 0.25);
-    background: linear-gradient(100deg, rgba(212, 175, 55, 0.11), rgba(255, 255, 255, 0.02));
-}
-
-.menu-cta p {
-    color: var(--text-light);
-    font-size: 1.05rem;
-}
-
 .quick-actions {
     position: fixed;
     right: 1.1rem;
@@ -1736,8 +1703,6 @@ body.is-reserving .space-transition-portal b {
     }
 
     .occasion-section { grid-template-columns: 1fr; gap: 1.75rem; }
-    .menu-cta { margin-top: 2.5rem; padding: 1.25rem; }
-    .menu-cta .btn-secondary { width: 100%; text-align: center; }
     .quick-actions { right: 0.8rem; bottom: 0.8rem; }
 
     .reservation-cta { bottom: -2rem; }
