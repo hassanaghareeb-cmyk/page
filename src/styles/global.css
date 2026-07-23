@@ -661,6 +661,16 @@ section {
     font-size: 0.95rem;
 }
 
+.footer-box a {
+    color: var(--text-muted);
+    text-decoration-color: rgba(212, 175, 55, 0.55);
+    text-underline-offset: 0.2em;
+}
+
+.footer-box a:hover {
+    color: var(--gold);
+}
+
 .footer-credits {
     max-width: 1200px;
     margin: 0 auto;
