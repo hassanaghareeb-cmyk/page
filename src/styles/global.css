@@ -1141,21 +1141,22 @@ body.is-reserving {
 
 body.is-reserving .signature-reservation-link {
     z-index: 5000;
-    animation: reservation-vortex 1.45s both cubic-bezier(0.7, 0, 0.84, 0);
+    animation: reservation-vortex 3s both cubic-bezier(0.7, 0, 0.84, 0);
 }
 
 body.is-reserving main,
 body.is-reserving .site-header,
 body.is-reserving .site-footer {
-    transition: opacity 0.72s ease, transform 1.2s ease;
+    transition: opacity 1.1s ease, transform 2.7s ease;
     opacity: 0;
-    transform: scale(0.76);
+    transform: scale(0.35) rotate(5deg);
 }
 
 @keyframes reservation-vortex {
     0% { transform: scale(1) rotate(0deg); filter: blur(0); }
-    45% { transform: scale(1.18) rotate(16deg); filter: blur(0); }
-    100% { transform: scale(16) rotate(140deg); filter: blur(9px); }
+    30% { transform: scale(1.2) rotate(28deg); filter: blur(0); }
+    65% { transform: scale(2.2) rotate(190deg); filter: blur(1px); }
+    100% { transform: scale(22) rotate(720deg); filter: blur(12px); }
 }
 
 .space-transition {
@@ -1166,9 +1167,18 @@ body.is-reserving .site-footer {
     overflow: hidden;
     pointer-events: none;
     place-items: center;
+    perspective: 900px;
     background: radial-gradient(circle at center, rgba(53, 20, 103, 0.82) 0%, rgba(5, 6, 20, 0.4) 36%, #03040c 100%);
     opacity: 0;
     transition: opacity 0.35s ease;
+}
+
+.space-transition::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 0 10%, rgba(23, 10, 58, 0.2) 31%, rgba(1, 2, 8, 0.88) 100%);
+    opacity: 0;
 }
 
 .space-transition-stars {
@@ -1185,6 +1195,7 @@ body.is-reserving .site-footer {
 }
 
 .space-transition-portal {
+    position: relative;
     width: min(24vw, 280px);
     aspect-ratio: 1;
     border: 2px solid rgba(245, 220, 129, 0.85);
@@ -1192,6 +1203,29 @@ body.is-reserving .site-footer {
     box-shadow: 0 0 0 18px rgba(97, 54, 177, 0.18), 0 0 70px 15px rgba(119, 76, 236, 0.4), inset 0 0 50px rgba(71, 33, 156, 0.9);
     opacity: 0;
     transform: scale(0.1);
+}
+
+.space-transition-portal i,
+.space-transition-portal b {
+    position: absolute;
+    inset: -20%;
+    display: block;
+    border: 2px dashed rgba(130, 176, 255, 0.9);
+    border-radius: 50%;
+    box-shadow: 0 0 36px rgba(87, 106, 255, 0.6);
+}
+
+.space-transition-portal i { transform: rotateX(68deg); }
+.space-transition-portal b { inset: 16%; border-color: rgba(245, 220, 129, 0.9); transform: rotateY(70deg); }
+
+.space-transition-streaks {
+    position: absolute;
+    inset: -20%;
+    opacity: 0;
+    background: repeating-conic-gradient(from 0deg, transparent 0deg 8deg, rgba(204, 220, 255, 0.75) 9deg 9.35deg, transparent 10deg 17deg);
+    -webkit-mask-image: radial-gradient(circle, transparent 0 10%, #000 42%, transparent 76%);
+    mask-image: radial-gradient(circle, transparent 0 10%, #000 42%, transparent 76%);
+    transform: scale(0.1) rotate(0deg);
 }
 
 .space-transition p {
@@ -1211,33 +1245,55 @@ body.is-reserving .space-transition {
 }
 
 body.is-reserving .space-transition-stars {
-    animation: star-flight 1.45s both cubic-bezier(0.17, 0.67, 0.24, 1);
+    animation: star-flight 3s both cubic-bezier(0.17, 0.67, 0.24, 1);
 }
 
 body.is-reserving .space-transition-portal {
-    animation: portal-open 1.25s both cubic-bezier(0.16, 0.75, 0.25, 1);
+    animation: portal-open 2.75s both cubic-bezier(0.16, 0.75, 0.25, 1);
 }
 
 body.is-reserving .space-transition p {
-    animation: flight-message 1.2s 0.35s both ease;
+    animation: flight-message 2.4s 0.45s both ease;
+}
+
+body.is-reserving .space-transition-streaks {
+    animation: streak-flight 2.9s both cubic-bezier(0.15, 0.72, 0.25, 1);
+}
+
+body.is-reserving .space-transition::before {
+    animation: space-fade 3s both ease;
 }
 
 @keyframes portal-open {
-    0% { opacity: 0; transform: scale(0.08) rotate(0deg); }
-    35% { opacity: 1; transform: scale(1) rotate(80deg); }
-    100% { opacity: 1; transform: scale(16) rotate(280deg); }
+    0% { opacity: 0; transform: scale(0.04) rotate(0deg) rotateX(0deg); }
+    24% { opacity: 1; transform: scale(1) rotate(110deg) rotateX(30deg); }
+    55% { opacity: 1; transform: scale(2.8) rotate(420deg) rotateX(68deg); }
+    100% { opacity: 1; transform: scale(24) rotate(1080deg) rotateX(88deg); }
 }
 
 @keyframes star-flight {
-    0% { opacity: 0; transform: scale(0.2); filter: blur(0); }
-    20% { opacity: 0.9; }
-    100% { opacity: 1; transform: scale(5); filter: blur(1px); }
+    0% { opacity: 0; transform: scale(0.08) rotate(0deg); filter: blur(0); }
+    16% { opacity: 0.9; }
+    60% { opacity: 1; transform: scale(2.2) rotate(100deg); filter: blur(0); }
+    100% { opacity: 1; transform: scale(8) rotate(260deg); filter: blur(1.5px); }
 }
 
 @keyframes flight-message {
     0%, 20% { opacity: 0; transform: translateY(8px); }
     45%, 75% { opacity: 1; transform: translateY(0); }
     100% { opacity: 0; transform: translateY(-10px); }
+}
+
+@keyframes streak-flight {
+    0% { opacity: 0; transform: scale(0.1) rotate(0deg); }
+    16% { opacity: 0.25; }
+    56% { opacity: 0.82; transform: scale(1.5) rotate(170deg); }
+    100% { opacity: 1; transform: scale(8) rotate(620deg); }
+}
+
+@keyframes space-fade {
+    0%, 65% { opacity: 0; }
+    100% { opacity: 1; }
 }
 
 /* --- RESERVIERUNGSSEITE --- */
