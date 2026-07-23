@@ -1141,13 +1141,13 @@ body.is-reserving {
 
 body.is-reserving .signature-reservation-link {
     z-index: 5000;
-    animation: reservation-vortex 2.7s both cubic-bezier(0.7, 0, 0.84, 0);
+    animation: reservation-vortex 1.6s both cubic-bezier(0.7, 0, 0.84, 0);
 }
 
 body.is-reserving main,
 body.is-reserving .site-header,
 body.is-reserving .site-footer {
-    transition: opacity 1.15s ease, transform 2.55s cubic-bezier(0.67, 0, 0.92, 0.52);
+    transition: opacity 0.65s ease, transform 1.5s cubic-bezier(0.67, 0, 0.92, 0.52);
     opacity: 0;
     transform: scale(0.08) rotate(100deg);
 }
@@ -1299,31 +1299,31 @@ body.is-reserving .space-transition {
 }
 
 body.is-reserving .space-transition-stars {
-    animation: star-flight 2.4s both cubic-bezier(0.17, 0.67, 0.24, 1);
+    animation: star-flight 1.6s both cubic-bezier(0.17, 0.67, 0.24, 1);
 }
 
 body.is-reserving .space-transition-portal {
-    animation: portal-open 2.65s both cubic-bezier(0.16, 0.75, 0.25, 1);
+    animation: portal-open 1.6s both cubic-bezier(0.16, 0.75, 0.25, 1);
 }
 
 body.is-reserving .space-transition-streaks {
-    animation: streak-flight 2.35s both cubic-bezier(0.15, 0.72, 0.25, 1);
+    animation: streak-flight 1.6s both cubic-bezier(0.15, 0.72, 0.25, 1);
 }
 
 body.is-reserving .space-transition::before {
-    animation: space-fade 2.7s both ease;
+    animation: space-fade 1.6s both ease;
 }
 
 body.is-reserving .space-transition::after {
-    animation: nebula-drift 2.7s both cubic-bezier(0.2, 0.75, 0.25, 1);
+    animation: nebula-drift 1.6s both cubic-bezier(0.2, 0.75, 0.25, 1);
 }
 
 body.is-reserving .black-hole {
-    animation: black-hole-pull 2.7s both cubic-bezier(0.18, 0.76, 0.18, 1);
+    animation: black-hole-pull 1.6s both cubic-bezier(0.18, 0.76, 0.18, 1);
 }
 
 body.is-reserving .black-hole-vortex {
-    animation: blue-vortex-pull 2.7s both cubic-bezier(0.18, 0.76, 0.18, 1);
+    animation: blue-vortex-pull 1.6s both cubic-bezier(0.18, 0.76, 0.18, 1);
 }
 
 body.is-reserving .space-transition-portal i {

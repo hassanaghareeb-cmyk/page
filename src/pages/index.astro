@@ -419,7 +419,7 @@ const dishImages = {
             if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
             event.preventDefault();
             document.body.classList.add("is-reserving");
-            window.setTimeout(() => { window.location.href = reservationLink.href; }, 2700);
+            window.setTimeout(() => { window.location.href = reservationLink.href; }, 1600);
         });
 
         const revealElements = document.querySelectorAll(
