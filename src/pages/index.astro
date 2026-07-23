@@ -36,16 +36,29 @@ const dishImages = {
     <div class="scroll-progress" aria-hidden="true"><span></span></div>
     <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
 
+    <div class="language-modal" id="language-modal" role="dialog" aria-modal="true" aria-labelledby="language-title" hidden>
+        <div class="language-panel">
+            <p class="language-kicker">NOVE</p>
+            <h2 id="language-title">Willkommen</h2>
+            <p>Bitte wählen Sie Ihre Sprache.</p>
+            <div class="language-options">
+                <button type="button" class="language-option" data-language="de"><span aria-hidden="true">DE</span><strong>Deutsch</strong><small>Weiter auf Deutsch</small></button>
+                <button type="button" class="language-option" data-language="en"><span aria-hidden="true">EN</span><strong>English</strong><small>Continue in English</small></button>
+            </div>
+        </div>
+    </div>
+
     <!-- NAVIGATION -->
     <header class="site-header">
         <div class="nav-wrapper">
             <a href="#home" class="brand-logo">Nove<span>.</span></a>
             <nav class="main-nav" aria-label="Hauptnavigation">
-                <a href="#home">Startseite</a>
-                <a href="#vorteile">Ihre Vorteile</a>
-                <a href="#menu">Speisekarte</a>
-                <a href="#kontakt">Kontakt & Zeiten</a>
+                <a href="#home" data-i18n="nav-home">Startseite</a>
+                <a href="#vorteile" data-i18n="nav-benefits">Ihre Vorteile</a>
+                <a href="#menu" data-i18n="nav-menu">Speisekarte</a>
+                <a href="#kontakt" data-i18n="nav-contact">Kontakt & Zeiten</a>
             </nav>
+            <button class="language-switcher" id="language-switcher" type="button" aria-label="Sprache ändern">DE / EN</button>
         </div>
     </header>
 
@@ -53,17 +66,17 @@ const dishImages = {
     <!-- HERO-BEREICH (id="home") -->
     <section class="hero-stage" id="home">
         <div class="hero-content">
-            <span class="hero-subtitle">Kulinarische Perfektion</span>
-            <h1>Tradition modern interpretiert</h1>
-            <p>Erleben Sie eine Symbiose aus handverlesenen, rein halal-zertifizierten Zutaten und zeitloser italienischer Kochkunst.</p>
+            <span class="hero-subtitle" data-i18n="hero-kicker">Kulinarische Perfektion</span>
+            <h1 data-i18n="hero-title">Tradition modern interpretiert</h1>
+            <p data-i18n="hero-copy">Erleben Sie eine Symbiose aus handverlesenen, rein halal-zertifizierten Zutaten und zeitloser italienischer Kochkunst.</p>
             <div class="hero-actions">
-                <a href="#menu" class="btn-primary">Menü entdecken</a>
+                <a href="#menu" class="btn-primary" data-i18n="hero-button">Menü entdecken</a>
                 <div id="live-status" class="status-indicator" aria-live="polite">Prüfe Öffnungszeiten...</div>
             </div>
             <div class="hero-highlights" aria-label="Unsere Qualitätsversprechen">
                 <span>100% Halal</span>
-                <span>Ohne Alkohol</span>
-                <span>Frisch zubereitet</span>
+                <span data-i18n="hero-alcohol-free">Ohne Alkohol</span>
+                <span data-i18n="hero-fresh">Frisch zubereitet</span>
             </div>
         </div>
         <div class="hero-corner" aria-hidden="true">
@@ -76,37 +89,37 @@ const dishImages = {
     <!-- VORTEILE & NUTZEN (id="vorteile") -->
     <section class="benefits-section" id="vorteile">
         <div class="section-header">
-            <h2>Ihr Vorteil bei Nove</h2>
-            <p class="section-lead">Genuss ohne Kompromisse. Wir verbinden Werte mit gehobener Gastronomie.</p>
+            <h2 data-i18n="benefits-title">Ihr Vorteil bei Nove</h2>
+            <p class="section-lead" data-i18n="benefits-lead">Genuss ohne Kompromisse. Wir verbinden Werte mit gehobener Gastronomie.</p>
         </div>
         
         <div class="benefits-grid">
             <div class="benefit-card">
                 <div class="benefit-icon">✨</div>
-                <h4>100% Halal Garantie</h4>
-                <p>Sämtliche Fleischsorten und Zutaten stammen aus lückenlos zertifizierten Halal-Quellen für Ihr absolutes Vertrauen.</p>
+                <h4 data-i18n="benefit-halal-title">100% Halal Garantie</h4>
+                <p data-i18n="benefit-halal-copy">Sämtliche Fleischsorten und Zutaten stammen aus lückenlos zertifizierten Halal-Quellen für Ihr absolutes Vertrauen.</p>
             </div>
             
             <div class="benefit-card">
                 <div class="benefit-icon">🌿</div>
-                <h4>Reiner Geschmack</h4>
-                <p>Unsere Küche ist komplett alkoholfrei. Saucen und Desserts werden handwerklich präzise ohne Wein oder Gelatine vollendet.</p>
+                <h4 data-i18n="benefit-taste-title">Reiner Geschmack</h4>
+                <p data-i18n="benefit-taste-copy">Unsere Küche ist komplett alkoholfrei. Saucen und Desserts werden handwerklich präzise ohne Wein oder Gelatine vollendet.</p>
             </div>
             
             <div class="benefit-card">
                 <div class="benefit-icon">👑</div>
-                <h4>Fine Dining Ambiente</h4>
-                <p>Ein modern gestaltetes Premium-Ambiente, das den perfekten Rahmen für besondere Abende mit Familie und Freunden bietet.</p>
+                <h4 data-i18n="benefit-ambience-title">Fine Dining Ambiente</h4>
+                <p data-i18n="benefit-ambience-copy">Ein modern gestaltetes Premium-Ambiente, das den perfekten Rahmen für besondere Abende mit Familie und Freunden bietet.</p>
             </div>
         </div>
     </section>
 
     <section class="signature-section" aria-labelledby="signature-title">
         <div class="signature-copy">
-            <p class="section-kicker">DIE NOVE-ERFAHRUNG</p>
-            <h2 id="signature-title">Ein Abend, der nachklingt.</h2>
-            <p>Von der Auswahl der Zutaten bis zum letzten Detail auf dem Teller: Wir verbinden italienische Handwerkskunst mit einer Atmosphäre, in der man gerne länger bleibt.</p>
-            <a class="text-link" href="#menu">Unsere Speisen entdecken <span aria-hidden="true">→</span></a>
+            <p class="section-kicker" data-i18n="signature-kicker">DIE NOVE-ERFAHRUNG</p>
+            <h2 id="signature-title" data-i18n="signature-title">Ein Abend, der nachklingt.</h2>
+            <p data-i18n="signature-copy">Von der Auswahl der Zutaten bis zum letzten Detail auf dem Teller: Wir verbinden italienische Handwerkskunst mit einer Atmosphäre, in der man gerne länger bleibt.</p>
+            <a class="text-link" href="#menu"><span data-i18n="signature-link">Unsere Speisen entdecken</span> <span aria-hidden="true">→</span></a>
         </div>
         <div class="signature-mark" aria-hidden="true">
             <span>Italian</span>
@@ -118,32 +131,32 @@ const dishImages = {
     <!-- SPEISEKARTE SECTION (id="menu") -->
     <section class="menu-section" id="menu">
         <div class="section-header">
-            <h2>Unsere Speisen</h2>
-            <p class="section-lead">Präzise abgestimmte Aromen, frisch für Sie zubereitet.</p>
+            <h2 data-i18n="menu-title">Unsere Speisen</h2>
+            <p class="section-lead" data-i18n="menu-lead">Präzise abgestimmte Aromen, frisch für Sie zubereitet.</p>
             
             <div class="filter-controls">
-                <button class="filter-trigger active" type="button" data-target="all" aria-pressed="true">Gesamtes Menü</button>
-                <button class="filter-trigger" type="button" data-target="veggie" aria-pressed="false">🌱 Vegetarisch</button>
-                <button class="filter-trigger" type="button" data-target="sharp" aria-pressed="false">🌶️ Scharf</button>
+                <button class="filter-trigger active" type="button" data-target="all" aria-pressed="true" data-i18n="filter-all">Gesamtes Menü</button>
+                <button class="filter-trigger" type="button" data-target="veggie" aria-pressed="false" data-i18n="filter-veggie">🌱 Vegetarisch</button>
+                <button class="filter-trigger" type="button" data-target="sharp" aria-pressed="false" data-i18n="filter-sharp">🌶️ Scharf</button>
             </div>
         </div>
 
         <div class="menu-container">
             <div class="menu-block">
-                <h3 class="category-title">Pizza dal Forno</h3>
+                <h3 class="category-title" data-i18n="category-pizza">Pizza dal Forno</h3>
                 <div class="items-list">
                     {menuData.pizzen.map((item) => (
                         <div class="dish-card" data-veggie={item.veggie.toString()} data-sharp={item.sharp.toString()}>
                             <div class="dish-meta">
                                 <h4 class="dish-name">
                                     {item.name}
-                                    {item.veggie && <span class="diet-tag">VEGGIE</span>}
-                                    {item.sharp && <span class="diet-tag sharp">SHARP</span>}
+                                    {item.veggie && <span class="diet-tag" data-i18n="tag-veggie">VEGGIE</span>}
+                                    {item.sharp && <span class="diet-tag sharp" data-i18n="tag-sharp">SCHARF</span>}
                                 </h4>
                                 <span class="dish-price">{item.preis.toFixed(2)} €</span>
                             </div>
-                            <p class="dish-description">{item.desc}</p>
-                            <span class="allergen-info">Allergene: {item.allergens.join(', ')}</span>
+                            <p class="dish-description" data-i18n={`dish-${item.id}-desc`}>{item.desc}</p>
+                            <span class="allergen-info"><span data-i18n="allergen-label">Allergene</span>: {item.allergens.join(', ')}</span>
                             <img class="dish-image" src={dishImages[item.id]} alt={`Foto von ${item.name}`} loading="lazy" />
                         </div>
                     ))}
@@ -151,20 +164,20 @@ const dishImages = {
             </div>
 
             <div class="menu-block">
-                <h3 class="category-title">Pasta Fresca</h3>
+                <h3 class="category-title" data-i18n="category-pasta">Pasta Fresca</h3>
                 <div class="items-list">
                     {menuData.pasten.map((item) => (
                         <div class="dish-card" data-veggie={item.veggie.toString()} data-sharp={item.sharp.toString()}>
                             <div class="dish-meta">
                                 <h4 class="dish-name">
                                     {item.name}
-                                    {item.veggie && <span class="diet-tag">VEGGIE</span>}
-                                    {item.sharp && <span class="diet-tag sharp">SHARP</span>}
+                                    {item.veggie && <span class="diet-tag" data-i18n="tag-veggie">VEGGIE</span>}
+                                    {item.sharp && <span class="diet-tag sharp" data-i18n="tag-sharp">SCHARF</span>}
                                 </h4>
                                 <span class="dish-price">{item.preis.toFixed(2)} €</span>
                             </div>
-                            <p class="dish-description">{item.desc}</p>
-                            <span class="allergen-info">Allergene: {item.allergens.join(', ')}</span>
+                            <p class="dish-description" data-i18n={`dish-${item.id}-desc`}>{item.desc}</p>
+                            <span class="allergen-info"><span data-i18n="allergen-label">Allergene</span>: {item.allergens.join(', ')}</span>
                             <img class="dish-image" src={dishImages[item.id]} alt={`Foto von ${item.name}`} loading="lazy" />
                         </div>
                     ))}
@@ -179,22 +192,22 @@ const dishImages = {
     <footer class="site-footer" id="kontakt">
         <div class="footer-grid">
             <div class="footer-box">
-                <h5>Standort</h5>
+                <h5 data-i18n="footer-location">Standort</h5>
                 <address>Musterstraße 42<br>12345 Musterstadt</address>
             </div>
             <div class="footer-box">
-                <h5>Unser Versprechen</h5>
+                <h5 data-i18n="footer-promise">Unser Versprechen</h5>
                 <p>100% Halal-Garantie</p>
-                <p>Kein Alkohol im gesamten Betrieb</p>
+                <p data-i18n="footer-alcohol-free">Kein Alkohol im gesamten Betrieb</p>
             </div>
             <div class="footer-box">
-                <h5>Öffnungszeiten</h5>
-                <p>Di — Sa: 17:30 — 21:00 Uhr</p>
-                <p>So & Mo: Ruhetag</p>
+                <h5 data-i18n="footer-hours">Öffnungszeiten</h5>
+                <p data-i18n="footer-hours-week">Di — Sa: 17:30 — 21:00 Uhr</p>
+                <p data-i18n="footer-hours-rest">So & Mo: Ruhetag</p>
             </div>
             <div class="footer-box">
-                <h5>Kontakt</h5>
-                <p>Ruf uns an oder komm einfach vorbei – wir freuen uns auf dich.</p>
+                <h5 data-i18n="footer-contact">Kontakt</h5>
+                <p data-i18n="footer-contact-copy">Ruf uns an oder komm einfach vorbei – wir freuen uns auf dich.</p>
                 <p>Telefon: 0123 456789<br>E-Mail: hallo@nove-restaurant.de</p>
             </div>
         </div>
@@ -205,6 +218,104 @@ const dishImages = {
 
     <!-- INTERAKTIVES JAVASCRIPT -->
     <script>
+        const translations = {
+            en: {
+                "nav-home": "Home",
+                "nav-benefits": "Why Nove",
+                "nav-menu": "Menu",
+                "nav-contact": "Contact & hours",
+                "hero-kicker": "Culinary perfection",
+                "hero-title": "Tradition, interpreted for today",
+                "hero-copy": "Experience a harmony of carefully selected, fully halal-certified ingredients and timeless Italian craftsmanship.",
+                "hero-button": "Explore the menu",
+                "hero-alcohol-free": "Alcohol-free",
+                "hero-fresh": "Freshly prepared",
+                "benefits-title": "The Nove difference",
+                "benefits-lead": "Enjoy without compromise. We bring together values and elevated dining.",
+                "benefit-halal-title": "100% halal promise",
+                "benefit-halal-copy": "Every meat and ingredient comes from fully certified halal sources, so you can dine with complete confidence.",
+                "benefit-taste-title": "Pure flavour",
+                "benefit-taste-copy": "Our kitchen is entirely alcohol-free. Sauces and desserts are finished with precision, without wine or gelatine.",
+                "benefit-ambience-title": "Fine dining ambience",
+                "benefit-ambience-copy": "A modern premium setting that creates the perfect backdrop for memorable evenings with family and friends.",
+                "signature-kicker": "THE NOVE EXPERIENCE",
+                "signature-title": "An evening that stays with you.",
+                "signature-copy": "From selecting ingredients to the final detail on the plate: we pair Italian craftsmanship with an atmosphere made for lingering.",
+                "signature-link": "Discover our dishes",
+                "menu-title": "Our dishes",
+                "menu-lead": "Thoughtfully balanced flavours, freshly prepared for you.",
+                "filter-all": "Full menu",
+                "filter-veggie": "🌱 Vegetarian",
+                "filter-sharp": "🌶️ Spicy",
+                "category-pizza": "Pizza dal Forno",
+                "category-pasta": "Fresh pasta",
+                "tag-veggie": "VEGGIE",
+                "tag-sharp": "SPICY",
+                "allergen-label": "Allergens",
+                "dish-p1-desc": "Fruity San Marzano tomato sauce, Fior di Latte, fresh basil, extra-virgin olive oil",
+                "dish-p2-desc": "San Marzano tomatoes, Fior di Latte, spicy Calabrian beef salami (halal), house-made chilli oil",
+                "dish-p3-desc": "Truffle cream, Fior di Latte, air-dried beef (bresaola), rocket, Grana Padano",
+                "dish-pa1-desc": "Traditional preparation with crisp veal bacon, egg yolk, Pecorino Romano and freshly ground black pepper (without white wine)",
+                "dish-pa2-desc": "Homemade egg pasta tossed in creamy truffle butter, fresh black truffle",
+                "footer-location": "Location",
+                "footer-promise": "Our promise",
+                "footer-alcohol-free": "No alcohol anywhere in our restaurant",
+                "footer-hours": "Opening hours",
+                "footer-hours-week": "Tue — Sat: 5:30 pm — 9:00 pm",
+                "footer-hours-rest": "Sun & Mon: Closed",
+                "footer-contact": "Contact",
+                "footer-contact-copy": "Call us or simply stop by — we look forward to welcoming you.",
+                "status-closed": "🔴 Closed",
+                "status-open": "🟢 Open now",
+                "status-opens-at": "🔴 Closed (opens at 5:30 pm)"
+            }
+        };
+
+        let activeLanguage = "de";
+        const languageModal = document.getElementById("language-modal");
+        const languageButtons = document.querySelectorAll(".language-option");
+        const languageSwitcher = document.getElementById("language-switcher");
+        const pageDescription = document.querySelector('meta[name="description"]');
+
+        const showLanguagePicker = () => {
+            languageModal.hidden = false;
+            document.body.classList.add("language-modal-open");
+            languageButtons[0]?.focus();
+        };
+
+        const setLanguage = (language) => {
+            activeLanguage = language;
+            const content = translations[language] || {};
+
+            document.documentElement.lang = language;
+            document.querySelectorAll("[data-i18n]").forEach((element) => {
+                const key = element.dataset.i18n;
+                if (content[key]) element.textContent = content[key];
+            });
+
+            if (language === "en") {
+                document.title = "Nove - Modern Halal Fine Dining";
+                if (pageDescription) pageDescription.content = "Nove combines modern Italian cuisine, halal-certified ingredients and a distinctive fine dining experience.";
+            } else {
+                document.title = "Nove - Modern Halal Fine Dining";
+                if (pageDescription) pageDescription.content = "Nove verbindet moderne italienische Küche mit halal-zertifizierten Zutaten und einem besonderen Fine-Dining-Erlebnis.";
+            }
+            checkStatus();
+        };
+
+        const chooseLanguage = (language) => {
+            setLanguage(language);
+            try { localStorage.setItem("nove-language", language); } catch (_) { /* Sprache gilt nur für diesen Besuch. */ }
+            languageModal.hidden = true;
+            document.body.classList.remove("language-modal-open");
+        };
+
+        languageButtons.forEach((button) => {
+            button.addEventListener("click", () => chooseLanguage(button.dataset.language));
+        });
+
+        languageSwitcher?.addEventListener("click", showLanguagePicker);
+
         const checkStatus = () => {
             const now = new Date();
             const day = now.getDay();
@@ -218,14 +329,26 @@ const dishImages = {
             const statusEl = document.getElementById("live-status");
             if (!statusEl) return;
             
+            const copy = translations[activeLanguage] || {};
             if (day === 0 || day === 1) {
-                statusEl.textContent = "🔴 Geschlossen (Ruhetag)";
+                statusEl.textContent = copy["status-closed"] || "🔴 Geschlossen (Ruhetag)";
             } else if (currentTime >= openTime && currentTime < closeTime) {
-                statusEl.textContent = "🟢 Jetzt geöffnet";
+                statusEl.textContent = copy["status-open"] || "🟢 Jetzt geöffnet";
             } else {
-                statusEl.textContent = "🔴 Geschlossen (Öffnet um 17:30)";
+                statusEl.textContent = copy["status-opens-at"] || "🔴 Geschlossen (Öffnet um 17:30)";
             }
         };
+
+        try {
+            const savedLanguage = localStorage.getItem("nove-language");
+            if (savedLanguage === "de" || savedLanguage === "en") {
+                setLanguage(savedLanguage);
+            } else {
+                showLanguagePicker();
+            }
+        } catch (_) {
+            showLanguagePicker();
+        }
 
         const filterButtons = document.querySelectorAll(".filter-trigger");
         const dishCards = document.querySelectorAll(".dish-card");
