@@ -658,6 +658,20 @@ section {
     text-decoration: none;
 }
 
+.footer-credits .powered-by {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin: 0 0.2rem;
+    color: #f48120;
+    font-weight: 600;
+}
+
+.footer-credits .powered-by::before {
+    content: "☁";
+    color: #f48120;
+}
+
 .legal-page {
     width: min(760px, calc(100% - 3rem));
     margin: 0 auto;
