@@ -276,6 +276,11 @@ const dishImages = {
         const languageButtons = document.querySelectorAll(".language-option");
         const languageSwitcher = document.getElementById("language-switcher");
         const pageDescription = document.querySelector('meta[name="description"]');
+        const germanTexts = {};
+
+        document.querySelectorAll("[data-i18n]").forEach((element) => {
+            germanTexts[element.dataset.i18n] = element.textContent;
+        });
 
         const showLanguagePicker = () => {
             languageModal.hidden = false;
@@ -285,7 +290,7 @@ const dishImages = {
 
         const setLanguage = (language) => {
             activeLanguage = language;
-            const content = translations[language] || {};
+            const content = language === "de" ? germanTexts : translations.en;
 
             document.documentElement.lang = language;
             document.querySelectorAll("[data-i18n]").forEach((element) => {
