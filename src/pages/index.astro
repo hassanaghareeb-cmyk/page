@@ -38,7 +38,6 @@ const dishImages = {
         <div class="space-transition-stars"></div>
         <div class="space-transition-streaks"></div>
         <div class="space-transition-portal"><i></i><b></b></div>
-        <p>Willkommen an Bord</p>
     </div>
     <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
 
@@ -418,7 +417,7 @@ const dishImages = {
             if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
             event.preventDefault();
             document.body.classList.add("is-reserving");
-            window.setTimeout(() => { window.location.href = reservationLink.href; }, 3000);
+            window.setTimeout(() => { window.location.href = reservationLink.href; }, 2400);
         });
 
         const revealElements = document.querySelectorAll(
