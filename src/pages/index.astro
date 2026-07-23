@@ -121,11 +121,12 @@ const dishImages = {
             <p data-i18n="signature-copy">Von der Auswahl der Zutaten bis zum letzten Detail auf dem Teller: Wir verbinden italienische Handwerkskunst mit einer Atmosphäre, in der man gerne länger bleibt.</p>
             <a class="text-link" href="#menu"><span data-i18n="signature-link">Unsere Speisen entdecken</span> <span aria-hidden="true">→</span></a>
         </div>
-        <div class="signature-mark" aria-hidden="true">
+        <a class="signature-mark signature-reservation-link" href={`${import.meta.env.BASE_URL}reservierung/`} aria-label="Tisch reservieren">
             <span>Italian</span>
             <strong>N</strong>
             <span>Halal</span>
-        </div>
+            <em class="reservation-cta">Tisch reservieren</em>
+        </a>
     </section>
 
     <!-- SPEISEKARTE SECTION (id="menu") -->
@@ -405,6 +406,14 @@ const dishImages = {
         }, { rootMargin: "-35% 0px -55% 0px", threshold: 0 });
 
         document.querySelectorAll("#home, #vorteile, #menu, #kontakt").forEach((section) => navObserver.observe(section));
+
+        const reservationLink = document.querySelector(".signature-reservation-link");
+        reservationLink?.addEventListener("click", (event) => {
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+            event.preventDefault();
+            document.body.classList.add("is-reserving");
+            window.setTimeout(() => { window.location.href = reservationLink.href; }, 520);
+        });
 
         const revealElements = document.querySelectorAll(
             ".section-header, .benefit-card, .signature-copy, .signature-mark, .menu-block, .footer-box"

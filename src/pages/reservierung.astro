@@ -1,0 +1,85 @@
+---
+import "../styles/global.css";
+---
+
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#0b0d11" />
+    <meta name="description" content="Senden Sie eine Tischanfrage an Nove." />
+    <title>Tisch reservieren | Nove</title>
+  </head>
+  <body>
+    <main class="reservation-page">
+      <a class="legal-back" href={import.meta.env.BASE_URL}>← Zurück zur Startseite</a>
+      <p class="legal-kicker">NOVE · TISCHANFRAGE</p>
+      <h1>Ihr Tisch bei Nove</h1>
+      <p class="reservation-lead">Senden Sie uns Ihre Anfrage. Wir melden uns schnellstmöglich mit einer Bestätigung.</p>
+
+      <form class="reservation-form" id="reservation-form">
+        <div class="reservation-fields">
+          <label>Datum
+            <input type="date" name="date" required />
+          </label>
+          <label>Uhrzeit
+            <select name="time" required>
+              <option value="">Bitte wählen</option>
+              <option>17:30</option><option>18:00</option><option>18:30</option><option>19:00</option>
+              <option>19:30</option><option>20:00</option><option>20:30</option>
+            </select>
+          </label>
+          <label>Personen
+            <select name="guests" required>
+              <option value="">Bitte wählen</option>
+              <option>1 Person</option><option>2 Personen</option><option>3 Personen</option><option>4 Personen</option>
+              <option>5 Personen</option><option>6 Personen</option><option>7+ Personen</option>
+            </select>
+          </label>
+          <label>Name
+            <input type="text" name="name" autocomplete="name" required />
+          </label>
+          <label>Telefonnummer
+            <input type="tel" name="phone" autocomplete="tel" required />
+          </label>
+          <label>E-Mail-Adresse
+            <input type="email" name="email" autocomplete="email" required />
+          </label>
+        </div>
+        <label>Besondere Wünsche <span>(optional)</span>
+          <textarea name="notes" rows="4" placeholder="Zum Beispiel Allergien oder Kinderstuhl"></textarea>
+        </label>
+        <button class="btn-primary" type="submit">Anfrage per E-Mail senden</button>
+        <p class="reservation-note">Eine Reservierung ist erst gültig, wenn Nove sie bestätigt hat.</p>
+        <p class="reservation-message" id="reservation-message" aria-live="polite"></p>
+      </form>
+    </main>
+
+    <script>
+      const form = document.getElementById("reservation-form");
+      const message = document.getElementById("reservation-message");
+      const dateInput = form.elements.namedItem("date");
+      dateInput.min = new Date().toISOString().split("T")[0];
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const values = new FormData(form);
+        const body = [
+          "Neue Tischanfrage für Nove",
+          "",
+          `Datum: ${values.get("date")}`,
+          `Uhrzeit: ${values.get("time")}`,
+          `Personen: ${values.get("guests")}`,
+          `Name: ${values.get("name")}`,
+          `Telefon: ${values.get("phone")}`,
+          `E-Mail: ${values.get("email")}`,
+          `Wünsche: ${values.get("notes") || "Keine"}`
+        ].join("\n");
+
+        message.textContent = "Ihr E-Mail-Programm wird geöffnet.";
+        window.location.href = `mailto:ghareebserag@gmail.com?subject=${encodeURIComponent("Tischanfrage Nove")}&body=${encodeURIComponent(body)}`;
+      });
+    </script>
+  </body>
+</html>

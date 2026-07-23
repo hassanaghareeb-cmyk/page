@@ -1109,6 +1109,148 @@ body {
     animation: mark-breathe 7s ease-in-out infinite;
 }
 
+.signature-reservation-link {
+    color: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.signature-reservation-link:hover,
+.signature-reservation-link:focus-visible {
+    border-color: #f5dc81;
+    background-color: rgba(212, 175, 55, 0.14);
+    box-shadow: 0 0 55px rgba(212, 175, 55, 0.2);
+}
+
+.reservation-cta {
+    position: absolute;
+    bottom: -2.4rem;
+    color: var(--gold);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    font-style: normal;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+body.is-reserving {
+    overflow: hidden;
+}
+
+body.is-reserving .signature-reservation-link {
+    z-index: 5000;
+    animation: reservation-vortex 0.52s both cubic-bezier(0.7, 0, 0.84, 0);
+}
+
+body.is-reserving main,
+body.is-reserving .site-header,
+body.is-reserving .site-footer {
+    transition: opacity 0.42s ease, transform 0.52s ease;
+    opacity: 0;
+    transform: scale(1.04);
+}
+
+@keyframes reservation-vortex {
+    0% { transform: scale(1) rotate(0deg); filter: blur(0); }
+    55% { transform: scale(1.12) rotate(16deg); filter: blur(0); }
+    100% { transform: scale(12) rotate(80deg); filter: blur(5px); }
+}
+
+/* --- RESERVIERUNGSSEITE --- */
+.reservation-page {
+    width: min(820px, calc(100% - 3rem));
+    min-height: 100svh;
+    margin: 0 auto;
+    padding: 7rem 0 5rem;
+}
+
+.reservation-page h1 {
+    max-width: 650px;
+    font-size: clamp(2.5rem, 7vw, 4.7rem);
+    font-weight: 400;
+    letter-spacing: -0.05em;
+    line-height: 1.02;
+}
+
+.reservation-lead {
+    max-width: 600px;
+    margin-top: 1.25rem;
+    color: var(--text-muted);
+    font-size: 1.08rem;
+}
+
+.reservation-form {
+    display: grid;
+    gap: 1.3rem;
+    margin-top: 3rem;
+    padding: clamp(1.3rem, 4vw, 2.5rem);
+    border: 1px solid var(--border-color);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+}
+
+.reservation-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.1rem;
+}
+
+.reservation-form label {
+    display: grid;
+    gap: 0.45rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.reservation-form label span {
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.reservation-form input,
+.reservation-form select,
+.reservation-form textarea {
+    width: 100%;
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    background: #0d0f14;
+    color: var(--text-light);
+    font: inherit;
+    font-weight: 400;
+    padding: 0.82rem 0.9rem;
+}
+
+.reservation-form textarea {
+    resize: vertical;
+}
+
+.reservation-form input:focus,
+.reservation-form select:focus,
+.reservation-form textarea:focus {
+    border-color: var(--gold);
+    outline: 2px solid rgba(212, 175, 55, 0.22);
+    outline-offset: 2px;
+}
+
+.reservation-form .btn-primary {
+    justify-self: start;
+    border: 0;
+    cursor: pointer;
+    font-family: var(--font-main);
+}
+
+.reservation-note,
+.reservation-message {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.reservation-message {
+    color: var(--gold);
+}
+
 .signature-mark::before,
 .signature-mark::after {
     content: "";
@@ -1160,4 +1302,9 @@ body {
     .signature-mark {
         margin: 0 auto;
     }
+
+    .reservation-cta { bottom: -2rem; }
+    .reservation-page { width: min(100% - 2.5rem, 820px); padding-top: 6rem; }
+    .reservation-fields { grid-template-columns: 1fr; }
+    .reservation-form .btn-primary { width: 100%; }
 }
