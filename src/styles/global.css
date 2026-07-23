@@ -1153,6 +1153,137 @@ body {
     .hero-highlights { justify-content: center; }
 }
 
+/* --- EINHEITLICHER PREMIUM-ABSCHLUSS --- */
+.brand-logo {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.7rem;
+    font-weight: 500;
+}
+
+.benefits-section,
+.menu-section {
+    position: relative;
+}
+
+.benefits-section::before,
+.menu-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 2rem;
+    left: 2rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.42), transparent);
+}
+
+.section-header h2 {
+    text-wrap: balance;
+    letter-spacing: -0.035em;
+}
+
+.benefit-card {
+    min-height: 260px;
+    border-radius: 2px;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.045), transparent 54%),
+        var(--card-bg);
+}
+
+.benefit-card h4 {
+    letter-spacing: -0.015em;
+}
+
+.menu-container {
+    gap: clamp(2rem, 6vw, 5rem);
+}
+
+.menu-block {
+    position: relative;
+}
+
+.menu-block::before {
+    position: absolute;
+    top: -0.1rem;
+    right: 0;
+    color: rgba(212, 175, 55, 0.34);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 2.5rem;
+    font-style: italic;
+}
+
+.menu-block:nth-child(1)::before { content: "01"; }
+.menu-block:nth-child(2)::before { content: "02"; }
+
+.category-title {
+    padding-right: 3.5rem;
+    letter-spacing: 0.02em;
+}
+
+.dish-card {
+    border-left-width: 1px;
+}
+
+.site-footer {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 80% 0%, rgba(212, 175, 55, 0.1), transparent 26%),
+        #090a0d;
+}
+
+.site-footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 8%;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(transparent, rgba(212, 175, 55, 0.34), transparent);
+}
+
+.footer-box h5 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+}
+
+.footer-credits {
+    position: relative;
+}
+
+.legal-page,
+.reservation-page {
+    position: relative;
+}
+
+.legal-page::before,
+.reservation-page::before {
+    content: "";
+    position: absolute;
+    top: 5.2rem;
+    right: -4rem;
+    width: 160px;
+    height: 160px;
+    border: 1px solid rgba(212, 175, 55, 0.14);
+    border-radius: 50%;
+    box-shadow: 0 0 0 22px rgba(212, 175, 55, 0.025);
+    pointer-events: none;
+}
+
+.reservation-form {
+    border-color: rgba(212, 175, 55, 0.24);
+}
+
+@media (max-width: 768px) {
+    .benefits-section::before,
+    .menu-section::before { right: 1.25rem; left: 1.25rem; }
+    .benefit-card { min-height: 0; }
+    .site-footer::before { left: 1.25rem; }
+    .legal-page::before,
+    .reservation-page::before { right: -5rem; width: 120px; height: 120px; }
+}
+
 .benefit-icon {
     display: grid;
     width: 58px;
