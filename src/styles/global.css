@@ -1625,6 +1625,95 @@ body.is-reserving .space-transition-portal b {
 .signature-mark span:first-child { top: 42px; }
 .signature-mark span:last-child { bottom: 42px; }
 
+.occasion-section {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(2.5rem, 9vw, 8rem);
+    align-items: start;
+}
+
+.occasion-section h2 {
+    max-width: 460px;
+    font-size: clamp(2.2rem, 4.5vw, 4rem);
+    font-weight: 400;
+    line-height: 1.04;
+    letter-spacing: -0.045em;
+}
+
+.occasion-copy > p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+}
+
+.occasion-list {
+    display: grid;
+    gap: 0.85rem;
+    margin-top: 1.8rem;
+    list-style: none;
+}
+
+.occasion-list li {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-light);
+}
+
+.occasion-list li::before {
+    content: "✦";
+    color: var(--gold);
+    font-size: 0.75rem;
+}
+
+.menu-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    background: linear-gradient(100deg, rgba(212, 175, 55, 0.11), rgba(255, 255, 255, 0.02));
+}
+
+.menu-cta p {
+    color: var(--text-light);
+    font-size: 1.05rem;
+}
+
+.quick-actions {
+    position: fixed;
+    right: 1.1rem;
+    bottom: 1.1rem;
+    z-index: 1900;
+    display: grid;
+    gap: 0.55rem;
+}
+
+.quick-actions a {
+    display: grid;
+    width: 46px;
+    height: 46px;
+    place-items: center;
+    border: 1px solid rgba(212, 175, 55, 0.62);
+    border-radius: 50%;
+    background: rgba(11, 13, 17, 0.88);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.32);
+    color: var(--gold);
+    font-size: 1rem;
+    text-decoration: none;
+    transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.quick-actions a:hover {
+    background: var(--gold);
+    color: var(--dark-bg);
+    transform: translateY(-3px);
+}
+
 @keyframes mark-breathe {
     0%, 100% { transform: rotate(-3deg) scale(1); box-shadow: 0 0 0 rgba(212, 175, 55, 0); }
     50% { transform: rotate(3deg) scale(1.025); box-shadow: 0 0 45px rgba(212, 175, 55, 0.12); }
@@ -1645,6 +1734,11 @@ body.is-reserving .space-transition-portal b {
     .signature-mark {
         margin: 0 auto;
     }
+
+    .occasion-section { grid-template-columns: 1fr; gap: 1.75rem; }
+    .menu-cta { margin-top: 2.5rem; padding: 1.25rem; }
+    .menu-cta .btn-secondary { width: 100%; text-align: center; }
+    .quick-actions { right: 0.8rem; bottom: 0.8rem; }
 
     .reservation-cta { bottom: -2rem; }
     .reservation-page { width: min(100% - 2.5rem, 820px); padding-top: 6rem; }

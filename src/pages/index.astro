@@ -140,6 +140,21 @@ const dishImages = {
         </a>
     </section>
 
+    <section class="occasion-section" aria-labelledby="occasion-title">
+        <div>
+            <p class="section-kicker" data-i18n="occasion-kicker">FÜR IHREN BESONDEREN ABEND</p>
+            <h2 id="occasion-title" data-i18n="occasion-title">Mehr als ein Abendessen.</h2>
+        </div>
+        <div class="occasion-copy">
+            <p data-i18n="occasion-copy">Ob ein ruhiges Dinner zu zweit, ein Familientreffen oder ein besonderer Anlass: Bei Nove stehen Genuss, Aufmerksamkeit und eine entspannte Atmosphäre im Mittelpunkt.</p>
+            <ul class="occasion-list">
+                <li data-i18n="occasion-one">Sorgfältig ausgewählte Zutaten</li>
+                <li data-i18n="occasion-two">Alkoholfreie italienische Küche</li>
+                <li data-i18n="occasion-three">Persönliche Tischanfrage in wenigen Schritten</li>
+            </ul>
+        </div>
+    </section>
+
     <!-- SPEISEKARTE SECTION (id="menu") -->
     <section class="menu-section" id="menu">
         <div class="section-header">
@@ -196,6 +211,10 @@ const dishImages = {
                 </div>
             </div>
         </div>
+        <div class="menu-cta">
+            <p data-i18n="menu-cta-copy">Sie möchten Ihren Abend bei Nove planen?</p>
+            <a class="btn-secondary" href={`${import.meta.env.BASE_URL}reservierung/`} data-i18n="menu-cta-button">Tisch anfragen</a>
+        </div>
     </section>
 
     </main>
@@ -228,6 +247,11 @@ const dishImages = {
         </div>
     </footer>
 
+    <div class="quick-actions" aria-label="Schnellzugriff">
+        <a href="tel:+4955163451185" aria-label="Nove anrufen">☎</a>
+        <a href={`${import.meta.env.BASE_URL}reservierung/`} aria-label="Tisch anfragen">✦</a>
+    </div>
+
     <!-- INTERAKTIVES JAVASCRIPT -->
     <script>
         const translations = {
@@ -256,8 +280,16 @@ const dishImages = {
                 "signature-title": "An evening that stays with you.",
                 "signature-copy": "From selecting ingredients to the final detail on the plate: we pair Italian craftsmanship with an atmosphere made for lingering.",
                 "signature-link": "Discover our dishes",
+                "occasion-kicker": "FOR YOUR SPECIAL EVENING",
+                "occasion-title": "More than dinner.",
+                "occasion-copy": "Whether it is a quiet dinner for two, a family gathering or a special occasion: at Nove, flavour, care and a relaxed atmosphere take centre stage.",
+                "occasion-one": "Carefully selected ingredients",
+                "occasion-two": "Alcohol-free Italian cuisine",
+                "occasion-three": "A personal table request in just a few steps",
                 "menu-title": "Our dishes",
                 "menu-lead": "Thoughtfully balanced flavours, freshly prepared for you.",
+                "menu-cta-copy": "Would you like to plan your evening at Nove?",
+                "menu-cta-button": "Book a table",
                 "filter-all": "Full menu",
                 "filter-veggie": "🌱 Vegetarian",
                 "filter-sharp": "🌶️ Spicy",
@@ -448,7 +480,7 @@ const dishImages = {
         });
 
         const revealElements = document.querySelectorAll(
-            ".section-header, .benefit-card, .signature-copy, .signature-mark, .menu-block, .footer-box"
+            ".section-header, .benefit-card, .signature-copy, .signature-mark, .occasion-section, .menu-block, .menu-cta, .footer-box"
         );
 
         if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
