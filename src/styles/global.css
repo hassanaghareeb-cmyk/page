@@ -2312,3 +2312,47 @@ body.is-reserving .space-transition-portal b {
     .reservation-fields { grid-template-columns: 1fr; }
     .reservation-form .btn-primary { width: 100%; }
 }
+
+/* --- EINHEITLICHER FOOTER-STIL FÜR DIE GESAMTE SEITE --- */
+html,
+body {
+    background: #090a0d;
+}
+
+body {
+    background:
+        radial-gradient(circle at 80% 0%, rgba(212, 175, 55, 0.1), transparent 26%),
+        #090a0d;
+}
+
+#main-content > section:not(.hero-stage) {
+    background:
+        radial-gradient(circle at 82% 0%, rgba(212, 175, 55, 0.075), transparent 28%),
+        #090a0d;
+}
+
+.menu-section {
+    background:
+        radial-gradient(circle at 82% 0%, rgba(212, 175, 55, 0.09), transparent 28%),
+        #090a0d;
+}
+
+.reservation-body {
+    background:
+        radial-gradient(circle at 80% 0%, rgba(212, 175, 55, 0.12), transparent 26%),
+        #090a0d;
+}
+
+/* Beim Reservieren: nur Gerichte auf dem ruhigen Footer-Hintergrund. */
+.space-transition {
+    background:
+        radial-gradient(circle at 80% 0%, rgba(212, 175, 55, 0.14), transparent 27%),
+        #090a0d;
+}
+
+.space-transition::before,
+.space-transition::after,
+.space-transition-stars,
+.space-transition-streaks {
+    display: none;
+}
