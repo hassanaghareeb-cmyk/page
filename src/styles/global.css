@@ -1530,73 +1530,9 @@ body {
     transform: scale(1);
 }
 
-.dish-card:hover .dish-image,
-.dish-card:focus-visible .dish-image {
+.dish-card:hover .dish-image {
     opacity: 1;
     transform: scale(1.05);
-}
-
-.dish-card:focus-visible {
-    outline: 2px solid var(--gold);
-    outline-offset: 4px;
-}
-
-.dish-lightbox {
-    width: min(920px, calc(100% - 2rem));
-    max-height: min(88svh, 820px);
-    padding: 0;
-    overflow: hidden;
-    color: #fff;
-    background: #0b0d11;
-    border: 1px solid rgba(212, 175, 55, 0.58);
-    border-radius: 8px;
-    box-shadow: 0 28px 90px rgba(0, 0, 0, 0.72);
-}
-
-.dish-lightbox::backdrop {
-    background: rgba(2, 3, 6, 0.82);
-    backdrop-filter: blur(8px);
-}
-
-.dish-lightbox-image {
-    display: block;
-    width: 100%;
-    max-height: min(76svh, 700px);
-    object-fit: contain;
-    background: #050608;
-}
-
-.dish-lightbox-title {
-    margin: 0;
-    padding: 1rem 3.8rem 1.1rem 1.25rem;
-    font-family: var(--font-display);
-    font-size: 1.15rem;
-}
-
-.dish-lightbox-close {
-    position: absolute;
-    z-index: 1;
-    top: 0.75rem;
-    right: 0.75rem;
-    display: grid;
-    width: 42px;
-    height: 42px;
-    padding: 0;
-    place-items: center;
-    color: #fff;
-    font-size: 2rem;
-    line-height: 1;
-    cursor: pointer;
-    background: rgba(5, 7, 10, 0.75);
-    border: 1px solid rgba(255, 255, 255, 0.42);
-    border-radius: 50%;
-}
-
-.dish-lightbox-close:hover,
-.dish-lightbox-close:focus-visible {
-    color: #111;
-    background: var(--gold);
-    border-color: var(--gold);
 }
 
 @media (max-width: 768px) {

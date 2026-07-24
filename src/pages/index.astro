@@ -176,7 +176,7 @@ const dishImages = {
                 <h3 class="category-title" data-i18n="category-pizza">Pizza dal Forno</h3>
                 <div class="items-list">
                     {menuData.pizzen.map((item) => (
-                        <div class="dish-card" data-veggie={item.veggie.toString()} data-sharp={item.sharp.toString()} tabindex="0" role="button" aria-label={`${item.name}: Foto groß anzeigen`}>
+                        <div class="dish-card" data-veggie={item.veggie.toString()} data-sharp={item.sharp.toString()}>
                             <div class="dish-meta">
                                 <h4 class="dish-name">
                                     {item.name}
@@ -197,7 +197,7 @@ const dishImages = {
                 <h3 class="category-title" data-i18n="category-pasta">Pasta Fresca</h3>
                 <div class="items-list">
                     {menuData.pasten.map((item) => (
-                        <div class="dish-card" data-veggie={item.veggie.toString()} data-sharp={item.sharp.toString()} tabindex="0" role="button" aria-label={`${item.name}: Foto groß anzeigen`}>
+                        <div class="dish-card" data-veggie={item.veggie.toString()} data-sharp={item.sharp.toString()}>
                             <div class="dish-meta">
                                 <h4 class="dish-name">
                                     {item.name}
@@ -217,12 +217,6 @@ const dishImages = {
     </section>
 
     </main>
-
-    <dialog class="dish-lightbox" aria-labelledby="dish-lightbox-title">
-        <button class="dish-lightbox-close" type="button" aria-label="Bild schließen">×</button>
-        <img class="dish-lightbox-image" src="" alt="" />
-        <p class="dish-lightbox-title" id="dish-lightbox-title"></p>
-    </dialog>
 
     <!-- FOOTER / KONTAKT -->
     <footer class="site-footer" id="kontakt">
@@ -418,39 +412,8 @@ const dishImages = {
 
         const filterButtons = document.querySelectorAll(".filter-trigger");
         const dishCards = document.querySelectorAll(".dish-card");
-        const dishLightbox = document.querySelector(".dish-lightbox");
-        const dishLightboxImage = document.querySelector(".dish-lightbox-image");
-        const dishLightboxTitle = document.querySelector(".dish-lightbox-title");
-        const dishLightboxClose = document.querySelector(".dish-lightbox-close");
         const progressBar = document.querySelector(".scroll-progress span");
         const navLinks = document.querySelectorAll(".main-nav a");
-
-        const openDishImage = (card) => {
-            const image = card.querySelector(".dish-image");
-            const title = card.querySelector(".dish-name")?.childNodes[0]?.textContent?.trim() || "Gericht";
-            if (!image || !dishLightbox || !dishLightboxImage || !dishLightboxTitle) return;
-
-            dishLightboxImage.src = image.currentSrc || image.src;
-            dishLightboxImage.alt = image.alt;
-            dishLightboxTitle.textContent = title;
-            dishLightbox.showModal();
-            dishLightboxClose?.focus();
-        };
-
-        dishCards.forEach((card) => {
-            card.addEventListener("click", () => openDishImage(card));
-            card.addEventListener("keydown", (event) => {
-                if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    openDishImage(card);
-                }
-            });
-        });
-
-        dishLightboxClose?.addEventListener("click", () => dishLightbox?.close());
-        dishLightbox?.addEventListener("click", (event) => {
-            if (event.target === dishLightbox) dishLightbox.close();
-        });
 
         filterButtons.forEach(button => {
             button.addEventListener("click", () => {
