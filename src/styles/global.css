@@ -2347,6 +2347,20 @@ body {
     display: none;
 }
 
+.reservation-form {
+    background: linear-gradient(145deg, rgba(212, 175, 55, 0.11), rgba(5, 7, 10, 0.9));
+}
+
+.reservation-fields {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 768px) {
+    .reservation-fields {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* Beim Reservieren: nur Gerichte auf dem ruhigen Footer-Hintergrund. */
 .space-transition {
     background:
