@@ -1325,6 +1325,68 @@ body {
     .reservation-page::before { right: -5rem; width: 120px; height: 120px; }
 }
 
+/* --- KLARERE, MODERNERE INHALTSSTRUKTUR --- */
+#main-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-stage { order: 1; }
+.benefits-section { order: 2; }
+.menu-section { order: 3; }
+.signature-section { order: 4; }
+.occasion-section { order: 5; }
+
+.menu-section {
+    max-width: none;
+    padding-right: max(2rem, calc((100vw - 1200px) / 2));
+    padding-left: max(2rem, calc((100vw - 1200px) / 2));
+    background:
+        linear-gradient(90deg, rgba(212, 175, 55, 0.05), transparent 24%, transparent 76%, rgba(212, 175, 55, 0.05)),
+        #101218;
+}
+
+.menu-section .section-header,
+.menu-section .menu-container {
+    max-width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.signature-section {
+    background: linear-gradient(115deg, rgba(255, 255, 255, 0.018), transparent 45%);
+}
+
+.occasion-section {
+    position: relative;
+}
+
+.occasion-section::after {
+    content: "NOVE";
+    position: absolute;
+    right: 2rem;
+    bottom: 1.8rem;
+    color: rgba(212, 175, 55, 0.06);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(4rem, 12vw, 10rem);
+    font-style: italic;
+    line-height: 0.7;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .menu-section {
+        padding-right: 1.25rem;
+        padding-left: 1.25rem;
+    }
+
+    .occasion-section::after {
+        right: 1.25rem;
+        bottom: 1.5rem;
+        font-size: 5rem;
+    }
+}
+
 .benefit-icon {
     display: grid;
     width: 58px;
