@@ -2343,6 +2343,10 @@ body {
         #090a0d;
 }
 
+.reservation-body::before {
+    display: none;
+}
+
 /* Beim Reservieren: nur Gerichte auf dem ruhigen Footer-Hintergrund. */
 .space-transition {
     background:
