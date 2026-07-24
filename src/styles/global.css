@@ -25,6 +25,7 @@ html {
 
 body {
     line-height: 1.6;
+    overflow-x: clip;
 }
 
 /* --- NAVIGATION --- */
@@ -1204,6 +1205,19 @@ body {
 .benefits-section,
 .menu-section {
     position: relative;
+}
+
+.menu-section,
+.menu-container,
+.menu-block {
+    min-width: 0;
+}
+
+@media (max-width: 1024px) {
+    .menu-container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
 }
 
 .benefits-section::before,
