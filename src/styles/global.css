@@ -1853,6 +1853,29 @@ body.is-reserving .site-footer {
     transform: scale(0.1) rotate(0deg);
 }
 
+.reservation-dishes {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.reservation-dishes img {
+    --orbit-radius: min(37vw, 430px);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: clamp(72px, 10vw, 150px);
+    aspect-ratio: 1;
+    object-fit: cover;
+    border: 1px solid rgba(245, 220, 129, 0.7);
+    border-radius: 50%;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--dish-angle)) translateX(0) scale(0.2);
+    will-change: transform, opacity, filter;
+}
+
 body.is-reserving .space-transition {
     opacity: 1;
 }
@@ -1867,6 +1890,10 @@ body.is-reserving .space-transition-portal {
 
 body.is-reserving .space-transition-streaks {
     animation: streak-flight 1.6s both cubic-bezier(0.15, 0.72, 0.25, 1);
+}
+
+body.is-reserving .reservation-dishes img {
+    animation: dish-reservation-orbit 1.95s var(--dish-delay) both cubic-bezier(0.18, 0.76, 0.2, 1);
 }
 
 body.is-reserving .space-transition::before {
@@ -1945,6 +1972,29 @@ body.is-reserving .space-transition-portal b {
 
 @keyframes orbit-two {
     to { transform: rotateY(70deg) rotateZ(360deg); }
+}
+
+@keyframes dish-reservation-orbit {
+    0% {
+        opacity: 0;
+        filter: blur(5px);
+        transform: translate(-50%, -50%) rotate(var(--dish-angle)) translateX(0) scale(0.15);
+    }
+    22% {
+        opacity: 1;
+        filter: blur(0);
+        transform: translate(-50%, -50%) rotate(var(--dish-angle)) translateX(var(--orbit-radius)) scale(1);
+    }
+    70% {
+        opacity: 0.95;
+        filter: blur(0);
+        transform: translate(-50%, -50%) rotate(calc(var(--dish-angle) + 540deg)) translateX(calc(var(--orbit-radius) * 0.7)) scale(0.78);
+    }
+    100% {
+        opacity: 0;
+        filter: blur(8px);
+        transform: translate(-50%, -50%) rotate(calc(var(--dish-angle) + 980deg)) translateX(0) scale(0.03);
+    }
 }
 
 /* --- RESERVIERUNGSSEITE --- */

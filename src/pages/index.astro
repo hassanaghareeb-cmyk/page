@@ -37,6 +37,11 @@ const dishImages = {
     <div class="space-transition" aria-hidden="true">
         <div class="space-transition-stars"></div>
         <div class="space-transition-streaks"></div>
+        <div class="reservation-dishes">
+            {Object.entries(dishImages).map(([id, src], index) => (
+                <img src={src} alt="" style={`--dish-angle: ${index * 72}deg; --dish-delay: ${index * 45}ms;`} />
+            ))}
+        </div>
     </div>
     <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
 
@@ -498,7 +503,7 @@ const dishImages = {
             if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
             event.preventDefault();
             document.body.classList.add("is-reserving");
-            window.setTimeout(() => { window.location.href = reservationLink.href; }, 1900);
+            window.setTimeout(() => { window.location.href = reservationLink.href; }, 2200);
         });
 
         const revealElements = document.querySelectorAll(
