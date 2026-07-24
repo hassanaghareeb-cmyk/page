@@ -383,13 +383,13 @@ body {
 
 .scroll-reveal {
     opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.5s ease var(--reveal-delay, 0ms), transform 0.5s ease var(--reveal-delay, 0ms);
+    transform: translateY(24px) scale(0.985);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms);
 }
 
 .scroll-reveal.is-visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
 }
 
 @keyframes hero-reveal {
@@ -1296,6 +1296,28 @@ body {
     background: linear-gradient(transparent, rgba(212, 175, 55, 0.34), transparent);
 }
 
+.site-footer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(circle, rgba(245, 220, 129, 0.7) 0 1px, transparent 1.7px),
+        radial-gradient(circle, rgba(212, 175, 55, 0.42) 0 0.75px, transparent 1.5px),
+        radial-gradient(circle, rgba(255, 255, 255, 0.26) 0 0.65px, transparent 1.35px);
+    background-position: 8% 18%, 70% 34%, 28% 76%;
+    background-size: 168px 168px, 241px 241px, 117px 117px;
+    opacity: 0.52;
+    animation: footer-drift 22s linear infinite alternate;
+}
+
+.footer-grid,
+.footer-credits {
+    position: relative;
+    z-index: 1;
+}
+
 .footer-box h5 {
     font-family: Georgia, "Times New Roman", serif;
     font-size: 1.05rem;
@@ -1995,6 +2017,70 @@ body.is-reserving .space-transition-portal b {
         filter: blur(8px);
         transform: translate(-50%, -50%) rotate(calc(var(--dish-angle) + 980deg)) translateX(0) scale(0.03);
     }
+}
+
+/* --- ERWEITERTE INTERAKTIONSANIMATIONEN --- */
+.main-nav a.is-active::after {
+    height: 2px;
+    background: linear-gradient(90deg, #a97e16, #f5dc81, #d4af37);
+    background-size: 200% 100%;
+    animation: nav-active-line 0.65s both ease-out, gold-shimmer 3.5s linear infinite;
+}
+
+.benefit-card.scroll-reveal .benefit-icon {
+    opacity: 0;
+    transform: scale(0.55) rotate(-12deg);
+}
+
+.benefit-card.scroll-reveal.is-visible .benefit-icon {
+    animation: benefit-icon-reveal 0.62s both cubic-bezier(0.22, 1, 0.36, 1);
+    animation-delay: calc(var(--reveal-delay, 0ms) + 120ms);
+}
+
+.dish-card.is-filter-entering {
+    animation: menu-card-enter 0.46s both cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dish-card.is-filter-leaving {
+    pointer-events: none;
+    animation: menu-card-leave 0.2s both ease-in;
+}
+
+@media (hover: hover) {
+    .dish-card:hover {
+        transform: translateY(-6px) scale(1.01);
+        box-shadow: 0 20px 42px rgba(0, 0, 0, 0.36);
+    }
+
+    .dish-card:hover .dish-image {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes benefit-icon-reveal {
+    0% { opacity: 0; transform: scale(0.55) rotate(-12deg); }
+    65% { opacity: 1; transform: scale(1.1) rotate(4deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+@keyframes menu-card-enter {
+    from { opacity: 0; transform: translateY(14px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes menu-card-leave {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.97); }
+}
+
+@keyframes nav-active-line {
+    from { opacity: 0; transform: scaleX(0.15); }
+    to { opacity: 1; transform: scaleX(1); }
+}
+
+@keyframes footer-drift {
+    from { background-position: 8% 18%, 70% 34%, 28% 76%; }
+    to { background-position: 22% 4%, 58% 62%, 44% 54%; }
 }
 
 /* --- RESERVIERUNGSSEITE --- */

@@ -464,15 +464,25 @@ const dishImages = {
                 dishCards.forEach(card => {
                     const isVeggie = card.getAttribute("data-veggie") === "true";
                     const isSharp = card.getAttribute("data-sharp") === "true";
+                    const shouldShow = target === "all" || (target === "veggie" && isVeggie) || (target === "sharp" && isSharp);
+                    const previousTimer = Number(card.dataset.filterTimer || 0);
+                    if (previousTimer) window.clearTimeout(previousTimer);
 
-                    if (target === "all") {
+                    if (shouldShow) {
                         card.style.display = "block";
-                    } else if (target === "veggie" && isVeggie) {
-                        card.style.display = "block";
-                    } else if (target === "sharp" && isSharp) {
-                        card.style.display = "block";
+                        card.classList.remove("is-filter-leaving");
+                        card.classList.remove("is-filter-entering");
+                        window.requestAnimationFrame(() => card.classList.add("is-filter-entering"));
+                        const timer = window.setTimeout(() => card.classList.remove("is-filter-entering"), 480);
+                        card.dataset.filterTimer = String(timer);
                     } else {
-                        card.style.display = "none";
+                        card.classList.remove("is-filter-entering");
+                        card.classList.add("is-filter-leaving");
+                        const timer = window.setTimeout(() => {
+                            card.style.display = "none";
+                            card.classList.remove("is-filter-leaving");
+                        }, 210);
+                        card.dataset.filterTimer = String(timer);
                     }
                 });
             });
