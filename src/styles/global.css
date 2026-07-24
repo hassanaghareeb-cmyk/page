@@ -141,7 +141,7 @@ body {
     background:
         linear-gradient(90deg, rgba(8, 10, 14, 0.91) 0%, rgba(8, 10, 14, 0.59) 53%, rgba(8, 10, 14, 0.31) 100%),
         linear-gradient(0deg, rgba(8, 10, 14, 0.85) 0%, transparent 48%),
-        url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=2000&q=85") center/cover;
+        url("/images/nove-hero-modern.png") center/cover;
 }
 
 .hero-content {
