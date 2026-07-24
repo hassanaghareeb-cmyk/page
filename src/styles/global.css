@@ -335,7 +335,7 @@ body {
 }
 
 .benefit-card:hover {
-    transform: translateY(-9px);
+    transform: translateY(-5px);
     border-color: rgba(212, 175, 55, 0.55);
     box-shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
 }
@@ -382,8 +382,8 @@ body {
 
 .scroll-reveal {
     opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.65s ease var(--reveal-delay, 0ms), transform 0.65s ease var(--reveal-delay, 0ms);
+    transform: translateY(16px);
+    transition: opacity 0.5s ease var(--reveal-delay, 0ms), transform 0.5s ease var(--reveal-delay, 0ms);
 }
 
 .scroll-reveal.is-visible {
@@ -563,7 +563,7 @@ section {
 }
 
 .dish-card:hover {
-    transform: translateX(4px);
+    transform: translateX(2px);
     box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
 }
 
@@ -811,6 +811,9 @@ section {
     }
     .main-nav a {
         width: 100%;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
         margin-right: 0;
         padding: 0.85rem 0;
         border-bottom: 1px solid rgba(255, 255, 255, 0.06);
@@ -834,7 +837,7 @@ section {
     .section-header { margin-bottom: 2.5rem; }
     .section-header h2 { font-size: 2rem; }
     .filter-controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; }
-    .filter-trigger { margin: 0; }
+    .filter-trigger { min-height: 44px; margin: 0; }
     .menu-container { grid-template-columns: 1fr; gap: 2.5rem; }
     .items-list { gap: 1rem; }
     .dish-card { padding: 1.25rem; }
@@ -867,6 +870,24 @@ section {
     .language-option { min-height: 112px; grid-template-columns: 48px 1fr; column-gap: 1rem; text-align: left; }
     .language-option > span { grid-row: span 2; }
     .language-option strong, .language-option small { width: 100%; margin: 0; }
+}
+
+@media (hover: none) {
+    .hero-highlights span:hover,
+    .benefit-card:hover,
+    .dish-card:hover,
+    .footer-box:hover {
+        transform: none;
+    }
+
+    .dish-card:hover {
+        box-shadow: none;
+    }
+
+    .btn-primary,
+    .filter-trigger.active {
+        animation: none;
+    }
 }
 
 /* --- QUALITÄTSDETAILS --- */
