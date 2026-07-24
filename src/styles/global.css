@@ -1470,6 +1470,54 @@ body {
     }
 }
 
+/* --- RUNDE SPEISEBILDER --- */
+.dish-card {
+    min-height: 148px;
+    padding-right: 9.5rem;
+}
+
+.dish-card::after {
+    display: none;
+}
+
+.dish-image,
+.dish-card .dish-image {
+    top: 50%;
+    right: 1.25rem;
+    bottom: auto;
+    left: auto;
+    z-index: 1;
+    width: 105px;
+    height: 105px;
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    border-radius: 50%;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.32);
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+}
+
+.dish-card:hover .dish-image {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.06);
+}
+
+@media (max-width: 768px) {
+    .dish-card {
+        min-height: 150px;
+        padding-right: 7.8rem;
+    }
+
+    .dish-image,
+    .dish-card .dish-image {
+        right: 0.9rem;
+        width: 86px;
+        height: 86px;
+        opacity: 1;
+    }
+
+    .allergen-info { max-width: 100%; }
+}
+
 .benefit-icon {
     display: grid;
     width: 58px;
