@@ -44,7 +44,11 @@ import "../styles/global.css";
       const form = document.getElementById("reservation-form");
       const message = document.getElementById("reservation-message");
       const dateInput = form.elements.namedItem("date");
-      dateInput.min = new Date().toISOString().split("T")[0];
+      const now = new Date();
+      const localToday = new Date(now.getTime() - now.getTimezoneOffset() * 60_000)
+        .toISOString()
+        .split("T")[0];
+      dateInput.min = localToday;
 
       form.addEventListener("submit", (event) => {
         event.preventDefault();
