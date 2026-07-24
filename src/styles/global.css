@@ -1387,6 +1387,89 @@ body {
     }
 }
 
+/* --- HANDY-FEINSCHLIFF --- */
+@media (max-width: 768px) {
+    body { overflow-x: hidden; }
+
+    section {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+
+    .hero-stage {
+        min-height: 680px;
+        padding-top: 10.5rem;
+        padding-bottom: 4rem;
+    }
+
+    .hero-actions {
+        width: min(100%, 340px);
+    }
+
+    .hero-actions .btn-primary {
+        width: 100%;
+        padding: 0.95rem 1.25rem;
+        text-align: center;
+    }
+
+    .status-indicator {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .hero-highlights {
+        max-width: 330px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .section-header h2,
+    .occasion-section h2 {
+        font-size: clamp(2.1rem, 10vw, 3rem);
+    }
+
+    .filter-controls {
+        width: 100%;
+    }
+
+    .filter-trigger {
+        flex: 1 1 130px;
+        padding-right: 0.65rem;
+        padding-left: 0.65rem;
+    }
+
+    .category-title {
+        margin-bottom: 1.2rem;
+        padding-right: 3.2rem;
+    }
+
+    .dish-description {
+        font-size: 0.9rem;
+    }
+
+    .allergen-info {
+        max-width: 75%;
+    }
+
+    .signature-copy,
+    .occasion-copy {
+        text-align: left;
+    }
+
+    .signature-copy .text-link {
+        margin-top: 1.5rem;
+    }
+
+    .footer-grid {
+        gap: 1.45rem;
+    }
+
+    .footer-credits {
+        font-size: 0.78rem;
+        line-height: 1.8;
+    }
+}
+
 .benefit-icon {
     display: grid;
     width: 58px;
