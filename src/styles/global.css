@@ -49,6 +49,9 @@ body {
 }
 
 .brand-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--text-light);
@@ -58,6 +61,16 @@ body {
 
 .brand-logo span {
     color: var(--gold);
+}
+
+.brand-logo .brand-word {
+    color: var(--text-light);
+}
+
+.brand-mark {
+    width: 2rem;
+    height: 2rem;
+    flex: 0 0 auto;
 }
 
 .main-nav a {

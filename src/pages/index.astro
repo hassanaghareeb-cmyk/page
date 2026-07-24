@@ -30,6 +30,7 @@ const dishImages = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0b0d11" />
     <meta name="description" content="Nove verbindet moderne italienische Küche mit halal-zertifizierten Zutaten und einem besonderen Fine-Dining-Erlebnis." />
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}nove-mark.svg`} />
     <title>Nove - Modern Halal Fine Dining</title>
 </head>
 <body>
@@ -60,7 +61,10 @@ const dishImages = {
     <!-- NAVIGATION -->
     <header class="site-header">
         <div class="nav-wrapper">
-            <a href="#home" class="brand-logo">Nove<span>.</span></a>
+            <a href="#home" class="brand-logo" aria-label="Nove – zur Startseite">
+                <img class="brand-mark" src={`${import.meta.env.BASE_URL}nove-mark.svg`} alt="" />
+                <span class="brand-word">Nove</span>
+            </a>
             <nav class="main-nav" id="primary-navigation" aria-label="Hauptnavigation">
                 <a href="#home" data-i18n="nav-home">Startseite</a>
                 <a href="#vorteile" data-i18n="nav-benefits">Ihre Vorteile</a>
