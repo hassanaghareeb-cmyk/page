@@ -2323,3 +2323,141 @@ body {
 .space-transition-streaks {
     display: none;
 }
+
+/* --- AL IMAN MARKT: EIGENE BEISPIELSEITE --- */
+.market-body {
+    min-width: 320px;
+    color: #173b31;
+    background: #f6f0e4;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.market-demo-ribbon {
+    padding: 0.6rem 1.25rem;
+    color: #f9f5eb;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-align: center;
+    text-transform: uppercase;
+    background: #133c30;
+}
+
+.market-header,
+.market-hero,
+.market-section,
+.market-values,
+.market-contact,
+.market-footer {
+    width: min(1180px, calc(100% - 3rem));
+    margin: 0 auto;
+}
+
+.market-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 94px;
+}
+
+.market-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: #173b31;
+    text-decoration: none;
+}
+
+.market-logo > span {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    color: #f7f0e2;
+    font-family: Georgia, serif;
+    font-size: 0.84rem;
+    background: #174738;
+    border-radius: 50%;
+}
+
+.market-logo strong { font-family: Georgia, serif; font-size: 1.35rem; letter-spacing: -0.03em; }
+.market-logo em { color: #bb7f23; font-style: normal; }
+.market-nav { display: flex; gap: clamp(1rem, 3vw, 2.4rem); }
+.market-nav a { color: #173b31; font-size: 0.88rem; font-weight: 700; text-decoration: none; }
+.market-nav a:hover { color: #b4771e; }
+
+.market-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(290px, 0.95fr);
+    align-items: center;
+    min-height: 600px;
+    padding: 4.5rem clamp(1.5rem, 6vw, 6rem);
+    overflow: hidden;
+    color: #f8f3e8;
+    background: #174738;
+    border-radius: 28px;
+}
+
+.market-kicker { margin: 0 0 1rem; color: #c78a2a; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.14em; }
+.market-hero h1, .market-section h2, .market-values h2, .market-contact h2 { margin: 0; font-family: Georgia, serif; font-weight: 400; letter-spacing: -0.055em; }
+.market-hero h1 { max-width: 630px; font-size: clamp(3.4rem, 8vw, 6.9rem); line-height: 0.9; }
+.market-hero h1 i { color: #e6b256; font-style: italic; }
+.market-hero-copy > p:not(.market-kicker) { max-width: 500px; margin: 2rem 0; color: rgba(248, 243, 232, 0.78); font-size: 1.08rem; }
+.market-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+.market-button { display: inline-flex; gap: 2rem; padding: 0.9rem 1.1rem; color: #18392f; font-size: 0.86rem; font-weight: 800; text-decoration: none; background: #ead5a3; border-radius: 999px; }
+.market-example-tag { color: rgba(248, 243, 232, 0.63); font-size: 0.77rem; }
+
+.market-hero-art { position: relative; min-height: 350px; }
+.market-orbit { position: absolute; border: 1px solid rgba(234, 213, 163, 0.34); border-radius: 50%; }
+.market-orbit-one { inset: 6% 2% 2% 6%; transform: rotate(-15deg); }
+.market-orbit-two { inset: 19% 15% 14% 13%; border-color: rgba(234, 213, 163, 0.2); transform: rotate(32deg); }
+.market-basket { position: absolute; top: 50%; left: 50%; display: grid; width: min(250px, 70vw); aspect-ratio: 1; place-content: center; color: #f8f3e8; text-align: center; background: #245b48; border: 1px solid rgba(234, 213, 163, 0.65); border-radius: 50%; transform: translate(-50%, -50%) rotate(-8deg); box-shadow: 18px 24px 0 rgba(8, 33, 26, 0.2); }
+.market-basket span { color: #e7bd68; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+.market-basket strong { margin: 0.25rem 0; font-family: Georgia, serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; }
+.market-basket i { color: rgba(248, 243, 232, 0.7); font-size: 0.78rem; font-style: normal; }
+.market-fruit { position: absolute; display: grid; width: 62px; height: 62px; place-items: center; color: #174738; font-size: 1.9rem; background: #e6b256; border-radius: 50%; }
+.market-lemon { top: 8%; right: 8%; transform: rotate(15deg); }
+.market-leaf { bottom: 5%; left: 3%; color: #ead5a3; background: #18392f; }
+
+.market-section { padding: 8rem 0; }
+.market-section-heading { max-width: 640px; }
+.market-section h2, .market-values h2, .market-contact h2 { font-size: clamp(2.6rem, 5vw, 4.5rem); line-height: 0.96; }
+.market-section-heading > p:last-child { max-width: 530px; color: #597368; }
+.market-category-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 3rem; }
+.market-category-card { min-height: 285px; padding: 1.7rem; border-radius: 18px; }
+.market-card-green { color: #f7f0e2; background: #245b48; }
+.market-card-cream { background: #e8dfcc; }
+.market-card-gold { background: #dbad57; }
+.market-card-number { display: block; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.12em; }
+.market-card-icon { display: block; margin: 2.4rem 0 1.2rem; font-size: 2.35rem; }
+.market-category-card h3 { margin: 0; font-family: Georgia, serif; font-size: 1.55rem; font-weight: 400; }
+.market-category-card p { color: inherit; font-size: 0.9rem; line-height: 1.55; opacity: 0.78; }
+
+.market-values { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 4rem; padding: 5rem clamp(1.5rem, 5vw, 5rem); color: #f7f0e2; background: #18392f; border-radius: 24px; }
+.market-values .market-kicker { color: #e6b256; }
+.market-value-list { display: grid; gap: 0.7rem; }
+.market-value-list p { display: flex; gap: 1rem; margin: 0; padding: 0.9rem 0; border-bottom: 1px solid rgba(247, 240, 226, 0.18); }
+.market-value-list span { color: #e6b256; font-size: 0.75rem; font-weight: 700; }
+
+.market-contact { display: grid; grid-template-columns: 1fr 0.8fr; gap: 4rem; padding: 8rem 0; }
+.market-contact > div > p:last-child { max-width: 460px; color: #597368; }
+.market-contact-card { padding: 2rem; background: #ece5d7; border-left: 3px solid #b4771e; }
+.market-contact-card p { margin: 0; padding: 1.1rem 0; border-bottom: 1px solid rgba(23, 59, 49, 0.14); line-height: 1.65; }
+.market-contact-card p:last-child { border: 0; }
+.market-contact-card strong { color: #a66e1d; font-size: 0.76rem; letter-spacing: 0.09em; text-transform: uppercase; }
+.market-footer { display: flex; justify-content: space-between; gap: 1rem; padding: 2rem 0 3rem; color: #597368; font-size: 0.82rem; border-top: 1px solid rgba(23, 59, 49, 0.14); }
+.market-footer strong { color: #173b31; }
+.market-footer a { color: #a66e1d; font-weight: 700; text-decoration: none; }
+
+@media (max-width: 760px) {
+    .market-header, .market-hero, .market-section, .market-values, .market-contact, .market-footer { width: min(100% - 2rem, 1180px); }
+    .market-header { min-height: 78px; }
+    .market-nav { gap: 0.9rem; }
+    .market-nav a { font-size: 0.76rem; }
+    .market-hero { grid-template-columns: 1fr; min-height: 0; padding: 4rem 1.5rem 2rem; border-radius: 20px; }
+    .market-hero-art { min-height: 310px; margin-top: 2rem; }
+    .market-category-grid, .market-values, .market-contact { grid-template-columns: 1fr; }
+    .market-section, .market-contact { padding-top: 5rem; padding-bottom: 5rem; }
+    .market-values { gap: 2.5rem; padding: 3rem 1.5rem; border-radius: 20px; }
+    .market-footer { flex-direction: column; padding-top: 1.5rem; }
+}
