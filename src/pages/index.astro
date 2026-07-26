@@ -7,15 +7,137 @@ import "../styles/global.css";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Beispiel-Website für Al Iman Markt Göttingen." />
-    <meta http-equiv="refresh" content="0; url=./al-iman-markt/" />
-    <title>Al Iman Markt Göttingen – Beispiel-Website</title>
+    <meta name="theme-color" content="#15100e" />
+    <meta name="description" content="Konzept-Website für Efendi Restaurant Göttingen – türkische Küche in modernem Ambiente." />
+    <title>Efendi Restaurant Göttingen – Konzeptseite</title>
   </head>
-  <body class="market-body">
-    <main class="market-redirect">
-      <h1>Al Iman Markt Göttingen – Beispiel-Website</h1>
-      <p>Die Beispiel-Website wird geöffnet.</p>
-      <a class="market-button" href="./al-iman-markt/">Zur Beispiel-Website</a>
+  <body class="efendi-body">
+    <div class="efendi-progress" aria-hidden="true"><span></span></div>
+    <div class="efendi-demo-bar">Konzeptseite · Nicht offizielle Website · Alle Angaben sind Beispiele</div>
+
+    <header class="efendi-header">
+      <a class="efendi-logo" href="#start" aria-label="Efendi – Startseite">EFENDI<span>·</span></a>
+      <nav class="efendi-nav" aria-label="Seitennavigation">
+        <a href="#kueche">Küche</a>
+        <a href="#erlebnis">Erlebnis</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+      <a class="efendi-nav-cta" href="#kontakt">Reservieren <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main>
+      <section class="efendi-hero" id="start">
+        <div class="efendi-hero-copy">
+          <p class="efendi-kicker">TÜRKISCHE KÜCHE · GÖTTINGEN</p>
+          <h1>Tradition,<br /><i>neu serviert.</i></h1>
+          <p>Eine moderne Konzept-Website für Efendi: authentische Aromen, offene Gastlichkeit und ein Abend, der in Erinnerung bleibt.</p>
+          <div class="efendi-actions">
+            <a class="efendi-button" href="#kueche">Unsere Küche <span aria-hidden="true">↓</span></a>
+            <span>Beispiel-Design · keine offiziellen Angaben</span>
+          </div>
+        </div>
+        <div class="efendi-hero-visual" aria-hidden="true">
+          <div class="efendi-plate">
+            <div class="efendi-plate-inner"><span>EFENDI</span><b>GÖTTINGEN</b></div>
+          </div>
+          <div class="efendi-spice efendi-spice-one">✦</div>
+          <div class="efendi-spice efendi-spice-two">✺</div>
+          <div class="efendi-arc efendi-arc-one"></div>
+          <div class="efendi-arc efendi-arc-two"></div>
+        </div>
+        <p class="efendi-side-note">Türkische Küche<br />mit Charakter</p>
+      </section>
+
+      <section class="efendi-intro efendi-reveal" aria-label="Efendi Konzept">
+        <p>Bei Efendi trifft die Wärme der türkischen Tischkultur auf ein ruhiges, modernes Restaurant-Erlebnis.</p>
+        <span>01</span>
+      </section>
+
+      <section class="efendi-menu" id="kueche" aria-labelledby="menu-title">
+        <div class="efendi-section-head efendi-reveal">
+          <p class="efendi-kicker">KONZEPT-SPEISEKARTE</p>
+          <h2 id="menu-title">Aromen mit<br /><i>Herkunft.</i></h2>
+        </div>
+        <div class="efendi-dish-grid">
+          <article class="efendi-dish efendi-reveal">
+            <span class="efendi-dish-no">01</span>
+            <div class="efendi-dish-orb efendi-orb-copper">✦</div>
+            <p class="efendi-dish-type">VOM HOLZKOHLEGRILL</p>
+            <h3>Meze & Mangal</h3>
+            <p>Ausgewählte Vorspeisen und Grillgerichte als Beispiel für eine vielfältige Karte.</p>
+          </article>
+          <article class="efendi-dish efendi-dish-featured efendi-reveal">
+            <span class="efendi-dish-no">02</span>
+            <div class="efendi-dish-orb efendi-orb-cream">❋</div>
+            <p class="efendi-dish-type">SIGNATURE</p>
+            <h3>Efendi Sofrası</h3>
+            <p>Ein gemeinsamer Tisch mit vielen kleinen Köstlichkeiten – als Muster für besondere Abende.</p>
+          </article>
+          <article class="efendi-dish efendi-reveal">
+            <span class="efendi-dish-no">03</span>
+            <div class="efendi-dish-orb efendi-orb-gold">✺</div>
+            <p class="efendi-dish-type">SÜSSES FINALE</p>
+            <h3>Baklava & Çay</h3>
+            <p>Feine Desserts und Tee für einen entspannten Abschluss – ebenfalls Beispielinhalte.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="efendi-experience" id="erlebnis" aria-labelledby="experience-title">
+        <div class="efendi-experience-visual efendi-reveal" aria-hidden="true"><span>EF</span><i></i><b></b></div>
+        <div class="efendi-experience-copy efendi-reveal">
+          <p class="efendi-kicker">MEHR ALS EIN ESSEN</p>
+          <h2 id="experience-title">Zeit für<br /><i>gute Gespräche.</i></h2>
+          <p>Ein Raum für Familie, Freunde und lange Abende. Diese Texte und Gestaltung sind Teil eines unverbindlichen Website-Konzepts.</p>
+          <ul>
+            <li><span>—</span> Modernes, warmes Ambiente</li>
+            <li><span>—</span> Türkische Gastfreundschaft</li>
+            <li><span>—</span> Beispielhafte Menü- und Kontaktangaben</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="efendi-contact" id="kontakt" aria-labelledby="contact-title">
+        <div class="efendi-reveal">
+          <p class="efendi-kicker">KONTAKT · MUSTERANGABEN</p>
+          <h2 id="contact-title">Efendi<br />Göttingen</h2>
+          <p>Für eine echte Veröffentlichung müssen Adresse, Telefon, E-Mail, Öffnungszeiten und die rechtlichen Seiten ergänzt werden.</p>
+        </div>
+        <div class="efendi-contact-card efendi-reveal">
+          <p><b>Beispiel-Adresse</b><br />Genussstraße 18<br />37000 Göttingen</p>
+          <p><b>Beispiel-Zeiten</b><br />Di – So · 17:00 – 23:00 Uhr<br />Mo · Ruhetag</p>
+          <p><b>Beispiel-Kontakt</b><br />+49 0000 000000<br />kontakt@efendi-beispiel.invalid</p>
+        </div>
+      </section>
     </main>
+
+    <footer class="efendi-footer">
+      <p>EFENDI · GÖTTINGEN · <strong>KONZEPTSEITE / NICHT OFFIZIELL</strong></p>
+      <a href="#start">Nach oben ↑</a>
+    </footer>
+
+    <script>
+      const progress = document.querySelector(".efendi-progress span");
+      const updateProgress = () => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        progress.style.width = `${max > 0 ? (window.scrollY / max) * 100 : 0}%`;
+      };
+      window.addEventListener("scroll", updateProgress, { passive: true });
+      updateProgress();
+
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        const elements = document.querySelectorAll(".efendi-reveal");
+        elements.forEach((element, index) => element.style.setProperty("--efendi-delay", `${(index % 3) * 100}ms`));
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.14 });
+        elements.forEach((element) => observer.observe(element));
+      }
+    </script>
   </body>
 </html>
