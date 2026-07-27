@@ -2551,6 +2551,8 @@ body {
 
 /* --- EFENDI: MODERNE RESTAURANT-KONZEPTSEITE --- */
 .efendi-body { min-width: 320px; color: #f4eadb; background: #15100e; font-family: Arial, Helvetica, sans-serif; }
+.efendi-body::before { position: fixed; z-index: -1; inset: 0; content: ""; pointer-events: none; background-image: radial-gradient(rgba(229, 180, 111, 0.08) 0.7px, transparent 0.7px); background-size: 18px 18px; mask-image: linear-gradient(to bottom, #000, transparent 52%); }
+.efendi-body section[id] { scroll-margin-top: 120px; }
 .efendi-progress { position: fixed; z-index: 100; top: 0; right: 0; left: 0; height: 3px; background: rgba(229, 180, 111, 0.12); }
 .efendi-progress span { display: block; width: 0; height: 100%; background: linear-gradient(90deg, #a84f31, #e5b46f, #a84f31); box-shadow: 0 0 14px rgba(229, 180, 111, 0.76); transition: width 0.08s linear; }
 .efendi-demo-bar { padding: 0.62rem 1rem; color: #f7ecdc; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.12em; text-align: center; text-transform: uppercase; background: linear-gradient(100deg, #3d1d17, #7e3826, #3d1d17); background-size: 200% 100%; animation: efendi-shimmer 10s linear infinite; }
@@ -2563,10 +2565,13 @@ body {
 .efendi-nav a::after { position: absolute; right: 0; bottom: -0.5rem; left: 0; height: 1px; content: ""; background: #e5b46f; transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease; }
 .efendi-nav a:hover { color: #fff6e9; }
 .efendi-nav a:hover::after { transform: scaleX(1); }
+.efendi-nav a.is-active { color: #f5cf90; }
+.efendi-nav a.is-active::after { transform: scaleX(1); }
 .efendi-nav-cta { padding: 0.68rem 0.9rem; color: #17100d; font-size: 0.75rem; font-weight: 800; text-decoration: none; background: #e5b46f; border-radius: 999px; transition: transform 0.25s ease, background-color 0.25s ease; }
 .efendi-nav-cta:hover { color: #17100d; background: #f5cf90; transform: translateY(-2px); }
 .efendi-hero { position: relative; display: grid; grid-template-columns: 1fr 0.9fr; align-items: center; min-height: 650px; padding: 5rem clamp(1.5rem, 6vw, 6rem); overflow: hidden; background: radial-gradient(circle at 80% 20%, rgba(168, 79, 49, 0.42), transparent 26%), linear-gradient(135deg, #21140f, #3b1c16); border: 1px solid rgba(229, 180, 111, 0.18); border-radius: 28px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.38); }
 .efendi-hero::before { position: absolute; width: 55vw; max-width: 700px; aspect-ratio: 1; content: ""; right: -28%; bottom: -70%; border: 48px solid rgba(229, 180, 111, 0.05); border-radius: 50%; animation: efendi-ambient 20s ease-in-out infinite alternate; }
+.efendi-hero::after { position: absolute; top: 0; right: 0; bottom: 0; width: 36%; content: ""; pointer-events: none; background: repeating-linear-gradient(135deg, transparent 0 22px, rgba(229, 180, 111, 0.025) 23px 24px); }
 .efendi-hero-copy, .efendi-hero-visual { position: relative; z-index: 1; }
 .efendi-kicker { margin: 0 0 1rem; color: #e5b46f; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.16em; }
 .efendi-hero h1, .efendi-section-head h2, .efendi-experience h2, .efendi-contact h2 { margin: 0; font-family: Georgia, serif; font-weight: 400; letter-spacing: -0.06em; }
@@ -2577,6 +2582,8 @@ body {
 .efendi-button { display: inline-flex; gap: 2rem; padding: 0.95rem 1.2rem; color: #17100d; font-size: 0.82rem; font-weight: 800; text-decoration: none; background: #e5b46f; border-radius: 999px; box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18); transition: transform 0.28s ease, box-shadow 0.28s ease; }
 .efendi-button:hover { color: #17100d; box-shadow: 0 18px 34px rgba(0, 0, 0, 0.28); transform: translateY(-3px); }
 .efendi-actions > span { color: rgba(244, 234, 219, 0.5); font-size: 0.75rem; }
+.efendi-hero-meta { display: flex; flex-wrap: wrap; gap: 0.65rem; margin-top: 2.6rem; }
+.efendi-hero-meta span { padding: 0.42rem 0.65rem; color: rgba(244, 234, 219, 0.72); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; border: 1px solid rgba(244, 234, 219, 0.18); border-radius: 999px; background: rgba(0, 0, 0, 0.12); }
 .efendi-hero-visual { min-height: 390px; }
 .efendi-plate { position: absolute; top: 50%; left: 50%; display: grid; width: min(310px, 72vw); aspect-ratio: 1; place-items: center; border: 1px solid rgba(229, 180, 111, 0.72); border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 0 22px rgba(229, 180, 111, 0.05), 0 24px 50px rgba(0, 0, 0, 0.22); animation: efendi-plate-float 7s ease-in-out infinite; }
 .efendi-plate::before, .efendi-plate::after { position: absolute; content: ""; border: 1px solid rgba(229, 180, 111, 0.28); border-radius: 50%; }
@@ -2600,7 +2607,9 @@ body {
 .efendi-section-head h2, .efendi-experience h2, .efendi-contact h2 { color: #2b1a14; font-size: clamp(2.8rem, 5vw, 4.8rem); line-height: 0.92; }
 .efendi-dish-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 3rem; }
 .efendi-dish { position: relative; min-height: 340px; padding: 1.6rem; overflow: hidden; color: #2b1a14; background: #eadcc7; border-radius: 20px; box-shadow: 0 12px 26px rgba(62, 33, 24, 0.08); transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease; }
+.efendi-dish::before { position: absolute; top: 0; right: 0; left: 0; height: 3px; content: ""; background: linear-gradient(90deg, transparent, rgba(168, 79, 49, 0.9), transparent); opacity: 0; transition: opacity 0.35s ease; }
 .efendi-dish:hover { box-shadow: 0 24px 42px rgba(62, 33, 24, 0.15); transform: translateY(-9px); }
+.efendi-dish:hover::before { opacity: 1; }
 .efendi-dish-featured { color: #f4eadb; background: #9c472f; }
 .efendi-dish-no, .efendi-dish-type { position: relative; z-index: 1; display: block; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.13em; }
 .efendi-dish-type { margin-top: 4rem; opacity: 0.75; }
@@ -2624,6 +2633,7 @@ body {
 .efendi-contact { display: grid; grid-template-columns: 1fr 0.85fr; gap: clamp(3rem, 8vw, 8rem); padding: 8rem 0; color: #2b1a14; }
 .efendi-contact > div > p:last-child { max-width: 450px; color: #6b5145; line-height: 1.7; }
 .efendi-contact-card { padding: 2rem; background: #eadcc7; border-left: 3px solid #a84f31; }
+.efendi-contact-card { box-shadow: 0 18px 35px rgba(62, 33, 24, 0.08); }
 .efendi-contact-card p { margin: 0; padding: 1rem 0; line-height: 1.65; border-bottom: 1px solid rgba(43, 26, 20, 0.15); }
 .efendi-contact-card p:last-child { border: 0; }
 .efendi-contact-card b { color: #a84f31; font-size: 0.7rem; letter-spacing: 0.13em; text-transform: uppercase; }
@@ -2639,4 +2649,4 @@ body {
 @keyframes efendi-orbit { to { transform: rotate(360deg); } }
 @keyframes efendi-letter-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
 @media (prefers-reduced-motion: reduce) { .efendi-body *, .efendi-body *::before, .efendi-body *::after { animation: none !important; transition: none !important; } .efendi-reveal { opacity: 1; transform: none; } }
-@media (max-width: 760px) { .efendi-header, .efendi-hero, .efendi-intro, .efendi-menu, .efendi-experience, .efendi-contact, .efendi-footer { width: min(100% - 2rem, 1180px); } .efendi-header { min-height: 78px; } .efendi-nav { gap: 0.75rem; } .efendi-nav a { font-size: 0.72rem; } .efendi-nav-cta { display: none; } .efendi-hero { grid-template-columns: 1fr; min-height: 0; padding: 4rem 1.5rem 2rem; border-radius: 20px; } .efendi-hero-visual { min-height: 320px; margin-top: 2rem; } .efendi-side-note { display: none; } .efendi-intro { align-items: flex-start; padding: 5rem 0; } .efendi-dish-grid, .efendi-experience, .efendi-contact { grid-template-columns: 1fr; } .efendi-menu, .efendi-contact { padding-top: 5rem; padding-bottom: 5rem; } .efendi-experience { gap: 2.5rem; padding: 3.5rem 1.5rem; border-radius: 20px; } .efendi-experience-visual { width: min(290px, 80vw); min-height: 290px; justify-self: center; } .efendi-footer { flex-direction: column; } }
+@media (max-width: 760px) { .efendi-header, .efendi-hero, .efendi-intro, .efendi-menu, .efendi-experience, .efendi-contact, .efendi-footer { width: min(100% - 2rem, 1180px); } .efendi-header { min-height: 78px; } .efendi-nav { gap: 0.75rem; } .efendi-nav a { font-size: 0.72rem; } .efendi-nav-cta { display: none; } .efendi-hero { grid-template-columns: 1fr; min-height: 0; padding: 4rem 1.5rem 2rem; border-radius: 20px; } .efendi-hero-visual { min-height: 320px; margin-top: 2rem; } .efendi-side-note { display: none; } .efendi-intro { align-items: flex-start; padding: 5rem 0; } .efendi-dish-grid, .efendi-experience, .efendi-contact { grid-template-columns: 1fr; } .efendi-menu, .efendi-contact { padding-top: 5rem; padding-bottom: 5rem; } .efendi-experience { gap: 2.5rem; padding: 3.5rem 1.5rem; border-radius: 20px; } .efendi-experience-visual { width: min(290px, 80vw); min-height: 290px; justify-self: center; } .efendi-footer { flex-direction: column; } .efendi-hero-meta { margin-top: 2rem; } }

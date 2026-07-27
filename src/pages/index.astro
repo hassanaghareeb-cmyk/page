@@ -35,6 +35,9 @@ import "../styles/global.css";
             <a class="efendi-button" href="#kueche">Unsere Küche <span aria-hidden="true">↓</span></a>
             <span>Beispiel-Design · keine offiziellen Angaben</span>
           </div>
+          <div class="efendi-hero-meta" aria-label="Konzept-Informationen">
+            <span>Göttingen</span><span>Türkische Küche</span><span>Konzept 2026</span>
+          </div>
         </div>
         <div class="efendi-hero-visual" aria-hidden="true">
           <div class="efendi-plate">
@@ -124,6 +127,16 @@ import "../styles/global.css";
       };
       window.addEventListener("scroll", updateProgress, { passive: true });
       updateProgress();
+
+      const navLinks = document.querySelectorAll(".efendi-nav a");
+      const sections = document.querySelectorAll("#kueche, #erlebnis, #kontakt");
+      const navigationObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          navLinks.forEach((link) => link.classList.toggle("is-active", link.getAttribute("href") === `#${entry.target.id}`));
+        });
+      }, { rootMargin: "-30% 0px -60% 0px", threshold: 0 });
+      sections.forEach((section) => navigationObserver.observe(section));
 
       if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         const elements = document.querySelectorAll(".efendi-reveal");
