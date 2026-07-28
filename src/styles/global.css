@@ -2613,6 +2613,20 @@ body {
 .praxis-legal-page h2 { margin: 0 0 0.8rem; font-family: Georgia, serif; font-size: 1.65rem; font-weight: 400; }.praxis-legal-page section p { margin: 0.85rem 0 0; }.praxis-legal-notice { max-width: 650px; color: #47727d; font-size: 1.05rem; line-height: 1.7; }.praxis-legal-small { color: #5c8088; font-size: 0.82rem; }.praxis-legal-back { color: #177b8c; font-size: 0.8rem; font-weight: 800; text-decoration: none; }.praxis-legal-back:hover { color: #0e6778; }
 @media (max-width: 760px) { .praxis-legal-page { width: min(100% - 2rem, 820px); padding-top: 3rem; }.praxis-legal-page section { padding: 1.5rem; } }
 
+/* Farbwelt der Praxis: klares Weiß, Türkis und medizinisches Hellblau. */
+.praxis-body { color: #153d58; background: #f8fcff; }
+.praxis-body::before { background: radial-gradient(circle at 90% 9%, rgba(0, 193, 187, 0.2), transparent 24rem), radial-gradient(circle at 3% 50%, rgba(48, 135, 209, 0.1), transparent 22rem); }
+.praxis-brand { color: #123d5d; }.praxis-brand small, .praxis-kicker { color: #008f9a; }.praxis-brand-mark { background: linear-gradient(140deg, #00b9b6, #1a87c8); }
+.praxis-header-cta, .praxis-button { background: linear-gradient(105deg, #008f9a, #1675b8); }.praxis-header-cta:hover, .praxis-button:hover { background: #086da6; }
+.praxis-hero { background: linear-gradient(124deg, #f9ffff 0%, #e9fbfd 42%, #c5f1ef 42.1%, #27bab6 100%); border-color: rgba(0, 166, 166, 0.2); }
+.praxis-hero::after { position: absolute; z-index: 0; top: 0; right: 0; width: 43%; height: 100%; content: ""; background: linear-gradient(146deg, rgba(255, 255, 255, 0.17), transparent 48%), repeating-linear-gradient(115deg, transparent 0 4.8rem, rgba(255, 255, 255, 0.1) 4.85rem 4.95rem); clip-path: polygon(23% 0, 100% 0, 100% 100%, 0 100%); }
+.praxis-hero::before { border-color: rgba(14, 105, 181, 0.25); box-shadow: 0 0 0 4rem rgba(255, 255, 255, 0.1), 0 0 0 8rem rgba(255, 255, 255, 0.06); }
+.praxis-hero h1 { color: #123d5d; }.praxis-hero h1 i, .praxis-section-head h2 i, .praxis-approach h2 i, .praxis-contact h2 i { color: #008f9a; }.praxis-hero-copy > p:not(.praxis-kicker) { color: #426d85; }
+.praxis-languages span { color: #117a89; border-color: rgba(0, 151, 158, 0.26); background: rgba(255, 255, 255, 0.65); }.praxis-text-link { color: #087a94; }
+.praxis-cross { border-color: rgba(255, 255, 255, 0.68); background: rgba(255, 255, 255, 0.21); box-shadow: 0 0 0 20px rgba(255, 255, 255, 0.12); }.praxis-cross span, .praxis-cross b { background: #fff; }.praxis-orbit { border-color: rgba(255, 255, 255, 0.38); }.praxis-hero-art p { color: rgba(255, 255, 255, 0.86); }
+.praxis-services { background: linear-gradient(135deg, #ecfbfd, #f8fdff); }.praxis-service-featured { background: linear-gradient(145deg, #008f9a, #176db2); }.praxis-service-number, .praxis-contact-card b { color: #008f9a; }.praxis-contact-card { background: #eafafd; border-left-color: #00aba8; }
+.praxis-approach { background: linear-gradient(135deg, #0f5e93, #008f9a); }.praxis-footer a:hover { color: #008f9a; }
+
 /* --- EFENDI: MODERNE RESTAURANT-KONZEPTSEITE --- */
 .efendi-body { min-width: 320px; color: #f4eadb; background: #15100e; font-family: Arial, Helvetica, sans-serif; }
 .efendi-body::before { position: fixed; z-index: -1; inset: 0; content: ""; pointer-events: none; background-image: radial-gradient(rgba(229, 180, 111, 0.08) 0.7px, transparent 0.7px); background-size: 18px 18px; mask-image: linear-gradient(to bottom, #000, transparent 52%); }
