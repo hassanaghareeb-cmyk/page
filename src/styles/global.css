@@ -2671,3 +2671,187 @@ body {
         background-position: 64% center;
     }
 }
+
+/* Letzte Veredelung: mehr räumliche Tiefe und eine echte mobile Navigation. */
+.efendi-body {
+    background:
+        radial-gradient(circle at 88% 10%, rgba(168, 79, 49, 0.16), transparent 25rem),
+        #15100e;
+}
+
+.efendi-header {
+    border-bottom: 1px solid rgba(229, 180, 111, 0.12);
+}
+
+.efendi-logo {
+    position: relative;
+}
+
+.efendi-logo::before {
+    width: 0.48rem;
+    height: 0.48rem;
+    margin-right: 0.46rem;
+    display: inline-block;
+    content: "";
+    border: 1px solid #e5b46f;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 2px #15100e;
+}
+
+.efendi-hero {
+    isolation: isolate;
+}
+
+.efendi-hero::after {
+    z-index: 0;
+    width: 100%;
+    opacity: 0.72;
+    background:
+        linear-gradient(90deg, transparent 42%, rgba(229, 180, 111, 0.1) 42.1%, transparent 42.3%),
+        repeating-linear-gradient(90deg, transparent 0 5.5rem, rgba(255, 255, 255, 0.035) 5.55rem 5.61rem);
+    mask-image: linear-gradient(90deg, transparent, #000 68%, transparent);
+}
+
+.efendi-hero-copy {
+    animation: efendi-hero-arrival 0.95s both cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.efendi-kicker::before {
+    width: 2.3rem;
+    height: 1px;
+    margin: 0 0.65rem 0.22rem 0;
+    display: inline-block;
+    content: "";
+    background: currentColor;
+}
+
+.efendi-button {
+    position: relative;
+    overflow: hidden;
+}
+
+.efendi-button::before {
+    position: absolute;
+    inset: 0;
+    content: "";
+    background: linear-gradient(110deg, transparent 25%, rgba(255, 255, 255, 0.38) 50%, transparent 75%);
+    transform: translateX(-130%);
+    transition: transform 0.6s ease;
+}
+
+.efendi-button:hover::before { transform: translateX(130%); }
+
+.efendi-scroll-cue {
+    position: absolute;
+    z-index: 2;
+    right: 1.5rem;
+    bottom: 1.4rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: rgba(244, 234, 219, 0.72);
+    font-size: 0.63rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.efendi-scroll-cue span {
+    width: 1.65rem;
+    height: 1.65rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(229, 180, 111, 0.52);
+    border-radius: 50%;
+}
+
+.efendi-scroll-cue span::after { content: "↓"; color: #e5b46f; }
+.efendi-scroll-cue:hover { color: #fff6e9; }
+.efendi-scroll-cue:hover span { background: rgba(229, 180, 111, 0.16); }
+
+.efendi-dish {
+    border: 1px solid rgba(62, 33, 24, 0.09);
+}
+
+.efendi-dish-featured {
+    background: linear-gradient(145deg, #a84f31, #77301f);
+}
+
+.efendi-experience {
+    position: relative;
+    overflow: hidden;
+}
+
+.efendi-experience::after {
+    position: absolute;
+    top: -11rem;
+    right: -9rem;
+    width: 24rem;
+    aspect-ratio: 1;
+    content: "";
+    border: 1px solid rgba(229, 180, 111, 0.13);
+    border-radius: 50%;
+    box-shadow: 0 0 0 2.8rem rgba(229, 180, 111, 0.025), 0 0 0 5.6rem rgba(229, 180, 111, 0.02);
+}
+
+.efendi-experience-copy, .efendi-experience-visual { z-index: 1; }
+
+.efendi-contact-card {
+    border-top: 1px solid rgba(168, 79, 49, 0.18);
+    border-right: 1px solid rgba(168, 79, 49, 0.1);
+    border-bottom: 1px solid rgba(168, 79, 49, 0.1);
+}
+
+.efendi-menu-toggle { display: none; }
+
+@keyframes efendi-hero-arrival {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 760px) {
+    .efendi-header { position: sticky; }
+    .efendi-menu-toggle {
+        z-index: 22;
+        width: 42px;
+        height: 42px;
+        display: grid;
+        gap: 5px;
+        place-content: center;
+        margin-left: auto;
+        padding: 0;
+        border: 1px solid rgba(229, 180, 111, 0.38);
+        border-radius: 50%;
+        color: #e5b46f;
+        background: rgba(21, 16, 14, 0.9);
+    }
+    .efendi-menu-toggle span { width: 16px; height: 1px; display: block; background: currentColor; transition: transform 0.25s ease; }
+    .efendi-menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(3px) rotate(45deg); }
+    .efendi-menu-toggle[aria-expanded="true"] span:last-child { transform: translateY(-3px) rotate(-45deg); }
+    .efendi-nav {
+        position: absolute;
+        top: calc(100% - 1px);
+        right: 0;
+        left: 0;
+        display: grid;
+        gap: 0;
+        padding: 0.6rem 1rem 1rem;
+        border: 1px solid rgba(229, 180, 111, 0.15);
+        background: rgba(21, 16, 14, 0.98);
+        box-shadow: 0 18px 32px rgba(0, 0, 0, 0.24);
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-8px);
+        transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+    .efendi-nav.is-open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .efendi-nav a { padding: 0.95rem 0.5rem; font-size: 0.86rem; border-bottom: 1px solid rgba(244, 234, 219, 0.1); }
+    .efendi-nav a::after { display: none; }
+    .efendi-hero { min-height: 680px; padding-bottom: 5rem; background-position: 68% center; }
+    .efendi-hero h1 { font-size: clamp(3.45rem, 17vw, 5.1rem); }
+    .efendi-hero-copy > p:not(.efendi-kicker) { font-size: 1rem; }
+    .efendi-scroll-cue { right: 1.25rem; bottom: 1.3rem; }
+    .efendi-side-note { display: none; }
+    .efendi-intro { gap: 1.25rem; }
+}

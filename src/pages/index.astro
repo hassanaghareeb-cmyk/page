@@ -17,7 +17,10 @@ import "../styles/global.css";
 
     <header class="efendi-header">
       <a class="efendi-logo" href="#start" aria-label="Efendi – Startseite">EFENDI<span>·</span></a>
-      <nav class="efendi-nav" aria-label="Seitennavigation">
+      <button class="efendi-menu-toggle" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="efendi-navigation">
+        <span></span><span></span>
+      </button>
+      <nav class="efendi-nav" id="efendi-navigation" aria-label="Seitennavigation">
         <a href="#kueche">Küche</a>
         <a href="#erlebnis">Erlebnis</a>
         <a href="#kontakt">Kontakt</a>
@@ -49,6 +52,7 @@ import "../styles/global.css";
           <div class="efendi-arc efendi-arc-two"></div>
         </div>
         <p class="efendi-side-note">Türkische Küche<br />mit Charakter</p>
+        <a class="efendi-scroll-cue" href="#kueche" aria-label="Zur Küche scrollen"><span></span> Entdecken</a>
       </section>
 
       <section class="efendi-intro efendi-reveal" aria-label="Efendi Konzept">
@@ -129,6 +133,18 @@ import "../styles/global.css";
       updateProgress();
 
       const navLinks = document.querySelectorAll(".efendi-nav a");
+      const menuToggle = document.querySelector(".efendi-menu-toggle");
+      const navigation = document.querySelector(".efendi-nav");
+      menuToggle?.addEventListener("click", () => {
+        const isOpen = navigation.classList.toggle("is-open");
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+        menuToggle.setAttribute("aria-label", isOpen ? "Menü schließen" : "Menü öffnen");
+      });
+      navLinks.forEach((link) => link.addEventListener("click", () => {
+        navigation.classList.remove("is-open");
+        menuToggle?.setAttribute("aria-expanded", "false");
+        menuToggle?.setAttribute("aria-label", "Menü öffnen");
+      }));
       const sections = document.querySelectorAll("#kueche, #erlebnis, #kontakt");
       const navigationObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
