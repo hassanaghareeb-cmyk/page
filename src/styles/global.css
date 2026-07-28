@@ -2650,3 +2650,24 @@ body {
 @keyframes efendi-letter-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
 @media (prefers-reduced-motion: reduce) { .efendi-body *, .efendi-body *::before, .efendi-body *::after { animation: none !important; transition: none !important; } .efendi-reveal { opacity: 1; transform: none; } }
 @media (max-width: 760px) { .efendi-header, .efendi-hero, .efendi-intro, .efendi-menu, .efendi-experience, .efendi-contact, .efendi-footer { width: min(100% - 2rem, 1180px); } .efendi-header { min-height: 78px; } .efendi-nav { gap: 0.75rem; } .efendi-nav a { font-size: 0.72rem; } .efendi-nav-cta { display: none; } .efendi-hero { grid-template-columns: 1fr; min-height: 0; padding: 4rem 1.5rem 2rem; border-radius: 20px; } .efendi-hero-visual { min-height: 320px; margin-top: 2rem; } .efendi-side-note { display: none; } .efendi-intro { align-items: flex-start; padding: 5rem 0; } .efendi-dish-grid, .efendi-experience, .efendi-contact { grid-template-columns: 1fr; } .efendi-menu, .efendi-contact { padding-top: 5rem; padding-bottom: 5rem; } .efendi-experience { gap: 2.5rem; padding: 3.5rem 1.5rem; border-radius: 20px; } .efendi-experience-visual { width: min(290px, 80vw); min-height: 290px; justify-self: center; } .efendi-footer { flex-direction: column; } .efendi-hero-meta { margin-top: 2rem; } }
+
+/* Bildstarker, ruhiger Einstieg – wie ein modernes Fine-Dining-Hero. */
+.efendi-hero {
+    grid-template-columns: 1fr;
+    background:
+        linear-gradient(90deg, rgba(15, 9, 7, 0.96) 0%, rgba(15, 9, 7, 0.78) 42%, rgba(15, 9, 7, 0.22) 100%),
+        linear-gradient(0deg, rgba(15, 9, 7, 0.78), transparent 54%),
+        url("/images/efendi-hero-concept.png") center / cover;
+}
+
+.efendi-hero-copy { max-width: 690px; }
+.efendi-hero-visual { display: none; }
+.efendi-hero::before { z-index: 0; border-color: rgba(229, 180, 111, 0.1); }
+.efendi-side-note { z-index: 1; }
+
+@media (max-width: 760px) {
+    .efendi-hero {
+        min-height: 700px;
+        background-position: 64% center;
+    }
+}
