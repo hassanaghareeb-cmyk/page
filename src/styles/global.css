@@ -2811,6 +2811,37 @@ body {
     background: linear-gradient(145deg, #a84f31, #77301f);
 }
 
+.efendi-dish-photo {
+    color: #fff6e9;
+    background: #2a1712;
+}
+
+.efendi-dish-photo > img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.efendi-dish-photo::after {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    content: "";
+    background: linear-gradient(180deg, rgba(16, 10, 8, 0.15), rgba(16, 10, 8, 0.93) 78%);
+}
+
+.efendi-dish-photo:hover > img { transform: scale(1.08); }
+.efendi-dish-photo .efendi-dish-no,
+.efendi-dish-photo .efendi-dish-type,
+.efendi-dish-photo h3,
+.efendi-dish-photo > p:last-child,
+.efendi-dish-photo .efendi-dish-orb { z-index: 1; }
+.efendi-dish-photo .efendi-dish-orb { opacity: 0.86; }
+
 .efendi-experience {
     position: relative;
     overflow: hidden;
@@ -2835,6 +2866,41 @@ body {
     border-right: 1px solid rgba(168, 79, 49, 0.1);
     border-bottom: 1px solid rgba(168, 79, 49, 0.1);
 }
+
+.efendi-footer-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 1.1rem; }
+
+.efendi-legal-page {
+    width: min(820px, calc(100% - 3rem));
+    margin: 0 auto;
+    padding: clamp(3rem, 10vw, 7rem) 0;
+}
+
+.efendi-legal-page h1 {
+    margin: 0.5rem 0 1.5rem;
+    color: #f4eadb;
+    font-family: Georgia, serif;
+    font-size: clamp(3.4rem, 10vw, 6rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.07em;
+}
+
+.efendi-legal-page section {
+    max-width: none;
+    margin: 1rem 0 0;
+    padding: 2rem;
+    color: #2b1a14;
+    background: #f1e6d5;
+    border: 1px solid rgba(229, 180, 111, 0.16);
+    border-radius: 18px;
+}
+
+.efendi-legal-page h2 { margin: 0 0 0.8rem; font-family: Georgia, serif; font-size: 1.65rem; font-weight: 400; }
+.efendi-legal-page section p { margin: 0.85rem 0 0; }
+.efendi-legal-notice { max-width: 650px; color: rgba(244, 234, 219, 0.7); font-size: 1.05rem; line-height: 1.7; }
+.efendi-legal-small { color: #765b4e; font-size: 0.82rem; }
+.efendi-legal-back { color: #e5b46f; font-size: 0.8rem; font-weight: 800; text-decoration: none; }
+.efendi-legal-back:hover { color: #fff6e9; }
 
 .efendi-menu-toggle { display: none; }
 
@@ -2891,4 +2957,7 @@ body {
     .efendi-intro { margin-top: 1.5rem; padding: 4.25rem 1.5rem; }
     .efendi-menu { padding: 4.25rem 1.25rem; }
     .efendi-contact { margin-bottom: 1rem; padding: 4.25rem 1.5rem; }
+    .efendi-footer-links { justify-content: flex-start; }
+    .efendi-legal-page { width: min(100% - 2rem, 820px); padding-top: 3rem; }
+    .efendi-legal-page section { padding: 1.5rem; }
 }
