@@ -20,15 +20,6 @@ jobs:
     steps:
       - name: Projekt laden
         uses: actions/checkout@v4
-      - name: Node.js einrichten
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: npm
-      - name: Abhängigkeiten installieren
-        run: npm ci
-      - name: Website bauen
-        run: npm run build
       - name: GitHub Pages vorbereiten
         uses: actions/configure-pages@v5
         with:
