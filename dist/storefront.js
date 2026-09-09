@@ -31,13 +31,23 @@ window.addEventListener('load', () => {
     phoenixVideo.className = 'cinematic-phoenix';
     phoenixVideo.src = '/assets/phoenix-transparent.webm';
     phoenixVideo.autoplay = true;
-    phoenixVideo.loop = true;
+    phoenixVideo.loop = false;
     phoenixVideo.muted = true;
     phoenixVideo.playsInline = true;
     phoenixVideo.setAttribute('aria-hidden', 'true');
     phoenixVideo.setAttribute('disablepictureinpicture', '');
     hero.appendChild(phoenixVideo);
     phoenixVideo.play().catch(() => {});
+    let wingLoopStart = 0;
+    phoenixVideo.addEventListener('loadedmetadata', () => {
+      wingLoopStart = Math.max(0, phoenixVideo.duration * .58);
+    }, { once:true });
+    phoenixVideo.addEventListener('timeupdate', () => {
+      if (wingLoopStart && phoenixVideo.currentTime >= phoenixVideo.duration - .12) {
+        phoenixVideo.currentTime = wingLoopStart;
+        phoenixVideo.play().catch(() => {});
+      }
+    });
 
     const videoStyle = document.createElement('style');
     videoStyle.textContent = `
