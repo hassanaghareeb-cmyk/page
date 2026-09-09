@@ -21,6 +21,32 @@ window.addEventListener('load', () => {
   `;
   document.head.appendChild(motionStyle);
 
+  const hero = document.querySelector('#home');
+  if (hero && !hero.querySelector('.cinematic-phoenix')) {
+    const phoenixVideo = document.createElement('video');
+    phoenixVideo.className = 'cinematic-phoenix';
+    phoenixVideo.src = '/assets/phoenix-transparent.webm';
+    phoenixVideo.autoplay = true;
+    phoenixVideo.loop = true;
+    phoenixVideo.muted = true;
+    phoenixVideo.playsInline = true;
+    phoenixVideo.setAttribute('aria-hidden', 'true');
+    phoenixVideo.setAttribute('disablepictureinpicture', '');
+    hero.appendChild(phoenixVideo);
+    phoenixVideo.play().catch(() => {});
+
+    const videoStyle = document.createElement('style');
+    videoStyle.textContent = `
+      .cinematic-phoenix{position:absolute;z-index:1;top:8%;left:50%;width:min(660px,62vw);height:auto;transform:translateX(-50%);pointer-events:none;mix-blend-mode:screen;filter:drop-shadow(0 0 24px rgba(201,169,97,.38));opacity:0;transition:opacity 1s ease;object-fit:contain}
+      .cinematic-phoenix.is-ready{opacity:.94}
+      #home img[src="/assets/logo.png"]{width:min(320px,64vw)!important;filter:drop-shadow(0 0 20px rgba(201,169,97,.32))}
+      @media(max-width:700px){.cinematic-phoenix{top:13%;width:105vw;opacity:.78}#home img[src="/assets/logo.png"]{width:min(265px,70vw)!important}}
+      @media(prefers-reduced-motion:reduce){.cinematic-phoenix{display:none}}
+    `;
+    document.head.appendChild(videoStyle);
+    phoenixVideo.addEventListener('canplay', () => phoenixVideo.classList.add('is-ready'), { once:true });
+  }
+
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!reducedMotion && backgroundLayers[0]) {
     const glow = document.createElement('div');
