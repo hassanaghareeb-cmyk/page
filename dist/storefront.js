@@ -23,6 +23,10 @@ window.addEventListener('load', () => {
 
   const hero = document.querySelector('#home');
   if (hero && !hero.querySelector('.cinematic-phoenix')) {
+    const originalHeroLogo = hero.querySelector('a[href="#home"] img[src="/assets/logo.png"]');
+    if (originalHeroLogo) {
+      originalHeroLogo.classList.add('original-hero-logo');
+    }
     const phoenixVideo = document.createElement('video');
     phoenixVideo.className = 'cinematic-phoenix';
     phoenixVideo.src = '/assets/phoenix-transparent.webm';
@@ -40,11 +44,16 @@ window.addEventListener('load', () => {
       .cinematic-phoenix{position:absolute;z-index:1;top:8%;left:50%;width:min(660px,62vw);height:auto;transform:translateX(-50%);pointer-events:none;mix-blend-mode:screen;filter:drop-shadow(0 0 24px rgba(201,169,97,.38));opacity:0;transition:opacity 1s ease;object-fit:contain}
       .cinematic-phoenix.is-ready{opacity:.94}
       #home img[src="/assets/logo.png"]{width:min(320px,64vw)!important;filter:drop-shadow(0 0 20px rgba(201,169,97,.32))}
+      #home .original-hero-logo{opacity:0!important;transition:opacity .45s ease}
+      body.phoenix-header-logo #home .original-hero-logo{opacity:1!important}
       @media(max-width:700px){.cinematic-phoenix{top:13%;width:105vw;opacity:.78}#home img[src="/assets/logo.png"]{width:min(265px,70vw)!important}}
       @media(prefers-reduced-motion:reduce){.cinematic-phoenix{display:none}}
     `;
     document.head.appendChild(videoStyle);
     phoenixVideo.addEventListener('canplay', () => phoenixVideo.classList.add('is-ready'), { once:true });
+    const updateHeaderLogo = () => document.body.classList.toggle('phoenix-header-logo', scrollY > innerHeight * .62);
+    addEventListener('scroll', updateHeaderLogo, { passive:true });
+    updateHeaderLogo();
   }
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
