@@ -22,7 +22,7 @@ window.addEventListener('load', () => {
     }
     const phoenixVideo = document.createElement('video');
     phoenixVideo.className = 'cinematic-phoenix';
-    phoenixVideo.src = '/assets/phoenix-hero-transparent.webm';
+    phoenixVideo.src = '/assets/phoenix-blue-transparent.webm';
     phoenixVideo.autoplay = true;
     phoenixVideo.loop = true;
     phoenixVideo.muted = true;
@@ -39,7 +39,7 @@ window.addEventListener('load', () => {
 
     const videoStyle = document.createElement('style');
     videoStyle.textContent = `
-      .cinematic-phoenix{position:absolute;z-index:1;top:4%;left:50%;width:min(620px,60vw);height:auto;aspect-ratio:30/13;contain:layout size;transform:translateX(-50%);pointer-events:none;filter:drop-shadow(0 0 24px rgba(201,169,97,.38));opacity:0;transition:opacity 1s ease;object-fit:contain}
+      .cinematic-phoenix{position:absolute;z-index:1;top:4%;left:50%;width:min(620px,60vw);height:auto;aspect-ratio:32/13;contain:layout size;transform:translateX(-50%);pointer-events:none;filter:drop-shadow(0 0 24px rgba(201,169,97,.38));opacity:0;transition:opacity 1s ease;object-fit:contain}
       .cinematic-phoenix.is-ready{opacity:.94}
       .cinematic-wordmark{position:absolute;z-index:2;top:38%;left:50%;width:min(510px,56vw);height:auto;transform:translateX(-50%);pointer-events:none;filter:drop-shadow(0 0 18px rgba(201,169,97,.28))}
       #home img[src="/assets/logo.png"]{width:min(320px,64vw)!important;filter:drop-shadow(0 0 20px rgba(201,169,97,.32))}
