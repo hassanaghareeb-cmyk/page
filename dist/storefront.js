@@ -22,7 +22,7 @@ window.addEventListener('load', () => {
     }
     const phoenixVideo = document.createElement('video');
     phoenixVideo.className = 'cinematic-phoenix';
-    phoenixVideo.src = '/assets/phoenix-blue-transparent.webm';
+    phoenixVideo.src = '/assets/phoenix-blue-loop.webm';
     phoenixVideo.autoplay = true;
     phoenixVideo.loop = true;
     phoenixVideo.muted = true;
