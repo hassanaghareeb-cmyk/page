@@ -9,15 +9,8 @@ window.addEventListener('load', () => {
 
   const motionStyle = document.createElement('style');
   motionStyle.textContent = `
-    @keyframes phoenixSignature {
-      0%,100% { transform:translate3d(0,0,0) rotate(-1.2deg); filter:drop-shadow(0 0 7px rgba(201,169,97,.25)); }
-      30% { transform:translate3d(2px,-5px,0) rotate(1.8deg); filter:drop-shadow(0 0 15px rgba(230,211,160,.5)); }
-      62% { transform:translate3d(-1px,-2px,0) rotate(-.5deg); filter:drop-shadow(0 0 10px rgba(201,169,97,.38)); }
-    }
-    img[src="/assets/logo.png"] { transform-origin:48% 28%; animation:phoenixSignature 4.8s cubic-bezier(.45,0,.2,1) infinite; will-change:transform,filter; }
-    img[src="/assets/logo.png"]:hover { animation-duration:1.7s; }
     .rose-scroll-glow { position:fixed; inset:-12%; z-index:1; pointer-events:none; opacity:var(--rose-glow,.12); background:radial-gradient(circle at var(--rose-x,50%) var(--rose-y,28%),rgba(105,163,255,.3),transparent 27%),radial-gradient(circle at 78% 72%,rgba(201,169,97,.1),transparent 24%); mix-blend-mode:screen; transition:opacity .25s linear; }
-    @media (prefers-reduced-motion:reduce) { img[src="/assets/logo.png"] { animation:none; } .rose-scroll-glow { display:none; } }
+    @media (prefers-reduced-motion:reduce) { .rose-scroll-glow { display:none; } }
   `;
   document.head.appendChild(motionStyle);
 
@@ -29,7 +22,7 @@ window.addEventListener('load', () => {
     }
     const phoenixVideo = document.createElement('video');
     phoenixVideo.className = 'cinematic-phoenix';
-    phoenixVideo.src = '/assets/phoenix-transparent.webm';
+    phoenixVideo.src = '/assets/phoenix-hero-transparent.webm';
     phoenixVideo.autoplay = true;
     phoenixVideo.loop = true;
     phoenixVideo.muted = true;
@@ -37,17 +30,23 @@ window.addEventListener('load', () => {
     phoenixVideo.setAttribute('aria-hidden', 'true');
     phoenixVideo.setAttribute('disablepictureinpicture', '');
     hero.appendChild(phoenixVideo);
+    const wordmark = document.createElement('img');
+    wordmark.className = 'cinematic-wordmark';
+    wordmark.src = '/assets/logo-wordmark.png';
+    wordmark.alt = 'Mon Rémy Parfumerie';
+    hero.appendChild(wordmark);
     phoenixVideo.play().catch(() => {});
 
     const videoStyle = document.createElement('style');
     videoStyle.textContent = `
-      .cinematic-phoenix{position:absolute;z-index:1;top:1.5%;left:50%;width:min(520px,48vw);height:auto;aspect-ratio:25/16;contain:layout size;transform:translateX(-50%);pointer-events:none;mix-blend-mode:screen;filter:drop-shadow(0 0 24px rgba(201,169,97,.38));opacity:0;transition:opacity 1s ease;object-fit:contain}
+      .cinematic-phoenix{position:absolute;z-index:1;top:4%;left:50%;width:min(620px,60vw);height:auto;aspect-ratio:30/13;contain:layout size;transform:translateX(-50%);pointer-events:none;filter:drop-shadow(0 0 24px rgba(201,169,97,.38));opacity:0;transition:opacity 1s ease;object-fit:contain}
       .cinematic-phoenix.is-ready{opacity:.94}
+      .cinematic-wordmark{position:absolute;z-index:2;top:38%;left:50%;width:min(510px,56vw);height:auto;transform:translateX(-50%);pointer-events:none;filter:drop-shadow(0 0 18px rgba(201,169,97,.28))}
       #home img[src="/assets/logo.png"]{width:min(320px,64vw)!important;filter:drop-shadow(0 0 20px rgba(201,169,97,.32))}
       #home .original-hero-logo{opacity:0!important;transition:opacity .45s ease}
       body.phoenix-header-logo #home .original-hero-logo{opacity:1!important}
-      @media(max-width:700px){.cinematic-phoenix{top:8%;width:88vw;max-height:280px;opacity:.82}#home img[src="/assets/logo.png"]{width:min(265px,70vw)!important}}
-      @media(prefers-reduced-motion:reduce){.cinematic-phoenix{display:none}}
+      @media(max-width:700px){.cinematic-phoenix{top:10%;width:96vw;opacity:.88}.cinematic-wordmark{top:35%;width:82vw}#home img[src="/assets/logo.png"]{width:min(265px,70vw)!important}}
+      @media(prefers-reduced-motion:reduce){.cinematic-phoenix{display:none}.cinematic-wordmark{top:24%}}
     `;
     document.head.appendChild(videoStyle);
     phoenixVideo.addEventListener('canplay', () => phoenixVideo.classList.add('is-ready'), { once:true });
