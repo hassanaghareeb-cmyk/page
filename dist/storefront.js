@@ -20,36 +20,41 @@ window.addEventListener('load', () => {
     if (originalHeroLogo) {
       originalHeroLogo.classList.add('original-hero-logo');
     }
-    const phoenixVideo = document.createElement('video');
-    phoenixVideo.className = 'cinematic-phoenix';
-    phoenixVideo.src = '/assets/phoenix-blue-loop.webm';
-    phoenixVideo.autoplay = true;
-    phoenixVideo.loop = true;
-    phoenixVideo.muted = true;
-    phoenixVideo.playsInline = true;
-    phoenixVideo.setAttribute('aria-hidden', 'true');
-    phoenixVideo.setAttribute('disablepictureinpicture', '');
-    hero.appendChild(phoenixVideo);
+    const phoenix = document.createElement('div');
+    phoenix.className = 'cinematic-phoenix';
+    phoenix.setAttribute('role', 'img');
+    phoenix.setAttribute('aria-label', 'Goldener Mon Rémy Phönix');
+    phoenix.innerHTML = `
+      <img class="phoenix-piece phoenix-wing phoenix-wing-left" src="/assets/logo-bird.png" alt="" aria-hidden="true">
+      <img class="phoenix-piece phoenix-wing phoenix-wing-right" src="/assets/logo-bird.png" alt="" aria-hidden="true">
+      <img class="phoenix-piece phoenix-body" src="/assets/logo-bird.png" alt="" aria-hidden="true">
+    `;
+    hero.appendChild(phoenix);
     const wordmark = document.createElement('img');
     wordmark.className = 'cinematic-wordmark';
     wordmark.src = '/assets/logo-wordmark.png';
     wordmark.alt = 'Mon Rémy Parfumerie';
     hero.appendChild(wordmark);
-    phoenixVideo.play().catch(() => {});
+    requestAnimationFrame(() => phoenix.classList.add('is-ready'));
 
     const videoStyle = document.createElement('style');
     videoStyle.textContent = `
-      .cinematic-phoenix{position:absolute;z-index:1;top:4%;left:50%;width:min(620px,60vw);height:auto;aspect-ratio:32/13;contain:layout size;transform:translateX(-50%);pointer-events:none;filter:brightness(1.28) saturate(1.22) contrast(1.06) drop-shadow(0 0 16px rgba(255,224,139,.48)) drop-shadow(0 0 32px rgba(201,169,97,.28));opacity:0;transition:opacity 1s ease;object-fit:contain;-webkit-mask-image:radial-gradient(ellipse 68% 76% at 50% 44%,#000 48%,rgba(0,0,0,.9) 65%,rgba(0,0,0,.42) 82%,transparent 100%);mask-image:radial-gradient(ellipse 68% 76% at 50% 44%,#000 48%,rgba(0,0,0,.9) 65%,rgba(0,0,0,.42) 82%,transparent 100%)}
+      @keyframes phoenixWingLeft{0%,100%{transform:rotate(1deg) translate3d(0,0,0) scaleY(1)}50%{transform:rotate(-6deg) translate3d(-2px,5px,0) scaleY(.94)}}
+      @keyframes phoenixWingRight{0%,100%{transform:rotate(-1deg) translate3d(0,0,0) scaleY(1)}50%{transform:rotate(6deg) translate3d(2px,5px,0) scaleY(.94)}}
+      .cinematic-phoenix{position:absolute;z-index:1;top:3%;left:50%;width:min(540px,54vw);aspect-ratio:1503/706;overflow:hidden;contain:layout size;transform:translateX(-50%);pointer-events:none;filter:drop-shadow(0 0 16px rgba(255,224,139,.42)) drop-shadow(0 0 28px rgba(201,169,97,.22));opacity:0;transition:opacity 1s ease}
       .cinematic-phoenix.is-ready{opacity:.94}
-      .cinematic-wordmark{position:absolute;z-index:2;top:38%;left:50%;width:min(510px,56vw);height:auto;transform:translateX(-50%);pointer-events:none;filter:drop-shadow(0 0 18px rgba(201,169,97,.28))}
+      .phoenix-piece{position:absolute;inset:0;width:100%;height:auto;max-width:none;mix-blend-mode:screen;will-change:transform}
+      .phoenix-wing-left{clip-path:polygon(18% 0,51% 0,51% 48%,40% 48%,27% 42%,16% 34%);transform-origin:48% 28%;animation:phoenixWingLeft 1.65s cubic-bezier(.45,0,.55,1) infinite}
+      .phoenix-wing-right{clip-path:polygon(49% 0,82% 0,84% 34%,73% 42%,60% 48%,49% 48%);transform-origin:52% 28%;animation:phoenixWingRight 1.65s cubic-bezier(.45,0,.55,1) infinite}
+      .phoenix-body{clip-path:polygon(40% 0,61% 0,61% 28%,67% 47%,64% 100%,35% 100%,38% 47%,40% 28%)}
+      .cinematic-wordmark{position:absolute;z-index:2;top:31%;left:50%;width:min(510px,56vw);height:auto;transform:translateX(-50%);pointer-events:none;filter:drop-shadow(0 0 18px rgba(201,169,97,.28))}
       #home img[src="/assets/logo.png"]{width:min(320px,64vw)!important;filter:drop-shadow(0 0 20px rgba(201,169,97,.32))}
       #home .original-hero-logo{opacity:0!important;transition:opacity .45s ease}
       body.phoenix-header-logo #home .original-hero-logo{opacity:1!important}
-      @media(max-width:700px){.cinematic-phoenix{top:10%;width:96vw;opacity:.88}.cinematic-wordmark{top:35%;width:82vw}#home img[src="/assets/logo.png"]{width:min(265px,70vw)!important}}
-      @media(prefers-reduced-motion:reduce){.cinematic-phoenix{display:none}.cinematic-wordmark{top:24%}}
+      @media(max-width:700px){.cinematic-phoenix{top:8%;width:84vw;opacity:.92}.cinematic-wordmark{top:33%;width:82vw}#home img[src="/assets/logo.png"]{width:min(265px,70vw)!important}}
+      @media(prefers-reduced-motion:reduce){.phoenix-wing{animation:none}}
     `;
     document.head.appendChild(videoStyle);
-    phoenixVideo.addEventListener('canplay', () => phoenixVideo.classList.add('is-ready'), { once:true });
     const updateHeaderLogo = () => document.body.classList.toggle('phoenix-header-logo', scrollY > innerHeight * .62);
     addEventListener('scroll', updateHeaderLogo, { passive:true });
     updateHeaderLogo();
