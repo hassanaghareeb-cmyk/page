@@ -31,35 +31,13 @@ window.addEventListener('load', () => {
     phoenixVideo.className = 'cinematic-phoenix';
     phoenixVideo.src = '/assets/phoenix-transparent.webm';
     phoenixVideo.autoplay = true;
-    phoenixVideo.loop = false;
+    phoenixVideo.loop = true;
     phoenixVideo.muted = true;
     phoenixVideo.playsInline = true;
     phoenixVideo.setAttribute('aria-hidden', 'true');
     phoenixVideo.setAttribute('disablepictureinpicture', '');
     hero.appendChild(phoenixVideo);
     phoenixVideo.play().catch(() => {});
-
-    // The supplied clip contains almost still frames at its end. Restart just
-    // before them so the wing movement stays continuous instead of hesitating.
-    const restartPhoenix = () => {
-      if (Number.isFinite(phoenixVideo.duration) && phoenixVideo.duration - phoenixVideo.currentTime <= .34) {
-        phoenixVideo.currentTime = .04;
-        phoenixVideo.play().catch(() => {});
-      }
-    };
-    if ('requestVideoFrameCallback' in phoenixVideo) {
-      const watchPhoenixFrames = () => {
-        restartPhoenix();
-        phoenixVideo.requestVideoFrameCallback(watchPhoenixFrames);
-      };
-      phoenixVideo.requestVideoFrameCallback(watchPhoenixFrames);
-    } else {
-      phoenixVideo.addEventListener('timeupdate', restartPhoenix);
-    }
-    phoenixVideo.addEventListener('ended', () => {
-      phoenixVideo.currentTime = .04;
-      phoenixVideo.play().catch(() => {});
-    });
 
     const videoStyle = document.createElement('style');
     videoStyle.textContent = `
