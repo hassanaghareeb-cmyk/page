@@ -10,9 +10,99 @@ window.addEventListener('load', () => {
   const motionStyle = document.createElement('style');
   motionStyle.textContent = `
     .rose-scroll-glow { position:fixed; inset:-12%; z-index:1; pointer-events:none; opacity:var(--rose-glow,.12); background:radial-gradient(circle at var(--rose-x,50%) var(--rose-y,28%),rgba(105,163,255,.3),transparent 27%),radial-gradient(circle at 78% 72%,rgba(201,169,97,.1),transparent 24%); mix-blend-mode:screen; transition:opacity .25s linear; }
-    @media (prefers-reduced-motion:reduce) { .rose-scroll-glow { display:none; } }
+    #creations { overflow:clip; }
+    #creations .creation-3d-stage { --tilt-x:0deg; --tilt-y:0deg; --glint-x:50%; --glint-y:30%; --scene-scale:1; --glint-opacity:.22; position:relative; isolation:isolate; perspective:1050px; transform-style:preserve-3d; }
+    #creations .creation-3d-object { position:absolute; inset:0; z-index:3; display:block; transform-style:preserve-3d; transform:translate3d(0,0,48px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) scale(var(--scene-scale)); transform-origin:50% 68%; transition:transform .48s cubic-bezier(.2,.75,.25,1); will-change:transform; }
+    #creations .creation-3d-stage.is-tracking .creation-3d-object { transition-duration:.14s; transition-timing-function:ease-out; }
+    #creations .creation-3d-float { position:absolute; inset:0; display:block; transform-style:preserve-3d; animation:creation-3d-float 6.5s ease-in-out infinite; }
+    #creations .creation-3d-float > img { z-index:1; transform:none!important; transition:none!important; filter:drop-shadow(0 34px 27px rgba(0,0,0,.48)) drop-shadow(0 0 15px rgba(61,119,255,.16)); }
+    #creations .creation-3d-aura { position:absolute; z-index:0; left:12%; right:12%; top:13%; bottom:7%; border-radius:50%; pointer-events:none; background:radial-gradient(ellipse at 50% 58%,rgba(47,103,224,.25),rgba(8,23,70,.1) 44%,transparent 72%); filter:blur(18px); transform:translateZ(-60px) scale(.92); opacity:.82; }
+    #creations .creation-3d-shadow { position:absolute; z-index:1; left:13%; right:13%; bottom:-1%; height:17%; border-radius:50%; pointer-events:none; background:radial-gradient(ellipse,rgba(0,0,0,.66) 0%,rgba(1,6,22,.38) 42%,transparent 73%); filter:blur(12px); transform:translateZ(-35px) rotateX(68deg) scaleX(.86); transform-origin:center; transition:transform .45s ease,opacity .45s ease; opacity:.82; }
+    #creations .creation-3d-ring { position:absolute; z-index:2; left:16%; right:16%; bottom:3%; height:17%; border:1px solid rgba(222,188,105,.28); border-radius:50%; pointer-events:none; box-shadow:0 0 24px rgba(60,115,255,.18),inset 0 0 18px rgba(221,185,97,.08); transform:translateZ(-12px) rotateX(70deg); opacity:.6; }
+    #creations .creation-3d-glint { position:absolute; inset:0; z-index:2; display:block; pointer-events:none; background:radial-gradient(ellipse 15% 65% at var(--glint-x) var(--glint-y),rgba(255,246,207,.95) 0%,rgba(255,210,95,.43) 20%,rgba(89,145,255,.16) 39%,transparent 64%); -webkit-mask:url('/assets/monremy-flacon-transparent.webp') center/contain no-repeat; mask:url('/assets/monremy-flacon-transparent.webp') center/contain no-repeat; mix-blend-mode:screen; opacity:var(--glint-opacity); transition:opacity .4s ease; transform:translateZ(3px); }
+    #creations .creation-3d-stage::after { content:''; position:absolute; z-index:4; inset:8% 8% 6%; pointer-events:none; border-radius:50%; background:linear-gradient(112deg,transparent 25%,rgba(255,228,157,.08) 45%,transparent 62%); filter:blur(16px); opacity:.35; transform:translateZ(70px); }
+    @keyframes creation-3d-float { 0%,100% { transform:translate3d(0,2px,0); } 50% { transform:translate3d(0,-6px,0); } }
+    @media (hover:hover) and (pointer:fine) {
+      #creations .creation-3d-stage:hover { --scene-scale:1.025; --glint-opacity:.72; }
+      #creations .creation-3d-stage:hover .creation-3d-shadow { transform:translateZ(-35px) rotateX(68deg) scaleX(.96); opacity:.7; }
+    }
+    @media (max-width:700px) {
+      #creations .creation-3d-stage { perspective:850px; --glint-opacity:.28; }
+      #creations .creation-3d-object { transform:translate3d(0,0,28px) rotateX(-1deg) scale(1.015); }
+      #creations .creation-3d-aura { left:7%; right:7%; filter:blur(13px); }
+      #creations .creation-3d-ring { left:11%; right:11%; opacity:.42; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      .rose-scroll-glow { display:none; }
+      #creations .creation-3d-object { transform:none!important; transition:none!important; }
+      #creations .creation-3d-float { animation:none!important; }
+      #creations .creation-3d-glint { opacity:.16; transition:none; }
+    }
   `;
   document.head.appendChild(motionStyle);
+
+  const creationBottle = document.querySelector('#creations img[src="/assets/monremy-flacon-transparent.webp"]');
+  const creationStage = creationBottle?.closest('a');
+  if (creationBottle && creationStage && !creationStage.classList.contains('creation-3d-stage')) {
+    creationStage.classList.add('creation-3d-stage');
+
+    const aura = document.createElement('span');
+    aura.className = 'creation-3d-aura';
+    aura.setAttribute('aria-hidden', 'true');
+
+    const shadow = document.createElement('span');
+    shadow.className = 'creation-3d-shadow';
+    shadow.setAttribute('aria-hidden', 'true');
+
+    const ring = document.createElement('span');
+    ring.className = 'creation-3d-ring';
+    ring.setAttribute('aria-hidden', 'true');
+
+    const object = document.createElement('span');
+    object.className = 'creation-3d-object';
+    const floatingLayer = document.createElement('span');
+    floatingLayer.className = 'creation-3d-float';
+    const glint = document.createElement('span');
+    glint.className = 'creation-3d-glint';
+    glint.setAttribute('aria-hidden', 'true');
+
+    creationStage.insertBefore(aura, creationBottle);
+    creationStage.insertBefore(shadow, creationBottle);
+    creationStage.insertBefore(ring, creationBottle);
+    creationStage.insertBefore(object, creationBottle);
+    object.appendChild(floatingLayer);
+    floatingLayer.appendChild(creationBottle);
+    floatingLayer.appendChild(glint);
+
+    const finePointer = window.matchMedia('(hover:hover) and (pointer:fine)');
+    let pointerFrame = 0;
+    let nextX = 0;
+    let nextY = 0;
+
+    const paintTilt = () => {
+      creationStage.style.setProperty('--tilt-x', `${(-nextY * 5).toFixed(2)}deg`);
+      creationStage.style.setProperty('--tilt-y', `${(nextX * 7).toFixed(2)}deg`);
+      creationStage.style.setProperty('--glint-x', `${(50 + nextX * 31).toFixed(1)}%`);
+      creationStage.style.setProperty('--glint-y', `${(34 + nextY * 26).toFixed(1)}%`);
+      pointerFrame = 0;
+    };
+
+    creationStage.addEventListener('pointermove', (event) => {
+      if (!finePointer.matches || event.pointerType === 'touch') return;
+      const bounds = creationStage.getBoundingClientRect();
+      nextX = Math.max(-1, Math.min(1, ((event.clientX - bounds.left) / bounds.width - .5) * 2));
+      nextY = Math.max(-1, Math.min(1, ((event.clientY - bounds.top) / bounds.height - .5) * 2));
+      creationStage.classList.add('is-tracking');
+      if (!pointerFrame) pointerFrame = requestAnimationFrame(paintTilt);
+    }, { passive:true });
+
+    creationStage.addEventListener('pointerleave', () => {
+      nextX = 0;
+      nextY = 0;
+      creationStage.classList.remove('is-tracking');
+      if (!pointerFrame) pointerFrame = requestAnimationFrame(paintTilt);
+    }, { passive:true });
+  }
 
   const hero = document.querySelector('#home');
   if (hero && !hero.querySelector('.cinematic-phoenix')) {
