@@ -338,6 +338,36 @@ window.addEventListener('load', () => {
     if (event.target.closest('header button')) setTimeout(translate, 0);
   });
 
+  const timelineMedia = window.matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)');
+  const timeline = process.querySelector('.editorial-process');
+  const timelineSteps = [...timeline.querySelectorAll('li')];
+  let timelineFrame = 0;
+  const updateTimeline = () => {
+    timelineFrame = 0;
+    if (!timelineMedia.matches) return;
+    const travel = Math.max(1, process.offsetHeight - innerHeight);
+    const progress = Math.max(0, Math.min(1, -process.getBoundingClientRect().top / travel));
+    timeline.style.setProperty('--timeline-progress', progress.toFixed(3));
+    timelineSteps.forEach((step, index) => {
+      step.classList.toggle('is-visible', progress >= [0, .32, .68][index]);
+    });
+  };
+  const scheduleTimeline = () => {
+    if (!timelineFrame) timelineFrame = requestAnimationFrame(updateTimeline);
+  };
+  const syncTimelineMode = () => {
+    process.classList.toggle('is-timeline-animated', timelineMedia.matches);
+    if (timelineMedia.matches) scheduleTimeline();
+    else {
+      timeline.style.removeProperty('--timeline-progress');
+      timelineSteps.forEach((step) => step.classList.remove('is-visible'));
+    }
+  };
+  timelineMedia.addEventListener('change', syncTimelineMode);
+  addEventListener('scroll', scheduleTimeline, { passive:true });
+  addEventListener('resize', scheduleTimeline, { passive:true });
+  syncTimelineMode();
+
 
   window.setTimeout(() => {
     const addressColumn = contact.querySelector('.grid > div');
