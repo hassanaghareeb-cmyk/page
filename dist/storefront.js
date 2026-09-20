@@ -177,21 +177,6 @@ window.addEventListener('load', () => {
     updateHeaderLogo();
   }
 
-  window.setTimeout(() => {
-    const contact = document.querySelector('#contact');
-    const heading = contact?.querySelector('.max-w-xl');
-    if (!contact || !heading || document.querySelector('.storefront-photo')) return;
-
-    const style = document.createElement('style');
-    style.textContent = `.storefront-photo{position:relative;margin:0 0 1.7rem;max-width:290px;overflow:hidden;border:1px solid rgba(201,169,97,.45);box-shadow:0 16px 38px rgba(0,0,0,.3)}.storefront-photo img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;object-position:center}.storefront-photo figcaption{position:absolute;left:0;right:0;bottom:0;padding:1.4rem .8rem .65rem;background:linear-gradient(transparent,rgba(2,6,18,.92));color:#f4efe2;font:italic .95rem Georgia,serif}.storefront-photo figcaption span{display:block;margin-bottom:.2rem;color:#c9a961;font:600 .58rem Arial,sans-serif;letter-spacing:.16em;text-transform:uppercase}`;
-    document.head.appendChild(style);
-
-    const photo = document.createElement('figure');
-    photo.className = 'storefront-photo';
-    photo.innerHTML = '<img src="/assets/monremy-storefront.png" alt="Außenansicht der Mon Rémy Parfumerie in der Weender Straße 79 in Göttingen" loading="lazy"><figcaption><span>Mon Rémy · Göttingen</span>Besuchen Sie uns persönlich.</figcaption>';
-    var addressColumn = contact.querySelector('.grid > div');
-    if (addressColumn) addressColumn.insertBefore(photo, addressColumn.firstChild);
-  }, 500);
 });
 
 // Editorial sections live outside the exported React tree so they survive hydration.
@@ -218,11 +203,8 @@ window.addEventListener('load', () => {
       floral: 'Floral', floralText: 'Sanfte Blütennoten und eine elegante, leichte Ausstrahlung.',
       fresh: 'Frisch', freshText: 'Klar, lebendig und voller Leichtigkeit.',
       woody: 'Holzig', woodyText: 'Warm, tief und von ruhiger Präsenz.',
-      galleryLabel: 'MON RÉMY GÖTTINGEN', galleryTitle: 'Einblicke in Mon Rémy.',
-      galleryLead: 'Ein Blick auf den Ort, an dem persönliche Duftmomente entstehen.',
-      storefrontCaption: 'Die Parfümerie von außen', storefrontAlt: 'Echte Außenaufnahme der Mon Rémy Parfümerie in Göttingen',
-      signCaption: 'Das Mon-Rémy-Leuchtschild im Innenraum', signAlt: 'Echtes Foto des beleuchteten Mon-Rémy-Schilds im Innenraum',
-      close: 'Bild schließen'
+      contactPhotoLabel: 'Mon Rémy · Göttingen', contactPhotoCaption: 'Besuchen Sie uns persönlich.',
+      contactPhotoAlt: 'Außenansicht der Mon Rémy Parfumerie in der Weender Straße 79 in Göttingen'
     },
     en: {
       processLabel: 'YOUR COMPOSITION', processTitle: 'How your fragrance takes shape.',
@@ -235,11 +217,8 @@ window.addEventListener('load', () => {
       floral: 'Floral', floralText: 'Soft floral notes with an elegant, light presence.',
       fresh: 'Fresh', freshText: 'Clear, lively and effortlessly light.',
       woody: 'Woody', woodyText: 'Warm, deep and quietly distinctive.',
-      galleryLabel: 'MON RÉMY GÖTTINGEN', galleryTitle: 'Inside Mon Rémy.',
-      galleryLead: 'A glimpse of the place where personal fragrance moments begin.',
-      storefrontCaption: 'The perfumery from outside', storefrontAlt: 'Real exterior photograph of Mon Rémy perfumery in Göttingen',
-      signCaption: 'The illuminated Mon Rémy sign inside', signAlt: 'Real photograph of the illuminated Mon Rémy sign inside the perfumery',
-      close: 'Close image'
+      contactPhotoLabel: 'Mon Rémy · Göttingen', contactPhotoCaption: 'Come and visit us.',
+      contactPhotoAlt: 'Exterior of the Mon Rémy perfumery on Weender Straße 79 in Göttingen'
     },
     ar: {
       processLabel: 'عطرك الخاص', processTitle: 'هكذا يتكوّن عطرك.',
@@ -252,11 +231,8 @@ window.addEventListener('load', () => {
       floral: 'زهري', floralText: 'نفحات زهرية ناعمة بحضور أنيق وخفيف.',
       fresh: 'منعش', freshText: 'طابع صافٍ وحيوي مفعم بالخفة.',
       woody: 'خشبي', woodyText: 'دافئ وعميق بحضور هادئ ومميز.',
-      galleryLabel: 'مون ريمي غوتينغن', galleryTitle: 'لمحات من مون ريمي.',
-      galleryLead: 'نظرة إلى المكان الذي تبدأ فيه لحظات العطر الشخصية.',
-      storefrontCaption: 'البارفومري من الخارج', storefrontAlt: 'صورة حقيقية لواجهة بارفومري مون ريمي في غوتينغن',
-      signCaption: 'لافتة مون ريمي المضيئة في الداخل', signAlt: 'صورة حقيقية للافتة مون ريمي المضيئة داخل البارفومري',
-      close: 'إغلاق الصورة'
+      contactPhotoLabel: 'مون ريمي · غوتينغن', contactPhotoCaption: 'يسعدنا استقبالكم.',
+      contactPhotoAlt: 'واجهة بارفومري مون ريمي في شارع فيندر 79 بمدينة غوتينغن'
     }
   };
 
@@ -292,36 +268,9 @@ window.addEventListener('load', () => {
       </div>
     </div>`;
 
-  const gallery = document.createElement('section');
-  gallery.id = 'impressions';
-  gallery.className = 'editorial-section';
-  gallery.setAttribute('aria-labelledby', 'impressions-title');
-  gallery.innerHTML = `
-    <div class="editorial-inner">
-      <p class="editorial-eyebrow" data-copy="galleryLabel"></p>
-      <h2 class="editorial-title" id="impressions-title" data-copy="galleryTitle"></h2>
-      <p class="editorial-lead" data-copy="galleryLead"></p>
-      <div class="editorial-gallery">
-        <button class="editorial-gallery-item" type="button" data-gallery-image="/assets/monremy-storefront.png" data-caption="storefrontCaption" data-alt="storefrontAlt">
-          <figure><span class="editorial-gallery-image"><img src="/assets/monremy-storefront.png" alt="" data-alt="storefrontAlt" loading="lazy" decoding="async"></span><figcaption data-copy="storefrontCaption"></figcaption></figure>
-        </button>
-        <button class="editorial-gallery-item" type="button" data-gallery-image="/assets/monremy-neon-sign.jpeg" data-caption="signCaption" data-alt="signAlt">
-          <figure><span class="editorial-gallery-image"><img src="/assets/monremy-neon-sign.jpeg" alt="" data-alt="signAlt" loading="lazy" decoding="async"></span><figcaption data-copy="signCaption"></figcaption></figure>
-        </button>
-      </div>
-    </div>`;
-
-  const dialog = document.createElement('dialog');
-  dialog.className = 'editorial-gallery-dialog';
-  dialog.innerHTML = '<div class="editorial-dialog-top"><button type="button" class="editorial-dialog-close" data-close aria-label="Bild schließen">×</button></div><img alt=""><p></p>';
-
   about.after(process);
   creations.after(worlds);
-  worlds.after(gallery);
-  document.body.appendChild(dialog);
 
-  let activeGalleryButton = null;
-  let currentImage = null;
   const language = () => {
     const code = document.documentElement.lang.toLowerCase().split('-')[0];
     return translations[code] ? code : 'de';
@@ -331,15 +280,11 @@ window.addEventListener('load', () => {
     for (const element of document.querySelectorAll('.editorial-section [data-copy]')) {
       element.textContent = copy[element.dataset.copy];
     }
-    for (const element of document.querySelectorAll('.editorial-section [data-alt]')) {
-      const description = copy[element.dataset.alt];
-      if (element.tagName === 'IMG') element.alt = description;
-      else element.setAttribute('aria-label', description);
-    }
-    dialog.querySelector('[data-close]').setAttribute('aria-label', copy.close);
-    if (currentImage) {
-      dialog.querySelector('img').alt = copy[currentImage.alt];
-      dialog.querySelector('p').textContent = copy[currentImage.caption];
+    const photo = contact.querySelector('.storefront-photo');
+    if (photo) {
+      photo.querySelector('img').alt = copy.contactPhotoAlt;
+      photo.querySelector('figcaption span').textContent = copy.contactPhotoLabel;
+      photo.querySelector('figcaption strong').textContent = copy.contactPhotoCaption;
     }
   };
   translate();
@@ -348,16 +293,14 @@ window.addEventListener('load', () => {
     if (event.target.closest('header button')) setTimeout(translate, 0);
   });
 
-  gallery.querySelectorAll('[data-gallery-image]').forEach((button) => {
-    button.addEventListener('click', () => {
-      activeGalleryButton = button;
-      currentImage = { alt: button.dataset.alt, caption: button.dataset.caption };
-      const image = dialog.querySelector('img');
-      image.src = button.dataset.galleryImage;
-      translate();
-      if (typeof dialog.showModal === 'function') dialog.showModal();
-    });
-  });
-  dialog.querySelector('[data-close]').addEventListener('click', () => dialog.close());
-  dialog.addEventListener('close', () => activeGalleryButton?.focus());
+
+  window.setTimeout(() => {
+    const addressColumn = contact.querySelector('.grid > div');
+    if (!addressColumn || contact.querySelector('.storefront-photo')) return;
+    const photo = document.createElement('figure');
+    photo.className = 'storefront-photo';
+    photo.innerHTML = '<img src="/assets/monremy-storefront.png" alt="" loading="lazy" decoding="async"><figcaption><span></span><strong></strong></figcaption>';
+    addressColumn.insertBefore(photo, addressColumn.firstChild);
+    translate();
+  }, 500);
 });
