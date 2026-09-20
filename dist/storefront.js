@@ -44,29 +44,33 @@ window.addEventListener('load', () => {
   const motionStyle = document.createElement('style');
   motionStyle.textContent = `
     #creations { overflow:clip; }
-    #creations .creation-3d-stage { --tilt-x:0deg; --tilt-y:0deg; --glint-x:50%; --glint-y:30%; --scene-scale:1; --glint-opacity:.22; position:relative; isolation:isolate; perspective:1050px; transform-style:preserve-3d; }
-    #creations .creation-3d-object { position:absolute; inset:0; z-index:3; display:block; transform-style:preserve-3d; transform:translate3d(0,0,48px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) scale(var(--scene-scale)); transform-origin:50% 68%; transition:transform .48s cubic-bezier(.2,.75,.25,1); will-change:transform; }
-    #creations .creation-3d-stage.is-tracking .creation-3d-object { transition-duration:.14s; transition-timing-function:ease-out; }
-    #creations .creation-3d-float { position:absolute; inset:0; display:block; transform-style:preserve-3d; animation:creation-3d-float 6.5s ease-in-out infinite; }
-    #creations .creation-3d-float > img { z-index:1; transform:none!important; transition:none!important; filter:drop-shadow(0 34px 27px rgba(0,0,0,.48)) drop-shadow(0 0 15px rgba(61,119,255,.16)); }
-    #creations .creation-3d-aura { position:absolute; z-index:0; left:12%; right:12%; top:13%; bottom:7%; border-radius:50%; pointer-events:none; background:radial-gradient(ellipse at 50% 58%,rgba(47,103,224,.25),rgba(8,23,70,.1) 44%,transparent 72%); filter:blur(18px); transform:translateZ(-60px) scale(.92); opacity:.82; }
-    #creations .creation-3d-shadow { position:absolute; z-index:1; left:13%; right:13%; bottom:-1%; height:17%; border-radius:50%; pointer-events:none; background:radial-gradient(ellipse,rgba(0,0,0,.66) 0%,rgba(1,6,22,.38) 42%,transparent 73%); filter:blur(12px); transform:translateZ(-35px) rotateX(68deg) scaleX(.86); transform-origin:center; transition:transform .45s ease,opacity .45s ease; opacity:.82; }
-    #creations .creation-3d-ring { position:absolute; z-index:2; left:16%; right:16%; bottom:3%; height:17%; border:1px solid rgba(222,188,105,.28); border-radius:50%; pointer-events:none; box-shadow:0 0 24px rgba(60,115,255,.18),inset 0 0 18px rgba(221,185,97,.08); transform:translateZ(-12px) rotateX(70deg); opacity:.6; }
-    #creations .creation-3d-glint { position:absolute; inset:0; z-index:2; display:block; pointer-events:none; background:radial-gradient(ellipse 15% 65% at var(--glint-x) var(--glint-y),rgba(255,246,207,.95) 0%,rgba(255,210,95,.43) 20%,rgba(89,145,255,.16) 39%,transparent 64%); -webkit-mask:url('/assets/monremy-flacon-transparent.webp') center/contain no-repeat; mask:url('/assets/monremy-flacon-transparent.webp') center/contain no-repeat; mix-blend-mode:screen; opacity:var(--glint-opacity); transition:opacity .4s ease; transform:translateZ(3px); }
-    #creations .creation-3d-stage::after { content:''; position:absolute; z-index:4; inset:8% 8% 6%; pointer-events:none; border-radius:50%; background:linear-gradient(112deg,transparent 25%,rgba(255,228,157,.08) 45%,transparent 62%); filter:blur(16px); opacity:.35; transform:translateZ(70px); }
+    #creations .creation-3d-stage { position:relative; isolation:isolate; perspective:1050px; transform-style:preserve-3d; }
+    #creations .creation-3d-aura { position:absolute; z-index:0; inset:13% 10% 7%; border-radius:50%; pointer-events:none; background:radial-gradient(ellipse at 50% 58%,rgba(47,103,224,.25),rgba(8,23,70,.1) 44%,transparent 72%); filter:blur(18px); opacity:.82; }
+    #creations .creation-3d-shadow { position:absolute; z-index:1; bottom:0; width:38%; height:14%; border-radius:50%; pointer-events:none; background:radial-gradient(ellipse,rgba(0,0,0,.66),rgba(1,6,22,.38) 42%,transparent 73%); filter:blur(12px); transform:rotateX(68deg); opacity:.82; transition:transform .45s ease,opacity .45s ease; }
+    #creations .creation-3d-shadow[data-bottle="left"] { left:9%; }
+    #creations .creation-3d-shadow[data-bottle="right"] { right:9%; }
+    #creations .creation-3d-bottle { --tilt-x:0deg; --tilt-y:0deg; --lift:0px; --glint-x:50%; --glint-y:34%; --glint-opacity:.22; position:absolute; inset:0; z-index:2; display:block; pointer-events:none; transform-style:preserve-3d; transform:translate3d(0,var(--lift),48px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)); transition:transform .48s cubic-bezier(.2,.75,.25,1); will-change:transform; }
+    #creations .creation-3d-bottle[data-bottle="left"] { clip-path:inset(-12% 50% -12% -12%); transform-origin:29% 67%; }
+    #creations .creation-3d-bottle[data-bottle="right"] { clip-path:inset(-12% -12% -12% 50%); transform-origin:71% 67%; }
+    #creations .creation-3d-bottle.is-tracking { transition-duration:.14s; transition-timing-function:ease-out; }
+    #creations .creation-3d-float { position:absolute; inset:0; display:block; animation:creation-3d-float 6.5s ease-in-out infinite; }
+    #creations .creation-3d-bottle[data-bottle="right"] .creation-3d-float { animation-delay:-3.25s; }
+    #creations .creation-3d-float > img { transform:none!important; transition:none!important; filter:drop-shadow(0 34px 27px rgba(0,0,0,.48)) drop-shadow(0 0 15px rgba(61,119,255,.16)); }
+    #creations .creation-3d-glint { position:absolute; inset:0; display:block; pointer-events:none; background:radial-gradient(ellipse 15% 65% at var(--glint-x) var(--glint-y),rgba(255,246,207,.95),rgba(255,210,95,.43) 20%,rgba(89,145,255,.16) 39%,transparent 64%); -webkit-mask:url('/assets/monremy-flacon-transparent.webp') center/contain no-repeat; mask:url('/assets/monremy-flacon-transparent.webp') center/contain no-repeat; mix-blend-mode:screen; opacity:var(--glint-opacity); transition:opacity .4s ease; }
+    #creations .creation-3d-hit { position:absolute; z-index:3; top:0; bottom:0; width:50%; display:block; touch-action:pan-y; }
+    #creations .creation-3d-hit[data-bottle="left"] { left:0; }
+    #creations .creation-3d-hit[data-bottle="right"] { right:0; }
     @keyframes creation-3d-float { 0%,100% { transform:translate3d(0,2px,0); } 50% { transform:translate3d(0,-6px,0); } }
     @media (hover:hover) and (pointer:fine) {
-      #creations .creation-3d-stage:hover { --scene-scale:1.025; --glint-opacity:.72; }
-      #creations .creation-3d-stage:hover .creation-3d-shadow { transform:translateZ(-35px) rotateX(68deg) scaleX(.96); opacity:.7; }
+      #creations .creation-3d-bottle.is-tracking { --glint-opacity:.72; }
     }
     @media (max-width:700px) {
-      #creations .creation-3d-stage { perspective:850px; --glint-opacity:.28; }
-      #creations .creation-3d-object { transform:translate3d(0,0,28px) rotateX(-1deg) scale(1.015); }
+      #creations .creation-3d-stage { perspective:850px; }
+      #creations .creation-3d-bottle { --glint-opacity:.28; }
       #creations .creation-3d-aura { left:7%; right:7%; filter:blur(13px); }
-      #creations .creation-3d-ring { left:11%; right:11%; opacity:.42; }
     }
     @media (prefers-reduced-motion:reduce) {
-      #creations .creation-3d-object { transform:none!important; transition:none!important; }
+      #creations .creation-3d-bottle { transform:none!important; transition:none!important; }
       #creations .creation-3d-float { animation:none!important; }
       #creations .creation-3d-glint { opacity:.16; transition:none; }
     }
@@ -82,58 +86,77 @@ window.addEventListener('load', () => {
     aura.className = 'creation-3d-aura';
     aura.setAttribute('aria-hidden', 'true');
 
-    const shadow = document.createElement('span');
-    shadow.className = 'creation-3d-shadow';
-    shadow.setAttribute('aria-hidden', 'true');
-
-    const ring = document.createElement('span');
-    ring.className = 'creation-3d-ring';
-    ring.setAttribute('aria-hidden', 'true');
-
-    const object = document.createElement('span');
-    object.className = 'creation-3d-object';
-    const floatingLayer = document.createElement('span');
-    floatingLayer.className = 'creation-3d-float';
-    const glint = document.createElement('span');
-    glint.className = 'creation-3d-glint';
-    glint.setAttribute('aria-hidden', 'true');
-
     creationStage.insertBefore(aura, creationBottle);
-    creationStage.insertBefore(shadow, creationBottle);
-    creationStage.insertBefore(ring, creationBottle);
-    creationStage.insertBefore(object, creationBottle);
-    object.appendChild(floatingLayer);
-    floatingLayer.appendChild(creationBottle);
-    floatingLayer.appendChild(glint);
-
+    creationBottle.alt = '';
+    creationBottle.setAttribute('aria-hidden', 'true');
     const finePointer = window.matchMedia('(hover:hover) and (pointer:fine)');
-    let pointerFrame = 0;
-    let nextX = 0;
-    let nextY = 0;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion:reduce)');
+    ['left', 'right'].forEach((side) => {
+      const shadow = document.createElement('span');
+      shadow.className = 'creation-3d-shadow';
+      shadow.dataset.bottle = side;
+      shadow.setAttribute('aria-hidden', 'true');
+      creationStage.appendChild(shadow);
 
-    const paintTilt = () => {
-      creationStage.style.setProperty('--tilt-x', `${(-nextY * 5).toFixed(2)}deg`);
-      creationStage.style.setProperty('--tilt-y', `${(nextX * 7).toFixed(2)}deg`);
-      creationStage.style.setProperty('--glint-x', `${(50 + nextX * 31).toFixed(1)}%`);
-      creationStage.style.setProperty('--glint-y', `${(34 + nextY * 26).toFixed(1)}%`);
-      pointerFrame = 0;
-    };
+      const bottle = document.createElement('span');
+      bottle.className = 'creation-3d-bottle';
+      bottle.dataset.bottle = side;
+      bottle.setAttribute('aria-hidden', 'true');
+      const floatingLayer = document.createElement('span');
+      floatingLayer.className = 'creation-3d-float';
+      const image = side === 'left' ? creationBottle : creationBottle.cloneNode(true);
+      floatingLayer.appendChild(image);
+      const glint = document.createElement('span');
+      glint.className = 'creation-3d-glint';
+      floatingLayer.appendChild(glint);
+      bottle.appendChild(floatingLayer);
+      creationStage.appendChild(bottle);
 
-    creationStage.addEventListener('pointermove', (event) => {
-      if (!finePointer.matches || event.pointerType === 'touch') return;
-      const bounds = creationStage.getBoundingClientRect();
-      nextX = Math.max(-1, Math.min(1, ((event.clientX - bounds.left) / bounds.width - .5) * 2));
-      nextY = Math.max(-1, Math.min(1, ((event.clientY - bounds.top) / bounds.height - .5) * 2));
-      creationStage.classList.add('is-tracking');
-      if (!pointerFrame) pointerFrame = requestAnimationFrame(paintTilt);
-    }, { passive:true });
+      const hit = document.createElement('span');
+      hit.className = 'creation-3d-hit';
+      hit.dataset.bottle = side;
+      hit.setAttribute('aria-hidden', 'true');
+      creationStage.appendChild(hit);
 
-    creationStage.addEventListener('pointerleave', () => {
-      nextX = 0;
-      nextY = 0;
-      creationStage.classList.remove('is-tracking');
-      if (!pointerFrame) pointerFrame = requestAnimationFrame(paintTilt);
-    }, { passive:true });
+      let pointerFrame = 0;
+      let nextX = 0;
+      let nextY = 0;
+      let touching = false;
+      const paintTilt = () => {
+        bottle.style.setProperty('--tilt-x', `${(-nextY * 5).toFixed(2)}deg`);
+        bottle.style.setProperty('--tilt-y', `${(nextX * 7).toFixed(2)}deg`);
+        bottle.style.setProperty('--lift', nextX || nextY ? '-5px' : '0px');
+        bottle.style.setProperty('--glint-x', `${(side === 'left' ? 29 : 71) + nextX * 17}%`);
+        bottle.style.setProperty('--glint-y', `${34 + nextY * 26}%`);
+        pointerFrame = 0;
+      };
+      const scheduleTilt = () => {
+        if (!pointerFrame) pointerFrame = requestAnimationFrame(paintTilt);
+      };
+      const updateTilt = (event) => {
+        if (reducedMotion.matches || (event.pointerType === 'touch' && !touching) || (event.pointerType !== 'touch' && !finePointer.matches)) return;
+        const bounds = hit.getBoundingClientRect();
+        nextX = Math.max(-1, Math.min(1, ((event.clientX - bounds.left) / bounds.width - .5) * 2));
+        nextY = Math.max(-1, Math.min(1, ((event.clientY - bounds.top) / bounds.height - .5) * 2));
+        bottle.classList.add('is-tracking');
+        scheduleTilt();
+      };
+      const resetTilt = () => {
+        touching = false;
+        nextX = 0;
+        nextY = 0;
+        bottle.classList.remove('is-tracking');
+        scheduleTilt();
+      };
+      hit.addEventListener('pointerdown', (event) => {
+        if (event.pointerType === 'touch') touching = true;
+        updateTilt(event);
+      }, { passive:true });
+      hit.addEventListener('pointermove', updateTilt, { passive:true });
+      hit.addEventListener('pointerleave', resetTilt, { passive:true });
+      hit.addEventListener('pointerup', resetTilt, { passive:true });
+      hit.addEventListener('pointercancel', resetTilt, { passive:true });
+    });
   }
 
   const hero = document.querySelector('#home');
