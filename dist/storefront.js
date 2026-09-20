@@ -193,3 +193,171 @@ window.addEventListener('load', () => {
     if (addressColumn) addressColumn.insertBefore(photo, addressColumn.firstChild);
   }, 500);
 });
+
+// Editorial sections live outside the exported React tree so they survive hydration.
+const editorialStylesheet = document.createElement('link');
+editorialStylesheet.rel = 'stylesheet';
+editorialStylesheet.href = '/editorial-sections.css';
+document.head.appendChild(editorialStylesheet);
+
+window.addEventListener('load', () => {
+  const about = document.getElementById('about');
+  const creations = document.getElementById('creations');
+  const contact = document.getElementById('contact');
+  if (!about || !creations || !contact || document.getElementById('process')) return;
+
+  const translations = {
+    de: {
+      processLabel: 'IHRE KOMPOSITION', processTitle: 'So entsteht Ihr Duft.',
+      processLead: 'Ein persönliches Gespräch ist der Anfang. Ihre Vorlieben geben der Komposition ihre Richtung.',
+      step1: 'Kennenlernen', step1Text: 'Wir sprechen über Eindrücke, Erinnerungen und das, was Sie an einem Duft lieben.',
+      step2: 'Richtung finden', step2Text: 'Aus Ihren Vorlieben entsteht eine Duftidee, die zu Ihrer Persönlichkeit passt.',
+      step3: 'Komposition', step3Text: 'Die einzelnen Nuancen werden zu Ihrem persönlichen Duft zusammengeführt.',
+      worldsLabel: 'DUFTWELTEN', worldsTitle: 'Ein Gefühl. Viele Facetten.',
+      worldsLead: 'Welche Richtung spricht Sie an? Entdecken Sie drei Stimmungen als Ausgangspunkt für Ihre eigene Duftreise.',
+      floral: 'Floral', floralText: 'Sanfte Blütennoten und eine elegante, leichte Ausstrahlung.',
+      fresh: 'Frisch', freshText: 'Klar, lebendig und voller Leichtigkeit.',
+      woody: 'Holzig', woodyText: 'Warm, tief und von ruhiger Präsenz.',
+      galleryLabel: 'MON RÉMY GÖTTINGEN', galleryTitle: 'Einblicke in Mon Rémy.',
+      galleryLead: 'Ein Blick auf den Ort, an dem persönliche Duftmomente entstehen.',
+      storefrontCaption: 'Die Parfümerie von außen', storefrontAlt: 'Echte Außenaufnahme der Mon Rémy Parfümerie in Göttingen',
+      signCaption: 'Das Mon-Rémy-Leuchtschild im Innenraum', signAlt: 'Echtes Foto des beleuchteten Mon-Rémy-Schilds im Innenraum',
+      close: 'Bild schließen'
+    },
+    en: {
+      processLabel: 'YOUR COMPOSITION', processTitle: 'How your fragrance takes shape.',
+      processLead: 'It begins with a personal conversation. Your preferences set the direction for the composition.',
+      step1: 'Getting to know you', step1Text: 'We talk about impressions, memories and what you love in a fragrance.',
+      step2: 'Finding a direction', step2Text: 'Your preferences become the starting point for a scent that feels like you.',
+      step3: 'Composition', step3Text: 'The individual notes come together in your personal fragrance.',
+      worldsLabel: 'FRAGRANCE WORLDS', worldsTitle: 'One feeling. Many facets.',
+      worldsLead: 'Which direction speaks to you? Discover three moods as the beginning of your fragrance journey.',
+      floral: 'Floral', floralText: 'Soft floral notes with an elegant, light presence.',
+      fresh: 'Fresh', freshText: 'Clear, lively and effortlessly light.',
+      woody: 'Woody', woodyText: 'Warm, deep and quietly distinctive.',
+      galleryLabel: 'MON RÉMY GÖTTINGEN', galleryTitle: 'Inside Mon Rémy.',
+      galleryLead: 'A glimpse of the place where personal fragrance moments begin.',
+      storefrontCaption: 'The perfumery from outside', storefrontAlt: 'Real exterior photograph of Mon Rémy perfumery in Göttingen',
+      signCaption: 'The illuminated Mon Rémy sign inside', signAlt: 'Real photograph of the illuminated Mon Rémy sign inside the perfumery',
+      close: 'Close image'
+    },
+    ar: {
+      processLabel: 'عطرك الخاص', processTitle: 'هكذا يتكوّن عطرك.',
+      processLead: 'تبدأ الرحلة بحوار شخصي، وتحدّد تفضيلاتك الاتجاه الذي تسير فيه التركيبة.',
+      step1: 'التعارف', step1Text: 'نتحدث عن الانطباعات والذكريات وما تحبّه في العطور.',
+      step2: 'اختيار الاتجاه', step2Text: 'تصبح تفضيلاتك نقطة البداية لرائحة تعبّر عن شخصيتك.',
+      step3: 'التركيب', step3Text: 'تجتمع النفحات المختلفة لتشكّل عطرك الشخصي.',
+      worldsLabel: 'عوالم العطور', worldsTitle: 'إحساس واحد، وجوه عديدة.',
+      worldsLead: 'أي طابع يلامسك؟ اكتشف ثلاثة اتجاهات كبداية لرحلتك مع العطور.',
+      floral: 'زهري', floralText: 'نفحات زهرية ناعمة بحضور أنيق وخفيف.',
+      fresh: 'منعش', freshText: 'طابع صافٍ وحيوي مفعم بالخفة.',
+      woody: 'خشبي', woodyText: 'دافئ وعميق بحضور هادئ ومميز.',
+      galleryLabel: 'مون ريمي غوتينغن', galleryTitle: 'لمحات من مون ريمي.',
+      galleryLead: 'نظرة إلى المكان الذي تبدأ فيه لحظات العطر الشخصية.',
+      storefrontCaption: 'البارفومري من الخارج', storefrontAlt: 'صورة حقيقية لواجهة بارفومري مون ريمي في غوتينغن',
+      signCaption: 'لافتة مون ريمي المضيئة في الداخل', signAlt: 'صورة حقيقية للافتة مون ريمي المضيئة داخل البارفومري',
+      close: 'إغلاق الصورة'
+    }
+  };
+
+  const process = document.createElement('section');
+  process.id = 'process';
+  process.className = 'editorial-section';
+  process.setAttribute('aria-labelledby', 'process-title');
+  process.innerHTML = `
+    <div class="editorial-inner">
+      <p class="editorial-eyebrow" data-copy="processLabel"></p>
+      <h2 class="editorial-title" id="process-title" data-copy="processTitle"></h2>
+      <p class="editorial-lead" data-copy="processLead"></p>
+      <ol class="editorial-process">
+        <li><span class="editorial-step-number" aria-hidden="true">01</span><h3 data-copy="step1"></h3><p data-copy="step1Text"></p></li>
+        <li><span class="editorial-step-number" aria-hidden="true">02</span><h3 data-copy="step2"></h3><p data-copy="step2Text"></p></li>
+        <li><span class="editorial-step-number" aria-hidden="true">03</span><h3 data-copy="step3"></h3><p data-copy="step3Text"></p></li>
+      </ol>
+    </div>`;
+
+  const worlds = document.createElement('section');
+  worlds.id = 'worlds';
+  worlds.className = 'editorial-section';
+  worlds.setAttribute('aria-labelledby', 'worlds-title');
+  worlds.innerHTML = `
+    <div class="editorial-inner">
+      <p class="editorial-eyebrow" data-copy="worldsLabel"></p>
+      <h2 class="editorial-title" id="worlds-title" data-copy="worldsTitle"></h2>
+      <p class="editorial-lead" data-copy="worldsLead"></p>
+      <div class="editorial-worlds">
+        <article class="editorial-world"><span class="editorial-world-index" aria-hidden="true">01 / 03</span><h3 data-copy="floral"></h3><p data-copy="floralText"></p></article>
+        <article class="editorial-world"><span class="editorial-world-index" aria-hidden="true">02 / 03</span><h3 data-copy="fresh"></h3><p data-copy="freshText"></p></article>
+        <article class="editorial-world"><span class="editorial-world-index" aria-hidden="true">03 / 03</span><h3 data-copy="woody"></h3><p data-copy="woodyText"></p></article>
+      </div>
+    </div>`;
+
+  const gallery = document.createElement('section');
+  gallery.id = 'impressions';
+  gallery.className = 'editorial-section';
+  gallery.setAttribute('aria-labelledby', 'impressions-title');
+  gallery.innerHTML = `
+    <div class="editorial-inner">
+      <p class="editorial-eyebrow" data-copy="galleryLabel"></p>
+      <h2 class="editorial-title" id="impressions-title" data-copy="galleryTitle"></h2>
+      <p class="editorial-lead" data-copy="galleryLead"></p>
+      <div class="editorial-gallery">
+        <button class="editorial-gallery-item" type="button" data-gallery-image="/assets/monremy-storefront.png" data-caption="storefrontCaption" data-alt="storefrontAlt">
+          <figure><span class="editorial-gallery-image"><img src="/assets/monremy-storefront.png" alt="" data-alt="storefrontAlt" loading="lazy" decoding="async"></span><figcaption data-copy="storefrontCaption"></figcaption></figure>
+        </button>
+        <button class="editorial-gallery-item" type="button" data-gallery-image="/assets/monremy-neon-sign.jpeg" data-caption="signCaption" data-alt="signAlt">
+          <figure><span class="editorial-gallery-image"><img src="/assets/monremy-neon-sign.jpeg" alt="" data-alt="signAlt" loading="lazy" decoding="async"></span><figcaption data-copy="signCaption"></figcaption></figure>
+        </button>
+      </div>
+    </div>`;
+
+  const dialog = document.createElement('dialog');
+  dialog.className = 'editorial-gallery-dialog';
+  dialog.innerHTML = '<div class="editorial-dialog-top"><button type="button" class="editorial-dialog-close" data-close aria-label="Bild schließen">×</button></div><img alt=""><p></p>';
+
+  about.after(process);
+  creations.after(worlds);
+  worlds.after(gallery);
+  document.body.appendChild(dialog);
+
+  let activeGalleryButton = null;
+  let currentImage = null;
+  const language = () => {
+    const code = document.documentElement.lang.toLowerCase().split('-')[0];
+    return translations[code] ? code : 'de';
+  };
+  const translate = () => {
+    const copy = translations[language()];
+    for (const element of document.querySelectorAll('.editorial-section [data-copy]')) {
+      element.textContent = copy[element.dataset.copy];
+    }
+    for (const element of document.querySelectorAll('.editorial-section [data-alt]')) {
+      const description = copy[element.dataset.alt];
+      if (element.tagName === 'IMG') element.alt = description;
+      else element.setAttribute('aria-label', description);
+    }
+    dialog.querySelector('[data-close]').setAttribute('aria-label', copy.close);
+    if (currentImage) {
+      dialog.querySelector('img').alt = copy[currentImage.alt];
+      dialog.querySelector('p').textContent = copy[currentImage.caption];
+    }
+  };
+  translate();
+  new MutationObserver(translate).observe(document.documentElement, { attributes: true, attributeFilter: ['lang', 'dir'] });
+  document.addEventListener('click', (event) => {
+    if (event.target.closest('header button')) setTimeout(translate, 0);
+  });
+
+  gallery.querySelectorAll('[data-gallery-image]').forEach((button) => {
+    button.addEventListener('click', () => {
+      activeGalleryButton = button;
+      currentImage = { alt: button.dataset.alt, caption: button.dataset.caption };
+      const image = dialog.querySelector('img');
+      image.src = button.dataset.galleryImage;
+      translate();
+      if (typeof dialog.showModal === 'function') dialog.showModal();
+    });
+  });
+  dialog.querySelector('[data-close]').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('close', () => activeGalleryButton?.focus());
+});
