@@ -1,3 +1,12 @@
+// Promote the existing subtitle to the sole hero headline in every language.
+const heroCopyStyle = document.createElement('style');
+heroCopyStyle.textContent = `
+  #home h1 { max-width:min(94vw,920px); font-size:clamp(2.1rem,4.4vw,3.7rem)!important; line-height:1.14; text-wrap:balance; }
+  #home h1 + p { display:none!important; }
+  @media (max-width:700px) { #home h1 { font-size:clamp(1.95rem,8vw,2.6rem)!important; } }
+`;
+document.head.appendChild(heroCopyStyle);
+
 // The exported page already animates this image with a spring. Keep one visual
 // scroll position so it cannot continue drifting after the user stops scrolling.
 const roseMotionStyle = document.createElement('style');
@@ -198,6 +207,19 @@ window.addEventListener('load', () => {
     const updateHeaderLogo = () => document.body.classList.toggle('phoenix-header-logo', scrollY > innerHeight * .62);
     addEventListener('scroll', updateHeaderLogo, { passive:true });
     updateHeaderLogo();
+  }
+
+  // Also correct older cached language bundles after a language switch.
+  if (hero) {
+    const syncHeroCopy = () => {
+      const heading = hero.querySelector('h1');
+      const lead = heading?.nextElementSibling;
+      if (lead?.tagName !== 'P') return;
+      const text = lead.textContent?.trim();
+      if (text && heading.textContent !== text) heading.textContent = text;
+    };
+    syncHeroCopy();
+    new MutationObserver(syncHeroCopy).observe(hero, { childList:true, characterData:true, subtree:true });
   }
 
 });
