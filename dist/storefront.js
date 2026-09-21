@@ -44,7 +44,7 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   updateRoses();
 }
 
-window.addEventListener('load', () => {
+const initializeStorefront = () => {
   const backgroundLayers = document.querySelectorAll('body > .pointer-events-none.fixed.inset-0 > div');
   if (backgroundLayers[1]) {
     backgroundLayers[1].style.background = 'radial-gradient(circle at 50% 12%, rgba(86,138,255,.08), transparent 44%), linear-gradient(180deg, rgba(1,4,13,.08), rgba(2,5,16,.16))';
@@ -176,11 +176,12 @@ window.addEventListener('load', () => {
     }
     const phoenixVideo = document.createElement('video');
     phoenixVideo.className = 'cinematic-phoenix';
-    phoenixVideo.src = '/assets/phoenix-blue-loop.webm';
+    phoenixVideo.src = '/assets/phoenix-blue-loop-optimized.webm';
     phoenixVideo.autoplay = true;
     phoenixVideo.loop = true;
     phoenixVideo.muted = true;
     phoenixVideo.playsInline = true;
+    phoenixVideo.preload = 'metadata';
     phoenixVideo.setAttribute('aria-hidden', 'true');
     phoenixVideo.setAttribute('disablepictureinpicture', '');
     hero.appendChild(phoenixVideo);
@@ -193,20 +194,69 @@ window.addEventListener('load', () => {
 
     const videoStyle = document.createElement('style');
     videoStyle.textContent = `
-      .cinematic-phoenix{position:absolute;z-index:1;top:4%;left:50%;width:min(620px,60vw);height:auto;aspect-ratio:32/13;contain:layout size;transform:translateX(-50%);pointer-events:none;filter:brightness(1.28) saturate(1.22) contrast(1.06) drop-shadow(0 0 16px rgba(255,224,139,.48)) drop-shadow(0 0 32px rgba(201,169,97,.28));opacity:0;transition:opacity 1s ease;object-fit:contain;-webkit-mask-image:radial-gradient(ellipse 68% 76% at 50% 44%,#000 48%,rgba(0,0,0,.9) 65%,rgba(0,0,0,.42) 82%,transparent 100%);mask-image:radial-gradient(ellipse 68% 76% at 50% 44%,#000 48%,rgba(0,0,0,.9) 65%,rgba(0,0,0,.42) 82%,transparent 100%)}
-      .cinematic-phoenix.is-ready{opacity:.94}
+      .cinematic-phoenix{--phoenix-x:0px;--phoenix-y:0px;--phoenix-scale:1;--phoenix-rotate:0deg;--phoenix-flight-opacity:.94;position:fixed;z-index:180;top:clamp(125px,18vh,175px);left:50%;width:min(620px,60vw);height:auto;aspect-ratio:32/13;contain:layout size;transform:translate(-50%,-50%) translate3d(var(--phoenix-x),var(--phoenix-y),0) scale(var(--phoenix-scale)) rotate(var(--phoenix-rotate));transform-origin:center;pointer-events:none;filter:brightness(1.28) saturate(1.22) contrast(1.06) drop-shadow(0 0 16px rgba(255,224,139,.48)) drop-shadow(0 0 32px rgba(201,169,97,.28));opacity:0;transition:opacity .32s ease;object-fit:contain;will-change:transform,opacity;-webkit-mask-image:radial-gradient(ellipse 68% 76% at 50% 44%,#000 48%,rgba(0,0,0,.9) 65%,rgba(0,0,0,.42) 82%,transparent 100%);mask-image:radial-gradient(ellipse 68% 76% at 50% 44%,#000 48%,rgba(0,0,0,.9) 65%,rgba(0,0,0,.42) 82%,transparent 100%)}
+      .cinematic-phoenix.is-ready{opacity:var(--phoenix-flight-opacity)}
       .cinematic-wordmark{position:absolute;z-index:2;top:38%;left:50%;width:min(510px,56vw);height:auto;transform:translateX(-50%);pointer-events:none;filter:drop-shadow(0 0 18px rgba(201,169,97,.28))}
       #home img[src="/assets/logo.png"]{width:min(320px,64vw)!important;filter:drop-shadow(0 0 20px rgba(201,169,97,.32))}
-      #home .original-hero-logo{opacity:0!important;transition:opacity .45s ease}
+      #home .original-hero-logo{opacity:0!important;transition:opacity .5s ease,filter .5s ease;filter:drop-shadow(0 0 16px rgba(255,218,118,.34))}
       body.phoenix-header-logo #home .original-hero-logo{opacity:1!important}
-      @media(max-width:700px){.cinematic-phoenix{top:10%;width:96vw;opacity:.88}.cinematic-wordmark{top:35%;width:82vw}#home img[src="/assets/logo.png"]{width:min(265px,70vw)!important}}
+      @media(max-width:700px){.cinematic-phoenix{top:clamp(126px,19vh,155px);width:96vw}.cinematic-wordmark{top:35%;width:82vw}#home img[src="/assets/logo.png"]{width:min(265px,70vw)!important}}
       @media(prefers-reduced-motion:reduce){.cinematic-phoenix{display:none}.cinematic-wordmark{top:24%}}
     `;
     document.head.appendChild(videoStyle);
-    phoenixVideo.addEventListener('canplay', () => phoenixVideo.classList.add('is-ready'), { once:true });
-    const updateHeaderLogo = () => document.body.classList.toggle('phoenix-header-logo', scrollY > innerHeight * .62);
-    addEventListener('scroll', updateHeaderLogo, { passive:true });
-    updateHeaderLogo();
+    const revealPhoenix = () => phoenixVideo.classList.add('is-ready');
+    phoenixVideo.addEventListener('canplay', revealPhoenix, { once:true });
+    if (phoenixVideo.readyState >= 3) revealPhoenix();
+
+    const reducePhoenixMotion = window.matchMedia('(prefers-reduced-motion:reduce)');
+    let phoenixFrame = 0;
+    let heroVisible = true;
+    let flightProgress = 0;
+    const syncPhoenixPlayback = () => {
+      if (!reducePhoenixMotion.matches && heroVisible && !document.hidden && flightProgress < .94) {
+        if (phoenixVideo.paused) phoenixVideo.play().catch(() => {});
+      } else if (!phoenixVideo.paused) {
+        phoenixVideo.pause();
+      }
+    };
+    const updatePhoenixFlight = () => {
+      phoenixFrame = 0;
+      const travel = Math.max(1, innerHeight * .72);
+      const raw = Math.max(0, Math.min(1, scrollY / travel));
+      const eased = raw * raw * (3 - 2 * raw);
+      flightProgress = raw;
+      const compact = innerWidth < 700;
+      const startY = compact
+        ? Math.min(155, Math.max(126, innerHeight * .19))
+        : Math.min(175, Math.max(125, innerHeight * .18));
+      const targetX = compact ? 55 : 68;
+      const targetY = compact ? 39 : 42;
+      const arc = Math.sin(eased * Math.PI) * Math.min(34, Math.max(24, innerWidth * .03));
+      const endScale = compact ? .13 : .14;
+      const fade = Math.max(0, Math.min(1, (raw - .72) / .22));
+      phoenixVideo.style.setProperty('--phoenix-x', `${((targetX - innerWidth / 2) * eased).toFixed(2)}px`);
+      phoenixVideo.style.setProperty('--phoenix-y', `${((targetY - startY) * eased - arc).toFixed(2)}px`);
+      phoenixVideo.style.setProperty('--phoenix-scale', (1 - (1 - endScale) * eased).toFixed(4));
+      phoenixVideo.style.setProperty('--phoenix-rotate', `${(-7 * Math.sin(eased * Math.PI)).toFixed(2)}deg`);
+      phoenixVideo.style.setProperty('--phoenix-flight-opacity', (.94 * (1 - fade)).toFixed(3));
+      document.body.classList.toggle('phoenix-header-logo', raw > .78);
+      syncPhoenixPlayback();
+    };
+    const schedulePhoenixFlight = () => {
+      if (!phoenixFrame) phoenixFrame = requestAnimationFrame(updatePhoenixFlight);
+    };
+    new IntersectionObserver(([entry]) => {
+      heroVisible = entry.isIntersecting;
+      syncPhoenixPlayback();
+    }, { threshold:.03 }).observe(hero);
+    addEventListener('scroll', schedulePhoenixFlight, { passive:true });
+    addEventListener('resize', schedulePhoenixFlight, { passive:true });
+    document.addEventListener('visibilitychange', syncPhoenixPlayback);
+    reducePhoenixMotion.addEventListener('change', () => {
+      schedulePhoenixFlight();
+      syncPhoenixPlayback();
+    });
+    updatePhoenixFlight();
   }
 
   // Also correct older cached language bundles after a language switch.
@@ -222,7 +272,10 @@ window.addEventListener('load', () => {
     new MutationObserver(syncHeroCopy).observe(hero, { childList:true, characterData:true, subtree:true });
   }
 
-});
+};
+
+if (document.readyState === 'complete') initializeStorefront();
+else window.addEventListener('load', initializeStorefront, { once:true });
 
 // Editorial sections live outside the exported React tree so they survive hydration.
 const editorialStylesheet = document.createElement('link');
@@ -230,7 +283,7 @@ editorialStylesheet.rel = 'stylesheet';
 editorialStylesheet.href = '/editorial-sections.css';
 document.head.appendChild(editorialStylesheet);
 
-window.addEventListener('load', () => {
+const initializeEditorialSections = () => {
   const about = document.getElementById('about');
   const creations = document.getElementById('creations');
   const contact = document.getElementById('contact');
@@ -245,9 +298,9 @@ window.addEventListener('load', () => {
       step3: 'Komposition', step3Text: 'Die einzelnen Nuancen werden zu Ihrem persönlichen Duft zusammengeführt.',
       worldsLabel: 'DUFTWELTEN', worldsTitle: 'Ein Gefühl. Viele Facetten.',
       worldsLead: 'Welche Richtung spricht Sie an? Entdecken Sie drei Stimmungen als Ausgangspunkt für Ihre eigene Duftreise.',
-      floral: 'Floral', floralText: 'Sanfte Blütennoten und eine elegante, leichte Ausstrahlung.',
-      fresh: 'Frisch', freshText: 'Klar, lebendig und voller Leichtigkeit.',
-      woody: 'Holzig', woodyText: 'Warm, tief und von ruhiger Präsenz.',
+      floral: 'Floral', floralText: 'Sanfte Blütennoten und eine elegante, leichte Ausstrahlung.', floralNotes: 'Rose · Jasmin · Iris',
+      fresh: 'Frisch', freshText: 'Klar, lebendig und voller Leichtigkeit.', freshNotes: 'Bergamotte · Zitrus · Aquatische Noten',
+      woody: 'Holzig', woodyText: 'Warm, tief und von ruhiger Präsenz.', woodyNotes: 'Zedernholz · Sandelholz · Amber',
       contactPhotoLabel: 'Mon Rémy · Göttingen', contactPhotoCaption: 'Besuchen Sie uns persönlich.',
       contactPhotoAlt: 'Außenansicht der Mon Rémy Parfumerie in der Weender Straße 79 in Göttingen'
     },
@@ -259,9 +312,9 @@ window.addEventListener('load', () => {
       step3: 'Composition', step3Text: 'The individual notes come together in your personal fragrance.',
       worldsLabel: 'FRAGRANCE WORLDS', worldsTitle: 'One feeling. Many facets.',
       worldsLead: 'Which direction speaks to you? Discover three moods as the beginning of your fragrance journey.',
-      floral: 'Floral', floralText: 'Soft floral notes with an elegant, light presence.',
-      fresh: 'Fresh', freshText: 'Clear, lively and effortlessly light.',
-      woody: 'Woody', woodyText: 'Warm, deep and quietly distinctive.',
+      floral: 'Floral', floralText: 'Soft floral notes with an elegant, light presence.', floralNotes: 'Rose · Jasmine · Iris',
+      fresh: 'Fresh', freshText: 'Clear, lively and effortlessly light.', freshNotes: 'Bergamot · Citrus · Aquatic notes',
+      woody: 'Woody', woodyText: 'Warm, deep and quietly distinctive.', woodyNotes: 'Cedarwood · Sandalwood · Amber',
       contactPhotoLabel: 'Mon Rémy · Göttingen', contactPhotoCaption: 'Come and visit us.',
       contactPhotoAlt: 'Exterior of the Mon Rémy perfumery on Weender Straße 79 in Göttingen'
     },
@@ -273,9 +326,9 @@ window.addEventListener('load', () => {
       step3: 'التركيب', step3Text: 'تجتمع النفحات المختلفة لتشكّل عطرك الشخصي.',
       worldsLabel: 'عوالم العطور', worldsTitle: 'إحساس واحد، وجوه عديدة.',
       worldsLead: 'أي طابع يلامسك؟ اكتشف ثلاثة اتجاهات كبداية لرحلتك مع العطور.',
-      floral: 'زهري', floralText: 'نفحات زهرية ناعمة بحضور أنيق وخفيف.',
-      fresh: 'منعش', freshText: 'طابع صافٍ وحيوي مفعم بالخفة.',
-      woody: 'خشبي', woodyText: 'دافئ وعميق بحضور هادئ ومميز.',
+      floral: 'زهري', floralText: 'نفحات زهرية ناعمة بحضور أنيق وخفيف.', floralNotes: 'ورد · ياسمين · سوسن',
+      fresh: 'منعش', freshText: 'طابع صافٍ وحيوي مفعم بالخفة.', freshNotes: 'برغموت · حمضيات · نفحات مائية',
+      woody: 'خشبي', woodyText: 'دافئ وعميق بحضور هادئ ومميز.', woodyNotes: 'خشب الأرز · صندل · عنبر',
       contactPhotoLabel: 'مون ريمي · غوتينغن', contactPhotoCaption: 'يسعدنا استقبالكم.',
       contactPhotoAlt: 'واجهة بارفومري مون ريمي في شارع فيندر 79 بمدينة غوتينغن'
     }
@@ -307,9 +360,9 @@ window.addEventListener('load', () => {
       <h2 class="editorial-title" id="worlds-title" data-copy="worldsTitle"></h2>
       <p class="editorial-lead" data-copy="worldsLead"></p>
       <div class="editorial-worlds">
-        <article class="editorial-world"><span class="editorial-world-index" aria-hidden="true">01 / 03</span><h3 data-copy="floral"></h3><p data-copy="floralText"></p></article>
-        <article class="editorial-world"><span class="editorial-world-index" aria-hidden="true">02 / 03</span><h3 data-copy="fresh"></h3><p data-copy="freshText"></p></article>
-        <article class="editorial-world"><span class="editorial-world-index" aria-hidden="true">03 / 03</span><h3 data-copy="woody"></h3><p data-copy="woodyText"></p></article>
+        <article class="editorial-world" tabindex="0" role="button" aria-expanded="false"><span class="editorial-world-index" aria-hidden="true">01 / 03</span><h3 data-copy="floral"></h3><p data-copy="floralText"></p><p class="editorial-world-notes" data-copy="floralNotes"></p></article>
+        <article class="editorial-world" tabindex="0" role="button" aria-expanded="false"><span class="editorial-world-index" aria-hidden="true">02 / 03</span><h3 data-copy="fresh"></h3><p data-copy="freshText"></p><p class="editorial-world-notes" data-copy="freshNotes"></p></article>
+        <article class="editorial-world" tabindex="0" role="button" aria-expanded="false"><span class="editorial-world-index" aria-hidden="true">03 / 03</span><h3 data-copy="woody"></h3><p data-copy="woodyText"></p><p class="editorial-world-notes" data-copy="woodyNotes"></p></article>
       </div>
     </div>`;
 
@@ -337,6 +390,63 @@ window.addEventListener('load', () => {
   document.addEventListener('click', (event) => {
     if (event.target.closest('header button')) setTimeout(translate, 0);
   });
+
+  const worldDeck = worlds.querySelector('.editorial-worlds');
+  const worldCards = [...worldDeck.querySelectorAll('.editorial-world')];
+  const fineWorldPointer = window.matchMedia('(hover:hover) and (pointer:fine)');
+  const setActiveWorld = (activeCard, selected = false) => {
+    worldCards.forEach((card) => {
+      const active = card === activeCard;
+      card.classList.toggle('is-active', active);
+      if (selected) card.classList.toggle('is-selected', active);
+      else if (!active) card.classList.remove('is-selected');
+      card.setAttribute('aria-expanded', active ? 'true' : 'false');
+    });
+    worldDeck.classList.toggle('has-active', Boolean(activeCard));
+  };
+  const restoreSelectedWorld = () => {
+    const selectedCard = worldDeck.querySelector('.is-selected');
+    setActiveWorld(selectedCard || null, Boolean(selectedCard));
+  };
+  worldCards.forEach((card) => {
+    let worldFrame = 0;
+    let nextX = 50;
+    let nextY = 38;
+    const paintWorldLight = () => {
+      worldFrame = 0;
+      card.style.setProperty('--spot-x', `${nextX.toFixed(1)}%`);
+      card.style.setProperty('--spot-y', `${nextY.toFixed(1)}%`);
+      card.style.setProperty('--depth-x', `${((nextX - 50) * -.025).toFixed(2)}px`);
+      card.style.setProperty('--depth-y', `${((nextY - 50) * -.025).toFixed(2)}px`);
+    };
+    const moveWorldLight = (event) => {
+      if (!fineWorldPointer.matches) return;
+      const bounds = card.getBoundingClientRect();
+      nextX = Math.max(0, Math.min(100, (event.clientX - bounds.left) / bounds.width * 100));
+      nextY = Math.max(0, Math.min(100, (event.clientY - bounds.top) / bounds.height * 100));
+      if (!worldFrame) worldFrame = requestAnimationFrame(paintWorldLight);
+    };
+    card.addEventListener('pointerenter', () => {
+      if (fineWorldPointer.matches) setActiveWorld(card);
+    });
+    card.addEventListener('pointermove', moveWorldLight, { passive:true });
+    card.addEventListener('pointerleave', restoreSelectedWorld);
+    card.addEventListener('focus', () => setActiveWorld(card));
+    card.addEventListener('blur', restoreSelectedWorld);
+    card.addEventListener('click', () => {
+      const close = card.classList.contains('is-selected');
+      if (close) setActiveWorld(null);
+      else setActiveWorld(card, true);
+    });
+    card.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      card.click();
+    });
+  });
+  document.addEventListener('pointerdown', (event) => {
+    if (!event.target.closest('.editorial-world')) setActiveWorld(null);
+  }, { passive:true });
 
   const timelineMedia = window.matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)');
   const timeline = process.querySelector('.editorial-process');
@@ -378,4 +488,7 @@ window.addEventListener('load', () => {
     addressColumn.insertBefore(photo, addressColumn.firstChild);
     translate();
   }, 500);
-});
+};
+
+if (document.readyState === 'complete') initializeEditorialSections();
+else window.addEventListener('load', initializeEditorialSections, { once:true });
