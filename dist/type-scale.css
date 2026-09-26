@@ -59,6 +59,26 @@ footer span {
   font-size: .9rem;
 }
 
+@media (max-width: 1023px) {
+  header.fixed[class*="bg-bg/"] {
+    border-color: rgba(214, 184, 113, .24) !important;
+    background:
+      linear-gradient(180deg, rgba(7, 31, 78, .72), rgba(4, 18, 50, .62)),
+      url('/assets/blue-flowers.webp') center 36% / cover no-repeat !important;
+    box-shadow: 0 10px 34px rgba(1, 8, 28, .18) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(1.15);
+    backdrop-filter: blur(16px) saturate(1.15);
+  }
+
+  header nav[class*="bg-bg-panel"] {
+    background:
+      linear-gradient(155deg, rgba(7, 32, 82, .92), rgba(3, 15, 43, .9)),
+      url('/assets/blue-flowers.webp') center / cover no-repeat !important;
+    -webkit-backdrop-filter: blur(18px) saturate(1.12);
+    backdrop-filter: blur(18px) saturate(1.12);
+  }
+}
+
 @media (max-width: 700px) {
   #home > div.relative {
     width: 100%;
