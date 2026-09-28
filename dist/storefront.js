@@ -7,6 +7,54 @@ heroCopyStyle.textContent = `
 `;
 document.head.appendChild(heroCopyStyle);
 
+// One shared frame keeps every scroll-linked effect in sync. This avoids
+// several independent requestAnimationFrame loops competing for the same frame.
+const motionHub = (() => {
+  const tasks = new Set();
+  let frame = 0;
+  const run = () => {
+    frame = 0;
+    tasks.forEach((task) => task());
+  };
+  const schedule = () => {
+    if (!frame) frame = requestAnimationFrame(run);
+  };
+  addEventListener('scroll', schedule, { passive:true });
+  addEventListener('resize', schedule, { passive:true });
+  addEventListener('load', schedule, { once:true });
+  return {
+    add(task) {
+      tasks.add(task);
+      schedule();
+      return () => tasks.delete(task);
+    },
+    schedule
+  };
+})();
+window.monRemyMotionHub = motionHub;
+
+// The source page is a static Next export. Wait until React has attached to
+// the server-rendered nodes before adding custom chapters, otherwise hydration
+// may replace them on slower devices.
+const runAfterHydration = (callback) => {
+  const startedAt = performance.now();
+  const probe = () => {
+    if (document.readyState !== 'complete') {
+      setTimeout(probe, 50);
+      return;
+    }
+    const reactNodes = [document.querySelector('header'), document.getElementById('main')].filter(Boolean);
+    const reactIsReady = reactNodes.some((node) => Object.keys(node).some((key) => key.startsWith('__reactFiber$') || key.startsWith('__reactProps$')));
+    if (!reactIsReady && performance.now() - startedAt < 1200) {
+      setTimeout(probe, 50);
+      return;
+    }
+    setTimeout(() => requestAnimationFrame(() => requestAnimationFrame(callback)), 80);
+  };
+  if (document.readyState === 'complete') probe();
+  else addEventListener('load', probe, { once:true });
+};
+
 // The exported page already animates this image with a spring. Keep one visual
 // scroll position so it cannot continue drifting after the user stops scrolling.
 const roseMotionStyle = document.createElement('style');
@@ -26,21 +74,14 @@ document.head.appendChild(roseMotionStyle);
 
 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   const roseMotionRule = roseMotionStyle.sheet.cssRules[0];
-  let roseFrame = 0;
   const updateRoses = () => {
     const maxScroll = Math.max(1, document.documentElement.scrollHeight - innerHeight);
     const progress = Math.max(0, Math.min(1, scrollY / maxScroll));
     const position = (28 - progress * 100).toFixed(2);
     const scale = (1.08 + progress * .06).toFixed(4);
     roseMotionRule.style.setProperty('transform', `translate3d(0,${position}px,0) scale(${scale})`, 'important');
-    roseFrame = 0;
   };
-  const scheduleRoses = () => {
-    if (!roseFrame) roseFrame = requestAnimationFrame(updateRoses);
-  };
-  addEventListener('scroll', scheduleRoses, { passive:true });
-  addEventListener('resize', scheduleRoses, { passive:true });
-  addEventListener('load', scheduleRoses, { once:true });
+  motionHub.add(updateRoses);
   updateRoses();
 }
 
@@ -209,7 +250,6 @@ const initializeStorefront = () => {
     if (phoenixVideo.readyState >= 3) revealPhoenix();
 
     const reducePhoenixMotion = window.matchMedia('(prefers-reduced-motion:reduce)');
-    let phoenixFrame = 0;
     let heroVisible = true;
     let flightProgress = 0;
     const syncPhoenixPlayback = () => {
@@ -220,7 +260,6 @@ const initializeStorefront = () => {
       }
     };
     const updatePhoenixFlight = () => {
-      phoenixFrame = 0;
       const travel = Math.max(1, innerHeight * .72);
       const raw = Math.max(0, Math.min(1, scrollY / travel));
       const eased = raw * raw * (3 - 2 * raw);
@@ -242,18 +281,14 @@ const initializeStorefront = () => {
       document.body.classList.toggle('phoenix-header-logo', raw > .78);
       syncPhoenixPlayback();
     };
-    const schedulePhoenixFlight = () => {
-      if (!phoenixFrame) phoenixFrame = requestAnimationFrame(updatePhoenixFlight);
-    };
+    motionHub.add(updatePhoenixFlight);
     new IntersectionObserver(([entry]) => {
       heroVisible = entry.isIntersecting;
       syncPhoenixPlayback();
     }, { threshold:.03 }).observe(hero);
-    addEventListener('scroll', schedulePhoenixFlight, { passive:true });
-    addEventListener('resize', schedulePhoenixFlight, { passive:true });
     document.addEventListener('visibilitychange', syncPhoenixPlayback);
     reducePhoenixMotion.addEventListener('change', () => {
-      schedulePhoenixFlight();
+      motionHub.schedule();
       syncPhoenixPlayback();
     });
     updatePhoenixFlight();
@@ -274,14 +309,275 @@ const initializeStorefront = () => {
 
 };
 
-if (document.readyState === 'complete') initializeStorefront();
-else window.addEventListener('load', initializeStorefront, { once:true });
+runAfterHydration(initializeStorefront);
 
 // Editorial sections live outside the exported React tree so they survive hydration.
 const editorialStylesheet = document.createElement('link');
 editorialStylesheet.rel = 'stylesheet';
 editorialStylesheet.href = '/editorial-sections.css';
 document.head.appendChild(editorialStylesheet);
+
+const premiumMotionStylesheet = document.createElement('link');
+premiumMotionStylesheet.rel = 'stylesheet';
+premiumMotionStylesheet.href = '/premium-motion.css';
+document.head.appendChild(premiumMotionStylesheet);
+document.body.classList.add('motion-preparing');
+setTimeout(() => document.body.classList.remove('motion-preparing'), 4000);
+
+const initializePremiumMotion = () => {
+  const root = document.documentElement;
+  if (document.querySelector('.motion-progress')) return;
+
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const finePointer = matchMedia('(hover:hover) and (pointer:fine)');
+  const hero = document.getElementById('home');
+  const about = document.getElementById('about');
+  const process = document.getElementById('process');
+  const creations = document.getElementById('creations');
+  const worlds = document.getElementById('worlds');
+  const contact = document.getElementById('contact');
+  const footer = document.querySelector('footer');
+  const chapters = [hero, about, process, creations, worlds, contact].filter(Boolean);
+
+  root.classList.add('motion-enhanced');
+  document.body.classList.add('motion-enhanced');
+
+  const progress = document.createElement('div');
+  progress.className = 'motion-progress';
+  progress.setAttribute('aria-hidden', 'true');
+  progress.innerHTML = '<span></span>';
+  document.body.appendChild(progress);
+  const progressFill = progress.firstElementChild;
+
+  let heroLight;
+  if (hero) {
+    hero.querySelector(':scope > div.relative')?.classList.add('motion-hero-stage');
+    const light = document.createElement('span');
+    light.className = 'motion-hero-light';
+    light.setAttribute('aria-hidden', 'true');
+    hero.appendChild(light);
+    heroLight = light;
+
+    let pointerFrame = 0;
+    let pointerX = 50;
+    let pointerY = 40;
+    const paintHeroLight = () => {
+      pointerFrame = 0;
+      hero.style.setProperty('--hero-light-x', `${pointerX.toFixed(1)}%`);
+      hero.style.setProperty('--hero-light-y', `${pointerY.toFixed(1)}%`);
+    };
+    hero.addEventListener('pointermove', (event) => {
+      if (!finePointer.matches || reducedMotion.matches) return;
+      const bounds = hero.getBoundingClientRect();
+      pointerX = (event.clientX - bounds.left) / bounds.width * 100;
+      pointerY = (event.clientY - bounds.top) / bounds.height * 100;
+      if (!pointerFrame) pointerFrame = requestAnimationFrame(paintHeroLight);
+    }, { passive:true });
+  }
+
+  const rail = document.createElement('nav');
+  rail.className = 'motion-rail';
+  rail.setAttribute('aria-label', 'Seitenabschnitte');
+  chapters.forEach((section, index) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.dataset.target = section.id;
+    button.dataset.label = section.querySelector('h1, h2')?.textContent?.trim() || section.id;
+    button.setAttribute('aria-label', button.dataset.label);
+    button.innerHTML = `<span>${String(index + 1).padStart(2, '0')}</span>`;
+    button.addEventListener('click', () => section.scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth' }));
+    rail.appendChild(button);
+  });
+  document.body.appendChild(rail);
+  const railButtons = [...rail.querySelectorAll('button')];
+
+  const refreshRailLabels = () => {
+    chapters.forEach((section, index) => {
+      const label = section.querySelector('h1, h2')?.textContent?.trim() || section.id;
+      if (railButtons[index]) {
+        railButtons[index].dataset.label = label;
+        railButtons[index].setAttribute('aria-label', label);
+      }
+    });
+  };
+  new MutationObserver(refreshRailLabels).observe(root, { attributes:true, attributeFilter:['lang', 'dir'] });
+
+  const revealItems = [];
+  const registerReveal = (element, variant = 'rise', delay = 0) => {
+    if (!element || element.classList.contains('motion-reveal')) return;
+    element.classList.add('motion-reveal');
+    element.dataset.motion = variant;
+    element.style.setProperty('--motion-delay', `${delay}ms`);
+    revealItems.push(element);
+  };
+
+  registerReveal(about?.querySelector('figure'), 'clip', 0);
+  about?.querySelectorAll('.grid > div:nth-child(2) > *').forEach((element, index) => registerReveal(element, 'rise', index * 90));
+  creations?.querySelectorAll('.max-w-xl > *').forEach((element, index) => registerReveal(element, 'rise', index * 90));
+  creations?.querySelectorAll('article > div > *').forEach((element, index) => registerReveal(element, 'right', 120 + index * 80));
+  process?.querySelectorAll('.editorial-eyebrow, .editorial-title, .editorial-lead').forEach((element, index) => registerReveal(element, 'rise', index * 90));
+  worlds?.querySelectorAll('.editorial-eyebrow, .editorial-title, .editorial-lead').forEach((element, index) => registerReveal(element, 'rise', index * 90));
+  worlds?.querySelectorAll('.editorial-world').forEach((element, index) => registerReveal(element, 'clip', 100 + index * 110));
+  contact?.querySelectorAll(':scope > .max-w-site > .max-w-xl > *').forEach((element, index) => registerReveal(element, 'rise', index * 90));
+  contact?.querySelectorAll(':scope > .max-w-site > .grid > div').forEach((element, index) => registerReveal(element, index ? 'right' : 'left', index * 100));
+  footer?.querySelectorAll(':scope > div > *').forEach((element, index) => registerReveal(element, 'rise', index * 70));
+
+  let revealObserver;
+  const observeReveal = (element) => {
+    if (reducedMotion.matches) element.classList.add('motion-in');
+    else revealObserver?.observe(element);
+  };
+  revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('motion-in');
+      revealObserver.unobserve(entry.target);
+    });
+  }, { threshold:.12, rootMargin:'0px 0px -8% 0px' });
+  revealItems.forEach(observeReveal);
+
+  const visibleObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('motion-section-visible');
+      visibleObserver.unobserve(entry.target);
+    });
+  }, { threshold:.13, rootMargin:'0px 0px -8% 0px' });
+  [about, process, creations, worlds, contact, footer].filter(Boolean).forEach((section) => visibleObserver.observe(section));
+
+  const decorateStorefront = () => {
+    const photo = contact?.querySelector('.storefront-photo');
+    if (!photo || photo.querySelector('.motion-mosaic')) return;
+    registerReveal(photo, 'clip', 40);
+    observeReveal(photo);
+    const mosaic = document.createElement('span');
+    mosaic.className = 'motion-mosaic';
+    mosaic.setAttribute('aria-hidden', 'true');
+    mosaic.innerHTML = Array.from({ length:8 }, (_, index) => `<i style="--tile:${index}"></i>`).join('');
+    photo.appendChild(mosaic);
+  };
+  decorateStorefront();
+  if (contact) new MutationObserver(decorateStorefront).observe(contact, { childList:true, subtree:true });
+
+  if (process?.querySelector('.editorial-process')) {
+    const orb = document.createElement('span');
+    orb.className = 'motion-timeline-orb';
+    orb.setAttribute('aria-hidden', 'true');
+    process.querySelector('.editorial-process').appendChild(orb);
+  }
+
+  const magneticElements = [...document.querySelectorAll('#home a[href^="#"], #contact a[href*="maps/dir"], #creations a[href="#contact"]')];
+  magneticElements.forEach((element) => {
+    element.classList.add('motion-magnetic');
+    element.addEventListener('pointermove', (event) => {
+      if (!finePointer.matches || reducedMotion.matches) return;
+      const bounds = element.getBoundingClientRect();
+      const x = ((event.clientX - bounds.left) / bounds.width - .5) * 12;
+      const y = ((event.clientY - bounds.top) / bounds.height - .5) * 8;
+      element.style.setProperty('--magnetic-x', `${x.toFixed(2)}px`);
+      element.style.setProperty('--magnetic-y', `${y.toFixed(2)}px`);
+    }, { passive:true });
+    element.addEventListener('pointerleave', () => {
+      element.style.setProperty('--magnetic-x', '0px');
+      element.style.setProperty('--magnetic-y', '0px');
+    }, { passive:true });
+  });
+
+  const navLinks = [...document.querySelectorAll('header nav a[href^="#"]')];
+  let activeChapter = '';
+  const updatePremiumScroll = () => {
+    const maxScroll = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+    const pageProgress = Math.max(0, Math.min(1, scrollY / maxScroll));
+    progressFill.style.transform = `scaleX(${pageProgress.toFixed(4)})`;
+    document.body.classList.toggle('motion-scrolled', scrollY > 48);
+
+    if (!reducedMotion.matches && hero) {
+      const heroProgress = Math.max(0, Math.min(1, scrollY / Math.max(1, innerHeight * .8)));
+      const heroStage = hero.querySelector('.motion-hero-stage');
+      if (heroStage) {
+        heroStage.style.setProperty('--motion-hero-y', `${(-heroProgress * 34).toFixed(2)}px`);
+        heroStage.style.setProperty('--motion-hero-opacity', Math.max(.18, 1 - heroProgress * .88).toFixed(3));
+      }
+    }
+
+    if (!reducedMotion.matches && about) {
+      const figure = about.querySelector('figure > a');
+      const bounds = about.getBoundingClientRect();
+      const local = Math.max(-1, Math.min(1, (innerHeight * .5 - (bounds.top + bounds.height * .5)) / innerHeight));
+      figure?.style.setProperty('--image-parallax', `${(local * 18).toFixed(2)}px`);
+    }
+
+    if (process) {
+      const timeline = process.querySelector('.editorial-process');
+      const bounds = process.getBoundingClientRect();
+      const local = Math.max(0, Math.min(1, (innerHeight * .82 - bounds.top) / Math.max(1, bounds.height + innerHeight * .35)));
+      timeline?.style.setProperty('--mobile-process-progress', local.toFixed(3));
+    }
+
+    if (!reducedMotion.matches && contact) {
+      const image = contact.querySelector('.storefront-photo img');
+      const bounds = contact.getBoundingClientRect();
+      const local = Math.max(-1, Math.min(1, (innerHeight * .5 - (bounds.top + bounds.height * .38)) / innerHeight));
+      image?.style.setProperty('--storefront-parallax', `${(local * 22).toFixed(2)}px`);
+    }
+
+    let closest = chapters[0];
+    let distance = Infinity;
+    chapters.forEach((section) => {
+      const bounds = section.getBoundingClientRect();
+      const currentDistance = Math.abs(bounds.top - innerHeight * .38);
+      if (currentDistance < distance) {
+        distance = currentDistance;
+        closest = section;
+      }
+    });
+    const nextChapter = closest?.id || '';
+    if (nextChapter !== activeChapter) {
+      activeChapter = nextChapter;
+      railButtons.forEach((button) => {
+        const active = button.dataset.target === activeChapter;
+        button.classList.toggle('is-current', active);
+        if (active) button.setAttribute('aria-current', 'true');
+        else button.removeAttribute('aria-current');
+      });
+      navLinks.forEach((link) => link.classList.toggle('is-current', link.getAttribute('href') === `#${activeChapter}`));
+    }
+  };
+  motionHub.add(updatePremiumScroll);
+
+  const settleMotionMode = () => {
+    if (reducedMotion.matches) revealItems.forEach((element) => element.classList.add('motion-in'));
+    motionHub.schedule();
+  };
+  reducedMotion.addEventListener('change', settleMotionMode);
+
+  // Next hydrates the exported document asynchronously. On slower devices it
+  // can briefly remove nodes added outside its tree, so restore the exact same
+  // nodes (and their listeners) once hydration has settled.
+  let reconcileFrame = 0;
+  const reconcileMotionDOM = () => {
+    reconcileFrame = 0;
+    root.classList.add('motion-enhanced');
+    document.body.classList.add('motion-enhanced');
+    if (!progress.isConnected) document.body.appendChild(progress);
+    if (!rail.isConnected) document.body.appendChild(rail);
+    if (heroLight && !heroLight.isConnected && hero?.isConnected) hero.appendChild(heroLight);
+    if (process && !process.isConnected && about?.isConnected) about.after(process);
+    if (worlds && !worlds.isConnected && creations?.isConnected) creations.after(worlds);
+  };
+  new MutationObserver(() => {
+    if (!reconcileFrame) reconcileFrame = requestAnimationFrame(reconcileMotionDOM);
+  }).observe(document.body, { childList:true, subtree:true });
+
+  requestAnimationFrame(() => {
+    root.classList.add('motion-ready');
+    document.body.classList.add('motion-ready');
+    document.body.classList.remove('motion-preparing');
+    hero?.classList.add('motion-ready');
+    reconcileMotionDOM();
+    motionHub.schedule();
+  });
+};
 
 const initializeEditorialSections = () => {
   const about = document.getElementById('about');
@@ -451,32 +747,29 @@ const initializeEditorialSections = () => {
   const timelineMedia = window.matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)');
   const timeline = process.querySelector('.editorial-process');
   const timelineSteps = [...timeline.querySelectorAll('li')];
-  let timelineFrame = 0;
   const updateTimeline = () => {
-    timelineFrame = 0;
     if (!timelineMedia.matches) return;
     const travel = Math.max(1, process.offsetHeight - innerHeight);
     const progress = Math.max(0, Math.min(1, -process.getBoundingClientRect().top / travel));
     timeline.style.setProperty('--timeline-progress', progress.toFixed(3));
+    timeline.style.setProperty('--timeline-orb-position', `${(16.666 + progress * 66.668).toFixed(3)}%`);
     timelineSteps.forEach((step, index) => {
       step.classList.toggle('is-visible', progress >= [0, .32, .68][index]);
     });
   };
-  const scheduleTimeline = () => {
-    if (!timelineFrame) timelineFrame = requestAnimationFrame(updateTimeline);
-  };
+  motionHub.add(updateTimeline);
   const syncTimelineMode = () => {
     process.classList.toggle('is-timeline-animated', timelineMedia.matches);
-    if (timelineMedia.matches) scheduleTimeline();
+    if (timelineMedia.matches) motionHub.schedule();
     else {
       timeline.style.removeProperty('--timeline-progress');
       timelineSteps.forEach((step) => step.classList.remove('is-visible'));
     }
   };
   timelineMedia.addEventListener('change', syncTimelineMode);
-  addEventListener('scroll', scheduleTimeline, { passive:true });
-  addEventListener('resize', scheduleTimeline, { passive:true });
   syncTimelineMode();
+
+  initializePremiumMotion();
 
 
   window.setTimeout(() => {
@@ -490,5 +783,4 @@ const initializeEditorialSections = () => {
   }, 500);
 };
 
-if (document.readyState === 'complete') initializeEditorialSections();
-else window.addEventListener('load', initializeEditorialSections, { once:true });
+runAfterHydration(initializeEditorialSections);

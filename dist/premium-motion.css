@@ -1,0 +1,739 @@
+:root {
+  --motion-gold: #e3c477;
+  --motion-gold-light: #fff0bd;
+  --motion-blue: #071a43;
+  --motion-ease: cubic-bezier(.16, 1, .3, 1);
+  --motion-soft: cubic-bezier(.22, .61, .36, 1);
+}
+
+html.motion-enhanced {
+  scroll-behavior: smooth;
+}
+
+body.motion-enhanced {
+  overflow-x: clip;
+}
+
+.motion-progress {
+  position: fixed;
+  z-index: 1000;
+  inset: 0 0 auto;
+  height: 2px;
+  pointer-events: none;
+  background: rgba(255, 255, 255, .035);
+}
+
+.motion-progress span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #9d7430, var(--motion-gold-light) 68%, #fff9df);
+  box-shadow: 0 0 14px rgba(241, 208, 127, .72);
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+}
+
+html[dir="rtl"] .motion-progress span {
+  transform-origin: right center;
+}
+
+/* A quiet chapter rail keeps the long page legible while adding an editorial feel. */
+.motion-rail {
+  position: fixed;
+  z-index: 190;
+  inset-inline-end: clamp(1rem, 2vw, 2.2rem);
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+  translate: 0 -50%;
+}
+
+.motion-rail button {
+  position: relative;
+  width: 2.45rem;
+  height: 2.45rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 248, 229, .38);
+  cursor: pointer;
+}
+
+.motion-rail button::before {
+  content: "";
+  position: absolute;
+  inset-inline-end: 0;
+  top: 50%;
+  width: .65rem;
+  height: 1px;
+  background: currentColor;
+  transition: width .45s var(--motion-ease), color .35s ease, box-shadow .35s ease;
+}
+
+.motion-rail button::after {
+  content: attr(data-label);
+  position: absolute;
+  inset-inline-end: calc(100% + .75rem);
+  top: 50%;
+  width: max-content;
+  max-width: 15rem;
+  padding: .4rem .65rem;
+  border: 1px solid rgba(227, 196, 119, .24);
+  background: rgba(5, 20, 52, .86);
+  color: #fff8e7;
+  font-size: .58rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  opacity: 0;
+  translate: .45rem -50%;
+  transition: opacity .25s ease, translate .35s var(--motion-ease);
+  pointer-events: none;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.motion-rail button span {
+  position: absolute;
+  inset-inline-start: 0;
+  top: 50%;
+  font-size: .55rem;
+  letter-spacing: .08em;
+  opacity: 0;
+  translate: 0 -50%;
+  transition: opacity .3s ease;
+}
+
+.motion-rail button:hover::after,
+.motion-rail button:focus-visible::after {
+  opacity: 1;
+  translate: 0 -50%;
+}
+
+.motion-rail button.is-current {
+  color: var(--motion-gold-light);
+}
+
+.motion-rail button.is-current::before {
+  width: 1.45rem;
+  box-shadow: 0 0 12px rgba(240, 208, 130, .7);
+}
+
+.motion-rail button.is-current span {
+  opacity: 1;
+}
+
+.motion-rail button:focus-visible {
+  outline: 1px solid var(--motion-gold-light);
+  outline-offset: 2px;
+}
+
+/* Header movement and active chapter marker. */
+body.motion-scrolled header.fixed {
+  padding-block: .68rem !important;
+  border-color: rgba(225, 193, 118, .24) !important;
+  background: rgba(4, 15, 40, .7) !important;
+  box-shadow: 0 14px 45px rgba(1, 7, 25, .24);
+  -webkit-backdrop-filter: blur(18px) saturate(1.22);
+  backdrop-filter: blur(18px) saturate(1.22);
+}
+
+header nav a[href^="#"] {
+  position: relative;
+}
+
+header nav a[href^="#"]::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: -.72rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--motion-gold-light), transparent);
+  opacity: 0;
+  scale: 0 1;
+  transition: opacity .3s ease, scale .45s var(--motion-ease);
+}
+
+header nav a[href^="#"].is-current {
+  color: var(--motion-gold-light) !important;
+}
+
+header nav a[href^="#"].is-current::after {
+  opacity: 1;
+  scale: 1 1;
+}
+
+/* Hero: staged typography, pointer light and one cinematic gold pass. */
+#home {
+  --hero-light-x: 50%;
+  --hero-light-y: 38%;
+  isolation: isolate;
+}
+
+#home .cinematic-phoenix {
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(ellipse 76% 54% at 50% 45%, #000 42%, rgba(0, 0, 0, .9) 58%, rgba(0, 0, 0, .38) 78%, transparent 100%);
+  mask-image: radial-gradient(ellipse 76% 54% at 50% 45%, #000 42%, rgba(0, 0, 0, .9) 58%, rgba(0, 0, 0, .38) 78%, transparent 100%);
+}
+
+#home::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 9% 7% 5%;
+  border: 1px solid rgba(227, 196, 119, .1);
+  border-radius: 52% 48% 46% 54% / 43% 47% 53% 57%;
+  opacity: 0;
+  scale: .88;
+  pointer-events: none;
+}
+
+#home::after {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  bottom: 0;
+  left: -34%;
+  width: 27%;
+  pointer-events: none;
+  background: linear-gradient(104deg, transparent, rgba(255, 238, 185, .1) 42%, rgba(255, 244, 208, .34) 50%, rgba(255, 230, 156, .08) 58%, transparent);
+  mix-blend-mode: screen;
+  transform: skewX(-11deg);
+  opacity: 0;
+}
+
+.motion-hero-stage {
+  --motion-hero-y: 0px;
+  --motion-hero-opacity: 1;
+  translate: 0 var(--motion-hero-y);
+  opacity: var(--motion-hero-opacity);
+  will-change: translate, opacity;
+}
+
+.motion-hero-light {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle 18rem at var(--hero-light-x) var(--hero-light-y), rgba(255, 227, 147, .14), transparent 68%),
+    radial-gradient(ellipse 34% 22% at 50% 28%, rgba(49, 106, 238, .14), transparent 72%);
+  mix-blend-mode: screen;
+  opacity: .85;
+}
+
+#home.motion-ready::before {
+  animation: motion-halo-in 1.8s .15s var(--motion-ease) both;
+}
+
+#home.motion-ready::after {
+  animation: motion-gold-pass 1.45s .48s var(--motion-ease) both;
+}
+
+body.motion-enhanced #home .cinematic-wordmark {
+  opacity: 0;
+  clip-path: inset(0 52% 0 52%);
+}
+
+#home.motion-ready .cinematic-wordmark {
+  animation: motion-wordmark 1.05s .22s var(--motion-ease) both;
+}
+
+body.motion-preparing #home h1,
+body.motion-enhanced #home h1 {
+  opacity: 0;
+  translate: 0 1.65rem;
+}
+
+#home.motion-ready h1 {
+  animation: motion-hero-title 1.05s .62s var(--motion-ease) both;
+}
+
+body.motion-preparing #home .motion-hero-stage > div.flex,
+body.motion-enhanced #home .motion-hero-stage > div.flex {
+  opacity: 0;
+  clip-path: inset(0 50% 0 50%);
+}
+
+#home.motion-ready .motion-hero-stage > div.flex {
+  animation: motion-hero-actions .9s .94s var(--motion-ease) both;
+}
+
+body.motion-preparing #home > div.absolute.bottom-8,
+body.motion-enhanced #home > div.absolute.bottom-8 {
+  opacity: 0;
+}
+
+#home.motion-ready > div.absolute.bottom-8 {
+  animation: motion-fade-in .8s 1.22s ease both;
+}
+
+#home > div.absolute.bottom-8 span:last-child {
+  transform-origin: top;
+  animation: motion-scroll-line 1.75s 1.9s ease-in-out infinite;
+}
+
+@keyframes motion-halo-in {
+  from { opacity: 0; scale: .88; rotate: -2deg; }
+  to { opacity: 1; scale: 1; rotate: 0deg; }
+}
+
+@keyframes motion-gold-pass {
+  0% { left: -34%; opacity: 0; }
+  18% { opacity: .85; }
+  72% { opacity: .5; }
+  100% { left: 116%; opacity: 0; }
+}
+
+@keyframes motion-wordmark {
+  from { opacity: 0; clip-path: inset(0 52% 0 52%); filter: brightness(1.7); }
+  to { opacity: 1; clip-path: inset(0 0 0 0); filter: brightness(1); }
+}
+
+@keyframes motion-hero-title {
+  from { opacity: 0; translate: 0 1.65rem; filter: blur(7px); }
+  to { opacity: 1; translate: 0 0; filter: blur(0); }
+}
+
+@keyframes motion-hero-actions {
+  from { opacity: 0; clip-path: inset(0 50% 0 50%); }
+  to { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+
+@keyframes motion-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes motion-scroll-line {
+  0%, 100% { scale: 1 .35; opacity: .45; }
+  50% { scale: 1 1; opacity: 1; }
+}
+
+/* Generic, one-shot section choreography. */
+.motion-reveal {
+  --motion-delay: 0ms;
+  opacity: 0;
+  filter: blur(6px);
+  translate: 0 2rem;
+  transition:
+    opacity .8s var(--motion-soft) var(--motion-delay),
+    translate .95s var(--motion-ease) var(--motion-delay),
+    clip-path 1.05s var(--motion-ease) var(--motion-delay),
+    filter .8s ease var(--motion-delay);
+  will-change: opacity, translate, clip-path;
+}
+
+.motion-reveal[data-motion="left"] {
+  translate: -3.25rem 0;
+}
+
+.motion-reveal[data-motion="right"] {
+  translate: 3.25rem 0;
+}
+
+html[dir="rtl"] .motion-reveal[data-motion="left"] {
+  translate: 3.25rem 0;
+}
+
+html[dir="rtl"] .motion-reveal[data-motion="right"] {
+  translate: -3.25rem 0;
+}
+
+.motion-reveal[data-motion="clip"] {
+  translate: 0 1.2rem;
+  /* Keep enough painted area for IntersectionObserver to detect the target. */
+  clip-path: inset(0 0 32% 0);
+}
+
+.motion-reveal.motion-in {
+  opacity: 1;
+  filter: blur(0);
+  translate: 0 0;
+  clip-path: inset(0 0 0 0);
+}
+
+.motion-magnetic {
+  --magnetic-x: 0px;
+  --magnetic-y: 0px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  translate: var(--magnetic-x) var(--magnetic-y);
+  transition: translate .42s var(--motion-ease), color .3s ease, background-color .3s ease, border-color .3s ease !important;
+}
+
+.motion-magnetic::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 244, 207, .28), transparent 70%);
+  translate: -120% 0;
+  transition: translate .65s var(--motion-ease);
+}
+
+.motion-magnetic:hover::before,
+.motion-magnetic:focus-visible::before {
+  translate: 120% 0;
+}
+
+/* About imagery moves on a separate longhand, preserving its original hover. */
+#about figure > a {
+  --image-parallax: 0px;
+  translate: 0 var(--image-parallax);
+  transition: translate .15s linear;
+}
+
+#about figure::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border: 1px solid rgba(245, 217, 150, .5);
+  pointer-events: none;
+  clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+}
+
+#about.motion-section-visible figure::after {
+  animation: motion-frame-draw 1.25s .4s var(--motion-ease) both;
+}
+
+@keyframes motion-frame-draw {
+  0% { clip-path: polygon(0 0, 0 0, 0 0, 0 0); opacity: 0; }
+  30% { clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); opacity: 1; }
+  65% { clip-path: polygon(0 0, 100% 0, 100% 100%, 100% 100%); }
+  100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); opacity: .85; }
+}
+
+/* The bottles enter independently, then keep their existing individual 3D tilt. */
+#creations .creation-3d-stage::after {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  inset: 5% -8%;
+  pointer-events: none;
+  background: linear-gradient(106deg, transparent 38%, rgba(255, 229, 158, .38) 49%, rgba(255, 247, 215, .64) 50%, rgba(255, 219, 132, .18) 53%, transparent 65%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  translate: -65% 0;
+}
+
+body.motion-enhanced #creations .creation-3d-bottle {
+  opacity: 0;
+}
+
+#creations.motion-section-visible .creation-3d-bottle[data-bottle="left"] {
+  animation: motion-bottle-left 1.25s .15s var(--motion-ease) both;
+}
+
+#creations.motion-section-visible .creation-3d-bottle[data-bottle="right"] {
+  animation: motion-bottle-right 1.25s .28s var(--motion-ease) both;
+}
+
+#creations.motion-section-visible .creation-3d-stage::after {
+  animation: motion-creation-shine 1.35s .78s var(--motion-ease) both;
+}
+
+@keyframes motion-bottle-left {
+  from { opacity: 0; translate: -5.5rem 2.2rem; scale: .92; }
+  65% { opacity: 1; }
+  to { opacity: 1; translate: 0 0; scale: 1; }
+}
+
+@keyframes motion-bottle-right {
+  from { opacity: 0; translate: 5.5rem 2.2rem; scale: .92; }
+  65% { opacity: 1; }
+  to { opacity: 1; translate: 0 0; scale: 1; }
+}
+
+@keyframes motion-creation-shine {
+  0% { opacity: 0; translate: -65% 0; }
+  22% { opacity: .8; }
+  100% { opacity: 0; translate: 65% 0; }
+}
+
+/* Timeline orb and mobile scroll progress. */
+.motion-timeline-orb {
+  display: none;
+}
+
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  #process.is-timeline-animated .motion-timeline-orb {
+    position: absolute;
+    z-index: 3;
+    top: calc(var(--timeline-y) - .66rem);
+    left: var(--timeline-orb-position, 16.666%);
+    display: block;
+    width: .56rem;
+    height: .56rem;
+    border: 1px solid #fff1c0;
+    border-radius: 1px;
+    background: #d7af59;
+    box-shadow: 0 0 0 7px rgba(225, 190, 109, .08), 0 0 24px rgba(255, 221, 142, .9);
+    translate: -50% 0;
+    rotate: 45deg;
+    pointer-events: none;
+  }
+
+  html[dir="rtl"] #process.is-timeline-animated .motion-timeline-orb {
+    right: var(--timeline-orb-position, 16.666%);
+    left: auto;
+    translate: 50% 0;
+  }
+}
+
+/* Fragrance cards arrive as a single cinematic strip; their own 3D hover remains intact. */
+#worlds .editorial-worlds {
+  box-shadow: 0 35px 90px rgba(0, 0, 0, .26);
+}
+
+#worlds .editorial-world-index::after {
+  content: "";
+  display: inline-block;
+  width: 2.4rem;
+  height: 1px;
+  margin-inline-start: .8rem;
+  vertical-align: middle;
+  background: currentColor;
+  opacity: .62;
+  scale: .35 1;
+  transform-origin: left;
+  transition: scale .6s var(--motion-ease);
+}
+
+#worlds .editorial-world.is-active .editorial-world-index::after {
+  scale: 1 1;
+}
+
+/* Storefront opens in eight shutters, using only the real storefront image below. */
+#contact .storefront-photo img {
+  --storefront-parallax: 0px;
+  translate: 0 var(--storefront-parallax);
+  scale: 1.08;
+}
+
+.motion-mosaic {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.motion-mosaic i {
+  display: block;
+  background:
+    linear-gradient(180deg, rgba(13, 46, 106, .98), rgba(4, 17, 49, .98)),
+    url('/assets/blue-flowers.webp') center / cover;
+  transform-origin: top;
+}
+
+.storefront-photo.motion-in .motion-mosaic i {
+  animation: motion-shutter-open .95s calc(180ms + var(--tile) * 65ms) var(--motion-ease) both;
+}
+
+@keyframes motion-shutter-open {
+  0% { scale: 1 1; }
+  100% { scale: 1 0; }
+}
+
+footer {
+  position: relative;
+}
+
+footer::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  width: min(1120px, 84vw);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 228, 157, .82), transparent);
+  translate: -50% 0;
+  scale: 0 1;
+  transition: scale 1.35s var(--motion-ease);
+}
+
+footer.motion-section-visible::before {
+  scale: 1 1;
+}
+
+@media (max-width: 1023px) {
+  .motion-rail {
+    display: none;
+  }
+
+  body.motion-scrolled header.fixed {
+    background:
+      linear-gradient(180deg, rgba(7, 31, 78, .78), rgba(4, 18, 50, .68)),
+      url('/assets/blue-flowers.webp') center 36% / cover no-repeat !important;
+  }
+
+  body,
+  main,
+  #home,
+  #about,
+  #process,
+  #creations,
+  #worlds,
+  #contact,
+  footer {
+    background-color: transparent !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .motion-reveal {
+    translate: 0 1.1rem;
+    filter: blur(3px);
+    transition-duration: .65s, .75s, .8s, .6s;
+  }
+
+  .motion-reveal[data-motion="left"],
+  .motion-reveal[data-motion="right"] {
+    translate: 0 1.1rem;
+  }
+
+  #home::before {
+    inset: 10% -24% 7%;
+  }
+
+  #home::after,
+  .motion-hero-light {
+    display: none;
+  }
+
+  #home > div.absolute.bottom-8 {
+    display: none !important;
+  }
+
+  #home h1 {
+    max-width: 12ch !important;
+  }
+
+  .motion-magnetic {
+    translate: 0 0 !important;
+  }
+
+  #about figure > a,
+  #contact .storefront-photo img {
+    translate: 0 0 !important;
+  }
+
+  #creations.motion-section-visible .creation-3d-bottle[data-bottle="left"] {
+    animation-name: motion-bottle-left-mobile;
+  }
+
+  #creations.motion-section-visible .creation-3d-bottle[data-bottle="right"] {
+    animation-name: motion-bottle-right-mobile;
+  }
+
+  @keyframes motion-bottle-left-mobile {
+    from { opacity: 0; translate: -1.6rem 1rem; scale: .96; }
+    to { opacity: 1; translate: 0 0; scale: 1; }
+  }
+
+  @keyframes motion-bottle-right-mobile {
+    from { opacity: 0; translate: 1.6rem 1rem; scale: .96; }
+    to { opacity: 1; translate: 0 0; scale: 1; }
+  }
+
+  .editorial-process {
+    --mobile-process-progress: 0;
+    position: relative;
+    gap: 1rem !important;
+    padding-inline-start: 2.15rem;
+  }
+
+  .editorial-process::before,
+  .editorial-process::after {
+    content: "";
+    position: absolute;
+    inset-inline-start: .25rem;
+    top: .35rem;
+    bottom: .35rem;
+    width: 1px;
+  }
+
+  .editorial-process::before {
+    background: rgba(226, 197, 128, .22);
+  }
+
+  .editorial-process::after {
+    background: linear-gradient(#fff0bd, #c99e4c);
+    box-shadow: 0 0 14px rgba(227, 196, 119, .55);
+    scale: 1 var(--mobile-process-progress);
+    transform-origin: top;
+  }
+
+  .editorial-process li {
+    padding: 1.1rem 0 1.8rem !important;
+    border: 0 !important;
+  }
+
+  .editorial-process li::before {
+    inset-inline-start: -2.18rem !important;
+    top: 1.45rem !important;
+  }
+
+  .editorial-step-number {
+    font-size: 3.25rem;
+  }
+
+  .motion-mosaic {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .motion-mosaic i:nth-child(n+6) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.motion-enhanced {
+    scroll-behavior: auto;
+  }
+
+  .motion-progress span,
+  .motion-hero-stage,
+  #about figure > a,
+  #contact .storefront-photo img,
+  .motion-magnetic {
+    transition: none !important;
+  }
+
+  #home::before,
+  #home::after,
+  .motion-hero-light,
+  .motion-mosaic,
+  .motion-timeline-orb {
+    display: none !important;
+  }
+
+  #home .cinematic-wordmark,
+  #home h1,
+  #home .motion-hero-stage > div.flex,
+  #home > div.absolute.bottom-8,
+  .motion-reveal,
+  #creations .creation-3d-bottle {
+    animation: none !important;
+    clip-path: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+    translate: 0 0 !important;
+    scale: 1 !important;
+    transition: none !important;
+  }
+
+  #home > div.absolute.bottom-8 span:last-child,
+  #about.motion-section-visible figure::after,
+  #creations.motion-section-visible .creation-3d-stage::after,
+  footer::before {
+    animation: none !important;
+    transition: none !important;
+  }
+}
