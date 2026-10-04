@@ -643,9 +643,35 @@ footer.motion-section-visible::before {
 }
 
 @media (max-width: 760px) {
+  html,
+  body {
+    touch-action: pan-y;
+    overscroll-behavior-x: none;
+  }
+
+  /* Mobile browsers repaint fixed blur and filtered background layers during
+     every touch frame. Keep the same rose artwork, but render it as one stable
+     GPU layer so native scrolling stays responsive. */
+  body > .pointer-events-none.fixed.inset-0 > div:first-child {
+    transform: translate3d(0, 0, 0) scale(1.035) !important;
+    filter: brightness(.94) saturate(1) !important;
+    will-change: auto !important;
+    backface-visibility: hidden;
+  }
+
+  header.fixed,
+  body.motion-scrolled header.fixed,
+  header.mobile-premium-header,
+  header.mobile-premium-header::before,
+  header.mobile-premium-header > nav,
+  header.fixed > div:last-child > div > div {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
   .motion-reveal {
     translate: 0 1.1rem;
-    filter: blur(3px);
+    filter: none;
     transition-duration: .65s, .75s, .8s, .6s;
   }
 
@@ -678,6 +704,12 @@ footer.motion-section-visible::before {
   #about figure > a,
   #contact .storefront-photo img {
     translate: 0 0 !important;
+    will-change: auto !important;
+  }
+
+  .cinematic-phoenix {
+    filter: brightness(1.18) saturate(1.1) drop-shadow(0 0 14px rgba(255, 218, 118, .34)) !important;
+    will-change: transform, opacity;
   }
 
   #creations.motion-section-visible .creation-3d-bottle[data-bottle="left"] {

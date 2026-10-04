@@ -72,7 +72,9 @@ roseMotionStyle.textContent = `
 `;
 document.head.appendChild(roseMotionStyle);
 
-if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+const mobilePerformanceMode = window.matchMedia('(max-width: 760px), (pointer: coarse)');
+
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && !mobilePerformanceMode.matches) {
   const roseMotionRule = roseMotionStyle.sheet.cssRules[0];
   const updateRoses = () => {
     const maxScroll = Math.max(1, document.documentElement.scrollHeight - innerHeight);
@@ -684,7 +686,7 @@ const initializePremiumMotion = () => {
       }
     }
 
-    if (!reducedMotion.matches && about) {
+    if (!reducedMotion.matches && !mobilePerformanceMode.matches && about) {
       const figure = about.querySelector('figure > a');
       const bounds = about.getBoundingClientRect();
       const local = Math.max(-1, Math.min(1, (innerHeight * .5 - (bounds.top + bounds.height * .5)) / innerHeight));
@@ -706,7 +708,7 @@ const initializePremiumMotion = () => {
       });
     }
 
-    if (!reducedMotion.matches && contact) {
+    if (!reducedMotion.matches && !mobilePerformanceMode.matches && contact) {
       const image = contact.querySelector('.storefront-photo img');
       const bounds = contact.getBoundingClientRect();
       const local = Math.max(-1, Math.min(1, (innerHeight * .5 - (bounds.top + bounds.height * .38)) / innerHeight));
