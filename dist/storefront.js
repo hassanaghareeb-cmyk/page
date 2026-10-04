@@ -272,7 +272,8 @@ const initializeStorefront = () => {
       const targetY = compact ? 39 : 42;
       const arc = Math.sin(eased * Math.PI) * Math.min(34, Math.max(24, innerWidth * .03));
       const endScale = compact ? .13 : .14;
-      const fade = Math.max(0, Math.min(1, (raw - .72) / .22));
+      // Fade the flying bird before it reaches the fixed navigation bar.
+      const fade = Math.max(0, Math.min(1, (raw - .56) / .18));
       phoenixVideo.style.setProperty('--phoenix-x', `${((targetX - innerWidth / 2) * eased).toFixed(2)}px`);
       phoenixVideo.style.setProperty('--phoenix-y', `${((targetY - startY) * eased - arc).toFixed(2)}px`);
       phoenixVideo.style.setProperty('--phoenix-scale', (1 - (1 - endScale) * eased).toFixed(4));
@@ -307,9 +308,191 @@ const initializeStorefront = () => {
     new MutationObserver(syncHeroCopy).observe(hero, { childList:true, characterData:true, subtree:true });
   }
 
+  const about = document.getElementById('about');
+  if (about) {
+    const aboutImage = about.querySelector('figure img');
+    const aboutLink = aboutImage?.closest('a');
+    if (aboutImage && aboutLink) {
+      aboutImage.src = '/assets/about-phoenix-transparent.png';
+      aboutImage.removeAttribute('srcset');
+      aboutImage.classList.add('about-phoenix-cutout');
+      aboutLink.classList.add('about-logo-stage');
+    }
+
+    const placeholderCopy = {
+      de: {
+        title:'Platzhalter für Ihre Überschrift.',
+        intro:'Platzhaltertext: Hier kann später die Geschichte von Mon Rémy und der Parfumerie stehen.',
+        detail:'Platzhaltertext: Hier ist Raum für Philosophie, Handwerk und die persönliche Duftberatung.',
+        labels:['Thema 01', 'Thema 02', 'Thema 03'],
+        values:['Platzhaltertext', 'Platzhaltertext', 'Platzhaltertext'],
+        alt:'Leuchtendes goldenes Mon-Rémy-Logo mit Phönix'
+      },
+      en: {
+        title:'Placeholder for your headline.',
+        intro:'Placeholder text: The story of Mon Rémy and the perfumery can be added here later.',
+        detail:'Placeholder text: Space for philosophy, craftsmanship and personal fragrance consultation.',
+        labels:['Topic 01', 'Topic 02', 'Topic 03'],
+        values:['Placeholder text', 'Placeholder text', 'Placeholder text'],
+        alt:'Glowing golden Mon Rémy logo with a phoenix'
+      },
+      ar: {
+        title:'مكان مخصص للعنوان.',
+        intro:'نص تجريبي: يمكن إضافة قصة مون ريمي ومتجر العطور هنا لاحقًا.',
+        detail:'نص تجريبي: مساحة للفلسفة والحرفية والاستشارة الشخصية في العطور.',
+        labels:['الموضوع 01', 'الموضوع 02', 'الموضوع 03'],
+        values:['نص تجريبي', 'نص تجريبي', 'نص تجريبي'],
+        alt:'شعار مون ريمي الذهبي المضيء مع طائر الفينيق'
+      }
+    };
+
+    const applyAboutPlaceholder = () => {
+      const code = document.documentElement.lang.toLowerCase().split('-')[0];
+      const content = placeholderCopy[code] || placeholderCopy.de;
+      const heading = about.querySelector('h2');
+      const paragraphs = [...about.querySelectorAll('.grid > div:nth-child(2) > p')];
+      const items = [...about.querySelectorAll('ul > li')];
+      if (heading && heading.textContent !== content.title) heading.textContent = content.title;
+      if (paragraphs[0] && paragraphs[0].textContent !== content.intro) paragraphs[0].textContent = content.intro;
+      if (paragraphs[1] && paragraphs[1].textContent !== content.detail) paragraphs[1].textContent = content.detail;
+      items.forEach((item, index) => {
+        const label = item.querySelector('b');
+        const value = item.querySelector('span');
+        if (label && content.labels[index]) label.textContent = content.labels[index];
+        if (value && content.values[index]) value.textContent = content.values[index];
+      });
+      if (aboutImage) aboutImage.alt = content.alt;
+    };
+    applyAboutPlaceholder();
+    new MutationObserver(applyAboutPlaceholder).observe(document.documentElement, { attributes:true, attributeFilter:['lang', 'dir'] });
+  }
+
 };
 
 runAfterHydration(initializeStorefront);
+
+// Turn the exported mobile header into a polished, accessible drawer without
+// touching the minified React bundle. React still owns the open state; these
+// enhancements only mirror it for motion, focus management and outside clicks.
+const initializeMobileNavigation = () => {
+  const header = document.querySelector('header.fixed');
+  const navigation = header?.querySelector(':scope > nav');
+  const controls = header?.querySelector(':scope > div:last-child');
+  const menuToggle = controls?.querySelector(':scope > button:first-child');
+  const languageToggle = controls?.querySelector(':scope > div > button:first-child');
+  if (!header || !navigation || !controls || !menuToggle || !languageToggle) return;
+  if (header.dataset.mobileNavigation === 'true') return;
+
+  header.dataset.mobileNavigation = 'true';
+  header.classList.add('mobile-premium-header');
+  new MutationObserver(() => {
+    if (!header.classList.contains('mobile-premium-header')) header.classList.add('mobile-premium-header');
+  }).observe(header, { attributes:true, attributeFilter:['class'] });
+  navigation.id = 'primary-navigation';
+  navigation.setAttribute('aria-label', 'Hauptnavigation');
+  menuToggle.setAttribute('aria-controls', navigation.id);
+  languageToggle.querySelector('span')?.setAttribute('aria-hidden', 'true');
+
+  const headerBrand = document.createElement('a');
+  headerBrand.className = 'mobile-header-brand';
+  headerBrand.href = '#home';
+  headerBrand.setAttribute('aria-label', 'Mon Rémy – Startseite');
+  headerBrand.innerHTML = `
+    <img class="mobile-header-brand__bird" src="/assets/logo-bird.png" alt="" width="1503" height="706">
+    <img class="mobile-header-brand__wordmark" src="/assets/logo-wordmark.png" alt="" width="1435" height="303">
+  `;
+  document.body.appendChild(headerBrand);
+
+  const mobileQuery = matchMedia('(max-width: 1023px)');
+  const copy = {
+    de: { open:'Menü öffnen', close:'Menü schließen', language:'Sprache auswählen', nav:'Hauptnavigation', home:'Mon Rémy – Startseite' },
+    en: { open:'Open menu', close:'Close menu', language:'Choose language', nav:'Main navigation', home:'Mon Rémy – Home' },
+    ar: { open:'فتح القائمة', close:'إغلاق القائمة', language:'اختيار اللغة', nav:'التنقل الرئيسي', home:'مون ريمي – الصفحة الرئيسية' }
+  };
+  let wasOpen = false;
+
+  const language = () => {
+    const code = document.documentElement.lang.toLowerCase().split('-')[0];
+    return copy[code] ? code : 'de';
+  };
+
+  const isOpen = () => mobileQuery.matches && menuToggle.getAttribute('aria-expanded') === 'true';
+  const syncNavigation = () => {
+    const open = isOpen();
+    const labels = copy[language()];
+    document.body.classList.toggle('mobile-menu-open', open);
+    navigation.setAttribute('aria-hidden', mobileQuery.matches && !open ? 'true' : 'false');
+    navigation.inert = mobileQuery.matches && !open;
+    menuToggle.setAttribute('aria-label', open ? labels.close : labels.open);
+    navigation.setAttribute('aria-label', labels.nav);
+    headerBrand.setAttribute('aria-label', labels.home);
+    languageToggle.setAttribute('aria-label', `${labels.language} – ${language().toUpperCase()}`);
+    languageToggle.setAttribute('title', labels.language);
+
+    if (open && !wasOpen) {
+      requestAnimationFrame(() => navigation.querySelector('a')?.focus({ preventScroll:true }));
+    } else if (!open && wasOpen && navigation.contains(document.activeElement)) {
+      menuToggle.focus({ preventScroll:true });
+    }
+    wasOpen = open;
+  };
+
+  new MutationObserver(syncNavigation).observe(menuToggle, { attributes:true, attributeFilter:['aria-expanded'] });
+  new MutationObserver(syncNavigation).observe(document.documentElement, { attributes:true, attributeFilter:['lang', 'dir'] });
+
+  let coordinatingControls = false;
+  menuToggle.addEventListener('click', () => {
+    if (coordinatingControls || languageToggle.getAttribute('aria-expanded') !== 'true') return;
+    coordinatingControls = true;
+    languageToggle.click();
+    coordinatingControls = false;
+  });
+  languageToggle.addEventListener('click', () => {
+    if (coordinatingControls || !isOpen()) return;
+    coordinatingControls = true;
+    menuToggle.click();
+    coordinatingControls = false;
+  });
+
+  document.addEventListener('pointerdown', (event) => {
+    if (!isOpen()) return;
+    if (navigation.contains(event.target) || controls.contains(event.target)) return;
+    menuToggle.click();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (!isOpen()) return;
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      menuToggle.click();
+      return;
+    }
+    if (event.key !== 'Tab') return;
+    const focusable = [menuToggle, ...navigation.querySelectorAll('a[href]')];
+    const first = focusable[0];
+    const last = focusable.at(-1);
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+
+  navigation.addEventListener('click', (event) => {
+    if (!event.target.closest('a[href]')) return;
+    setTimeout(syncNavigation, 0);
+  });
+
+  mobileQuery.addEventListener('change', () => {
+    if (!mobileQuery.matches && menuToggle.getAttribute('aria-expanded') === 'true') menuToggle.click();
+    syncNavigation();
+  });
+  syncNavigation();
+};
+
+runAfterHydration(initializeMobileNavigation);
 
 // Editorial sections live outside the exported React tree so they survive hydration.
 const editorialStylesheet = document.createElement('link');
@@ -484,6 +667,7 @@ const initializePremiumMotion = () => {
   });
 
   const navLinks = [...document.querySelectorAll('header nav a[href^="#"]')];
+  const mobileProcessSteps = process ? [...process.querySelectorAll('.editorial-process li')] : [];
   let activeChapter = '';
   const updatePremiumScroll = () => {
     const maxScroll = Math.max(1, document.documentElement.scrollHeight - innerHeight);
@@ -507,11 +691,19 @@ const initializePremiumMotion = () => {
       figure?.style.setProperty('--image-parallax', `${(local * 18).toFixed(2)}px`);
     }
 
-    if (process) {
+    if (process && innerWidth <= 760 && mobileProcessSteps.length) {
       const timeline = process.querySelector('.editorial-process');
-      const bounds = process.getBoundingClientRect();
-      const local = Math.max(0, Math.min(1, (innerHeight * .82 - bounds.top) / Math.max(1, bounds.height + innerHeight * .35)));
+      const centers = mobileProcessSteps.map((step) => {
+        const bounds = step.getBoundingClientRect();
+        return bounds.top + bounds.height * .5;
+      });
+      const trigger = innerHeight * .68;
+      const span = Math.max(1, centers.at(-1) - centers[0]);
+      const local = Math.max(0, Math.min(1, (trigger - centers[0]) / span));
       timeline?.style.setProperty('--mobile-process-progress', local.toFixed(3));
+      mobileProcessSteps.forEach((step, index) => {
+        step.classList.toggle('is-mobile-active', centers[index] <= trigger);
+      });
     }
 
     if (!reducedMotion.matches && contact) {
