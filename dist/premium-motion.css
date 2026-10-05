@@ -165,18 +165,25 @@ header.fixed {
   content: "";
   position: absolute;
   z-index: 0;
-  inset: 14% 10% 18%;
+  inset: 12% 8% 15%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 193, 72, .2), rgba(47, 101, 218, .08) 42%, transparent 72%);
-  filter: blur(24px);
+  background: radial-gradient(circle, rgba(255, 221, 139, .16), rgba(47, 101, 218, .06) 42%, transparent 72%);
+  filter: blur(20px);
   pointer-events: none;
 }
 
 #about .about-logo-stage .about-phoenix-cutout {
   z-index: 1;
-  padding: 1.5%;
+  padding: 0;
   object-fit: contain !important;
-  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, .36)) drop-shadow(0 0 18px rgba(255, 195, 76, .26));
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, .42)) drop-shadow(0 0 14px rgba(255, 215, 112, .2));
+  transform: scale(1.035);
+  transition: transform .8s var(--motion-ease), filter .8s ease !important;
+}
+
+#about .about-logo-stage:hover .about-phoenix-cutout {
+  transform: scale(1.055) translateY(-.25rem);
+  filter: drop-shadow(0 24px 34px rgba(0, 0, 0, .46)) drop-shadow(0 0 18px rgba(255, 222, 132, .28));
 }
 
 #about .about-logo-stage > div {

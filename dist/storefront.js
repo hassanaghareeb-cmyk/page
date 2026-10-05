@@ -315,7 +315,7 @@ const initializeStorefront = () => {
     const aboutImage = about.querySelector('figure img');
     const aboutLink = aboutImage?.closest('a');
     if (aboutImage && aboutLink) {
-      aboutImage.src = '/assets/about-phoenix-transparent.png';
+      aboutImage.src = '/assets/about-phoenix-premium.webp';
       aboutImage.removeAttribute('srcset');
       aboutImage.classList.add('about-phoenix-cutout');
       aboutLink.classList.add('about-logo-stage');
