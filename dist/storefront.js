@@ -496,6 +496,82 @@ const initializeMobileNavigation = () => {
 
 runAfterHydration(initializeMobileNavigation);
 
+// The exported legal overlays are visually modal, but the source bundle does
+// not expose dialog semantics or keyboard focus management. Add both without
+// altering React's open/close state.
+const initializeLegalDialogs = () => {
+  let activeDialog = null;
+  let opener = null;
+  let previousOverflow = '';
+
+  const findDialog = () => [...document.querySelectorAll('div.fixed.inset-0')]
+    .find((element) => element.classList.contains('z-[600]')) || null;
+
+  const focusableElements = (dialog) => [...dialog.querySelectorAll(
+    'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+  )].filter((element) => element.getClientRects().length);
+
+  const syncDialog = () => {
+    const overlay = findDialog();
+    if (overlay && overlay !== activeDialog) {
+      activeDialog = overlay;
+      const panel = overlay.firstElementChild;
+      const heading = panel?.querySelector('h3');
+      if (!panel || !heading) return;
+      heading.id = 'legal-dialog-title';
+      panel.setAttribute('role', 'dialog');
+      panel.setAttribute('aria-modal', 'true');
+      panel.setAttribute('aria-labelledby', heading.id);
+      panel.setAttribute('tabindex', '-1');
+      previousOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(() => (panel.querySelector('button') || panel).focus({ preventScroll:true }));
+      return;
+    }
+    if (!overlay && activeDialog) {
+      activeDialog = null;
+      document.body.style.overflow = previousOverflow;
+      opener?.focus({ preventScroll:true });
+      opener = null;
+    }
+  };
+
+  document.addEventListener('pointerdown', (event) => {
+    const button = event.target.closest('footer button');
+    if (button) opener = button;
+  }, { capture:true, passive:true });
+
+  document.addEventListener('keydown', (event) => {
+    if (!activeDialog) return;
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      activeDialog.querySelector('button')?.click();
+      return;
+    }
+    if (event.key !== 'Tab') return;
+    const focusable = focusableElements(activeDialog);
+    if (!focusable.length) {
+      event.preventDefault();
+      activeDialog.firstElementChild?.focus();
+      return;
+    }
+    const first = focusable[0];
+    const last = focusable.at(-1);
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+
+  new MutationObserver(syncDialog).observe(document.body, { childList:true, subtree:true });
+  syncDialog();
+};
+
+runAfterHydration(initializeLegalDialogs);
+
 // Editorial sections live outside the exported React tree so they survive hydration.
 const editorialStylesheet = document.createElement('link');
 editorialStylesheet.rel = 'stylesheet';
